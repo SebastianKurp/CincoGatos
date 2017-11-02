@@ -6,8 +6,6 @@ import App from './App';
 import AddItem from './components/AddItem';
 import IndexItem from './components/IndexItem';
 import EditItem from './components/EditItem';
-import AddFlashcard from './components/AddFlashcard';
-import IndexFlashcard from './components/IndexFlashcard';
 import AllSets from './components/AllSets';
 
 //This is how web pages are routed
@@ -17,11 +15,9 @@ import AllSets from './components/AllSets';
     <Router>
         <div> {/*This div tag is here because 'Router may have only one child element'*/}
           <Route exact path='/' component={App} />
-          <Route path='/addflashcard' component={AddFlashcard} />
           <Route path='/add-item' component={AddItem} />
           <Route path='/index' component={IndexItem} />
           <Route path='/edit/:id' component={EditItem} />
-          <Route path='/indexCard' component={IndexFlashcard}/>
           <Route path='/welcome' component={AllSets}/>
         </div>
     </Router>,
