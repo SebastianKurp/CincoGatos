@@ -4,7 +4,6 @@ var flashRouter = express.Router();
 
 // Require flashcard model in our routes module
 var flashcard = require('../models/Flashcard');
-console.log("Inside flashrouter");
 
 // Defined store route
 flashRouter.route('/add/post').post(function (req, res) {
@@ -49,7 +48,7 @@ flashRouter.route('/update/:id').post(function (req, res) {
   });
 });
 
-// Defined delete | remove | destroy route
+// Defined delete route
 flashRouter.route('/delete/:id').get(function (req, res) {
   Flashcard.findByIdAndRemove({_id: req.params.id},
        function(err, flashcard){
