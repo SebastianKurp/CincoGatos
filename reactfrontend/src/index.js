@@ -8,6 +8,7 @@ import IndexItem from './components/IndexItem';
 import EditItem from './components/EditItem';
 import AddFlashcard from './components/AddFlashcard';
 import IndexFlashcard from './components/IndexFlashcard';
+import AllSets from './components/AllSets';
 
 //This is how web pages are routed
 // '/' is main, App.js
@@ -21,6 +22,7 @@ import IndexFlashcard from './components/IndexFlashcard';
           <Route path='/index' component={IndexItem} />
           <Route path='/edit/:id' component={EditItem} />
           <Route path='/indexCard' component={IndexFlashcard}/>
+          <Route path='/welcome' component={AllSets}/>
         </div>
     </Router>,
     document.getElementById('root')
