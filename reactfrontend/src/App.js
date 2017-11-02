@@ -6,7 +6,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      user: null // not logged in == null
+      authenticated: false
     }
 }
 
@@ -15,13 +15,16 @@ class App extends Component {
     return (
       <div className="wrapper">
         <h1>Cinco Gatos</h1>
-        {/*If the value of user is true they will see logout
-          if null they will be shown an option to login*/}
-        {this.state.user ?
-          <button onClick={this.logout}>Log Out</button>
-          :
-          <button onClick={this.login}>Log In</button>
-        }
+        {/*This will eventually show a login prompt if they are not signed in
+          or all user options if they are*/}
+        {this.props.authenticated
+        ?(
+          <h2>You're a valid user!</h2>
+        )
+      :
+      (
+        <h2>You are not a valid user</h2>
+      )}
       </div>
     );
   }
