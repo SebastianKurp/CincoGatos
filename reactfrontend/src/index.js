@@ -7,6 +7,7 @@ import AddItem from './components/AddItem';
 import IndexItem from './components/IndexItem';
 import EditItem from './components/EditItem';
 import AllSets from './components/AllSets';
+import Login from './components/Login';
 
 //This is how web pages are routed
 // '/' is main, App.js
@@ -19,6 +20,7 @@ import AllSets from './components/AllSets';
           <Route path='/index' component={IndexItem} />
           <Route path='/edit/:id' component={EditItem} />
           <Route path='/welcome' component={AllSets}/>
+          <Route path='/login' component={Login}/>
         </div>
     </Router>,
     document.getElementById('root')
