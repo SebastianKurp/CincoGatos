@@ -2,7 +2,7 @@
 "# CincoGatos"
 
 
-**To run:**
+***To run:***
 
 
 Go into 'expressbackend' --> npm install (only first time) --> npm start
