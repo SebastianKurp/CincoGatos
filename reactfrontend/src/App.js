@@ -67,6 +67,9 @@ export default class App extends Component {
   render() {
     return this.state.loading === true ? <h1>Loading</h1> : (
       <BrowserRouter>
+        {/*Below is a navbar that renders everywhere the user is
+          It will show different links based on whether or not this.state.authenticated is true
+          or not*/}
         <div>
           <nav className="navbar navbar-default navbar-static-top">
             <div className="container">
@@ -93,6 +96,8 @@ export default class App extends Component {
               </ul>
             </div>
           </nav>
+          {/*This is what renders below the nav bar. The components act as pages
+            which fill use the space underneath the above div*/}
           <div className="container">
             <div className="row">
               <Switch>
