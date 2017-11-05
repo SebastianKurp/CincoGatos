@@ -4,6 +4,9 @@ import Login from './components/Login'
 import Signup from './components/Signup'
 import { logout } from './components/UserFunctions'
 import AllSets from './components/AllSets'
+import Animals from './components/Animals'
+import NotFound from './components/NotFound'
+import Home from './components/Home'
 import { fbAuth } from './firebase'
 
 
@@ -26,7 +29,7 @@ function PublicRoute ({component: Component, authenticated, ...rest}) {
       {...rest}
       render={(props) => authenticated === false
         ? <Component {...props} />
-      : <Redirect to='/welcome' />}
+      : <Redirect to='/login' />}
     />
   )
 }
@@ -74,6 +77,7 @@ export default class App extends Component {
                 <li>
                   {this.state.authenticated
                     ?<span>
+                    <Link to='/welcome' className="navbar-brand">Learn!</Link>
                     <button
                         style={{border: 'none', background: 'transparent'}}
                         onClick={() => {
@@ -83,7 +87,7 @@ export default class App extends Component {
                     </span>
                     : <span>
                         <Link to="/login" className="navbar-brand">Login</Link>
-                        <Link to="/register" className="navbar-brand">Register</Link>
+                        <Link to="/signup" className="navbar-brand">Sign Up</Link>
                       </span>}
                 </li>
               </ul>
@@ -92,9 +96,12 @@ export default class App extends Component {
           <div className="container">
             <div className="row">
               <Switch>
+                <Route path='/' exact component={Home} />
                 <PublicRoute authenticated={this.state.authenticated} path='/login' component={Login} />
                 <PublicRoute authenticated={this.state.authenticated} path='/signup' component={Signup} />
                 <PrivateRoute authenticated={this.state.authenticated} path='/welcome' component={AllSets}/>
+                <PrivateRoute authenticated={this.state.authenticated} path='/animals' component={Animals}/>
+                <PublicRoute path="*" component={NotFound}/>
               </Switch>
             </div>
           </div>
