@@ -1,4 +1,4 @@
-import firebase from 'firebase';
+ import firebase from 'firebase';
 
 // Initialize Firebase/config key
 const config = {
@@ -9,9 +9,14 @@ const config = {
   storageBucket: "cincogatos-34db5.appspot.com",
   messagingSenderId: "821202238986"
 };
-firebase.initializeApp(config);
+
+
+
+export const app = firebase.initializeApp(config);
+export const ref = firebase.database().ref();
+export const fbAuth = firebase.auth;
 //Google OAuth popup for logging in
-export const provider = new firebase.auth.GoogleAuthProvider();
-export const auth = firebase.auth();
+export const googleProvider = new firebase.auth.GoogleAuthProvider();
+
 
 export default firebase;
