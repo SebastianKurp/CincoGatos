@@ -1,11 +1,34 @@
 import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
-//import cat from './public/images';
+import { Link } from 'react-router-dom'
+import { logout } from './UserFunctions'
 
 class AllSets extends Component {
 
     render() {
       return (
+        <body>
+        <div>
+          <nav className="navbar navbar-default navbar-static-top">
+            <div className="container">
+              <div className="navbar-header">
+                <Link to="/" className="navbar-brand">Cinco Gatos</Link>
+              </div>
+              <ul className="nav navbar-nav pull-right">
+                <li>
+                <span>
+                    <button
+                        style={{border: 'none', background: 'transparent'}}
+                        onClick={() => {
+                          logout()
+                        }}
+                        className="navbar-brand">Logout</button>
+                    </span>
+                </li>
+              </ul>
+            </div>
+          </nav>
+          </div>
         <Grid fluid>
         <Row around="xs">
           <Col xs={0}/>
@@ -32,6 +55,7 @@ class AllSets extends Component {
         <img src={require('../images/frog.gif')} height={150} alt={"frog"}/>
         </Row>
         </Grid>
+        </body>
       );
     }
   }
