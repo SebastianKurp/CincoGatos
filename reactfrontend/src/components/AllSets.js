@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
-//import cat from './public/images';
+import { Link } from 'react-router-dom'
+import { logout } from './UserFunctions'
 
 class AllSets extends Component {
 
     render() {
       return (
+
+        <div id='body'>
         <Grid fluid>
         <Row around="xs">
           <Col xs={0}/>
-          <img src={require('../images/cat.jpg')} height={150} alt={"cat"} />
+          <Link to='/animals'><img src={require('../images/cat.jpg')} height={150} alt={"cat"} /></Link>
           <img src={require('../images/whale.gif')} height={150} alt={"whale"}/>
           <img src={require('../images/walrus.gif')} height={150} alt={"walrus"}/>
           </Row>
@@ -32,6 +35,7 @@ class AllSets extends Component {
         <img src={require('../images/frog.gif')} height={150} alt={"frog"}/>
         </Row>
         </Grid>
+      </div>
       );
     }
   }

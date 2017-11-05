@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@blueprintjs/core": "^1.32.0",
     "axios": "^0.16.2",
     "firebase": "^4.6.0",
     "react": "^15.6.1",
