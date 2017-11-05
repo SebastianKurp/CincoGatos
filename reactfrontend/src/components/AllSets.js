@@ -9,7 +9,7 @@ class AllSets extends Component {
       return (
 
         <div id='body'>
-        <Grid fluid>
+        <Grid>
         <Row around="xs">
           <Col xs={0}/>
           <Link to='/animals'><img src={require('../images/cat.jpg')} height={150} alt={"cat"} /></Link>
