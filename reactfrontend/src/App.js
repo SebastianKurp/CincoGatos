@@ -3,7 +3,7 @@ import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom'
 import Login from './components/Login'
 import Signup from './components/Signup'
 import { logout } from './components/UserFunctions'
-import AllSets from './components/AllSets'
+import ShowSets from './components/ShowSets'
 import Animals from './components/Animals'
 import NotFound from './components/NotFound'
 import Home from './components/Home'
@@ -104,7 +104,7 @@ export default class App extends Component {
                 <Route path='/' exact component={Home} />
                 <PublicRoute authenticated={this.state.authenticated} path='/login' component={Login} />
                 <PublicRoute authenticated={this.state.authenticated} path='/signup' component={Signup} />
-                <PrivateRoute authenticated={this.state.authenticated} path='/welcome' component={AllSets}/>
+                <PrivateRoute authenticated={this.state.authenticated} path='/welcome' component={ShowSets}/>
                 <PrivateRoute authenticated={this.state.authenticated} path='/animals' component={Animals}/>
                 <PublicRoute path="*" component={NotFound}/>
               </Switch>
