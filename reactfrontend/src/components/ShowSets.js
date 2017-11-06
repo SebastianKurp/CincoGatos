@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import Button from './Button'
 import Bar from './Bar'
+import { Link } from 'react-router-dom'
 
 class ShowSets extends Component {
 
@@ -37,6 +38,7 @@ class ShowSets extends Component {
         document.body.addEventListener("keyup", function(e) {
             keyPresses[e.keyCode] = false;
         });
+
     }
 
 
@@ -54,6 +56,7 @@ class ShowSets extends Component {
     					new Button(0.5, 0.7, 0.07, 0.085, "rgb(255,100,125)", "rgb(0,0,0)", 6),
     					new Button(0.7, 0.7, 0.07, 0.085, "rgb(255,200,0)", "rgb(0,0,0)", 6),
     				];
+
     	bars =	[
     				new Bar(0.05, 0.05, 0.65, 0.1, "rgb(100,100,100)", "rgb(50,50,50)", "rgb(0,0,0)", 6),
     				new Bar(0.70, 0.05, 0.95, 0.1, "rgb(255,255,255)", "rgb(200,200,200)", "rgb(0,0,0)", 6),
@@ -64,8 +67,8 @@ class ShowSets extends Component {
 
     function move()
     {
-      	ctx.canvas.width = window.innerWidth - 25; //sets size of canvas width + height in window
-      	ctx.canvas.height = window.innerHeight - 25;
+      	ctx.canvas.width = window.innerWidth - 200; //sets size of canvas width + height in window
+      	ctx.canvas.height = window.innerHeight - 80;
       	ctx.clearRect(0, 0, c.width, c.height);
 
       ctx.beginPath();
@@ -75,7 +78,7 @@ class ShowSets extends Component {
 
     	for (var k = 0; k < buttons.length; k++)
     	{
-    		buttons[k].size(mouseX - 50, mouseY - 50, c.width, c.height); //both were - 10
+    		buttons[k].size(mouseX - 90, mouseY - 70, c.width, c.height); //both were - 10
     		buttons[k].draw(ctx, c.width, c.height);
     	}
     	for (var i = 0; i < bars.length; i++)
