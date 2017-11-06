@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-flexbox-grid';
-import { Link } from 'react-router-dom'
 
 class NotFound extends Component {
 

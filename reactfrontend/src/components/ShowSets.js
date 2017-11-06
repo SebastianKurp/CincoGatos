@@ -8,8 +8,6 @@ class ShowSets extends Component {
   componentDidMount(){
     let c = ReactDOM.findDOMNode(this.refs.myCanvas);
     let ctx = c.getContext('2d');
-
-    ctx.fillStyle = "rgb(200,255,255)";
     var buttons, bars, mouseX = 0, mouseY = 0, keyPresses, mouseDown = false;
     c.style.backgroundColor = "#FFFFFF";
 
@@ -21,7 +19,8 @@ class ShowSets extends Component {
     		keyPresses.push(false)
     	}
     	initialize();
-    	var interval = setInterval(move, 1000.0/60.0);
+    	setInterval(move, 1000.0/60.0);
+      //interval var was causing issue because it was never called
     	document.body.addEventListener("mousemove", function(e) {
     		mouseX = e.pageX;
     		mouseY = e.pageY;
@@ -65,23 +64,23 @@ class ShowSets extends Component {
 
     function move()
     {
-      	ctx.canvas.width = window.innerWidth - 25;
+      	ctx.canvas.width = window.innerWidth - 25; //sets size of canvas width + height in window
       	ctx.canvas.height = window.innerHeight - 25;
       	ctx.clearRect(0, 0, c.width, c.height);
 
-      	ctx.beginPath();
+      ctx.beginPath();
     	ctx.arc(c.width/2, c.height/2, Math.min(c.width, c.height)/2, 0, 2*Math.PI);
     	ctx.fillStyle = "rgb(200,255,255)"
     	ctx.fill();
 
-    	for (var i = 0; i < buttons.length; i++)
+    	for (var k = 0; k < buttons.length; k++)
     	{
-    		buttons[i].size(mouseX - 10, mouseY - 10, c.width, c.height);
-    		buttons[i].draw(ctx, c.width, c.height);
+    		buttons[k].size(mouseX - 50, mouseY - 50, c.width, c.height); //both were - 10
+    		buttons[k].draw(ctx, c.width, c.height);
     	}
     	for (var i = 0; i < bars.length; i++)
     	{
-    		bars[i].color(mouseX, mouseY, c.width, c.height)
+    		bars[i].color(mouseX - 50, mouseY - 50, c.width, c.height) //had no subtraction
     		bars[i].draw(ctx, c.width, c.height);
     	}
     }
