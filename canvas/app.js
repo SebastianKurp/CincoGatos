@@ -36,7 +36,7 @@ function initialize()
 					new Button(0.3, 0.3, 0.07, 0.085, "rgb(100,100,100)", "rgb(0,0,0)", 6),
 					new Button(0.5, 0.3, 0.07, 0.085, "rgb(100,100,100)", "rgb(0,0,0)", 6),
 					new Button(0.7, 0.3, 0.07, 0.085, "rgb(100,100,100)", "rgb(0,0,0)", 6),
-					new Button(0.2, 0.5, 0.07, 0.085, "rgb(255,50,50)", "rgb(0,0,0)", 6, "animals.png"),
+					new Button(0.2, 0.5, 0.07, 0.085, "rgb(255,50,50)", "rgb(0,0,0)", 6, image = "animals.png", link = "/animals"),
 					new Button(0.4, 0.5, 0.07, 0.085, "rgb(0,150,255)", "rgb(0,0,0)", 6),
 					new Button(0.6, 0.5, 0.07, 0.085, "rgb(150,35,255)", "rgb(0,0,0)", 6),
 					new Button(0.8, 0.5, 0.07, 0.085, "rgb(255,150,0)", "rgb(0,0,0)", 6),
@@ -66,6 +66,10 @@ function move()
 	for (var i = 0; i < buttons.length; i++)
 	{
 		buttons[i].size(mouseX - 10, mouseY - 10, c.width, c.height);
+		if (buttons[i].isClicked(mouseDown, mouseX - 10, mouseY - 10, c.width, c.height))
+		{
+			console.log(buttons[i].link);
+		}
 		buttons[i].draw(ctx, c.width, c.height);
 	}
 	for (var i = 0; i < bars.length; i++)
