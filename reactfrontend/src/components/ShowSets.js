@@ -10,7 +10,7 @@ class ShowSets extends Component {
     let c = ReactDOM.findDOMNode(this.refs.myCanvas);
     let ctx = c.getContext('2d');
     var buttons, bars, mouseX = 0, mouseY = 0, keyPresses, mouseDown = false, clickBuffer = "None";
-    c.style.backgroundColor = "#000000";
+    c.style.backgroundColor = "#FFFFFF";
 
     function setup()
     {
@@ -72,7 +72,7 @@ class ShowSets extends Component {
     function move()
     {
 			ctx.canvas.width = window.innerWidth;
-			ctx.canvas.height = window.innerHeight;
+			ctx.canvas.height = window.innerHeight - 100;
 			ctx.clearRect(0, 0, c.width, c.height);
 	
 			ctx.beginPath();
