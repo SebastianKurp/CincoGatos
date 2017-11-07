@@ -98,8 +98,6 @@ export default class App extends Component {
           </nav>
           {/*This is what renders below the nav bar. The components act as pages
             which fill use the space underneath the above div*/}
-          <div className="container">
-            <div className="row">
               <Switch>
                 <Route path='/' exact component={Home} />
                 <PublicRoute authenticated={this.state.authenticated} path='/login' component={Login} />
@@ -107,9 +105,7 @@ export default class App extends Component {
                 <PrivateRoute authenticated={this.state.authenticated} path='/welcome' component={ShowSets}/>
                 <PrivateRoute authenticated={this.state.authenticated} path='/animals' component={Animals}/>
                 <PublicRoute path="*" component={NotFound}/>
-              </Switch>
-            </div>
-          </div>
+              </Switch> 
         </div>
       </BrowserRouter>
     );

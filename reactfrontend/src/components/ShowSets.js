@@ -10,7 +10,7 @@ class ShowSets extends Component {
     let c = ReactDOM.findDOMNode(this.refs.myCanvas);
     let ctx = c.getContext('2d');
     var buttons, bars, mouseX = 0, mouseY = 0, keyPresses, mouseDown = false, clickBuffer = "None";
-    c.style.backgroundColor = "#FFFFFF";
+    c.style.backgroundColor = "#000000";
 
     function setup()
     {
@@ -71,8 +71,8 @@ class ShowSets extends Component {
 
     function move()
     {
-			ctx.canvas.width = window.innerWidth - 125;
-			ctx.canvas.height = window.innerHeight - 100;
+			ctx.canvas.width = window.innerWidth;
+			ctx.canvas.height = window.innerHeight;
 			ctx.clearRect(0, 0, c.width, c.height);
 	
 			ctx.beginPath();
@@ -82,8 +82,8 @@ class ShowSets extends Component {
 			
 			for (var j = 0; j < buttons.length; j++)
 			{
-				buttons[j].size(mouseX - 90, mouseY - 70, c.width, c.height);
-				if (buttons[j].isClicked(mouseDown, mouseX - 90, mouseY - 70, c.width, c.height))
+				buttons[j].size(mouseX, mouseY - 50, c.width, c.height);
+				if (buttons[j].isClicked(mouseDown, mouseX, mouseY - 50, c.width, c.height))
 				{
 					clickBuffer = buttons[j].link;
 				}
@@ -92,13 +92,14 @@ class ShowSets extends Component {
 					console.log(clickBuffer);
           var hardcodingisbad = "http://localhost:3000";    
           window.location.href= hardcodingisbad+clickBuffer;
+
           clickBuffer = "None";
 				}
 				buttons[j].draw(ctx, c.width, c.height);
 			}
 			for (var i = 0; i < bars.length; i++)
 			{
-				bars[i].color(mouseX-90, mouseY-70, c.width, c.height)
+				bars[i].color(mouseX, mouseY-50, c.width, c.height)
 				bars[i].draw(ctx, c.width, c.height);
 			}
     }
@@ -110,9 +111,7 @@ class ShowSets extends Component {
 
   render(){
     return (
-      <div>
       <canvas ref="myCanvas" />
-      </div>
     );
   }
 }
