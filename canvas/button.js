@@ -1,6 +1,6 @@
 class Button
 {
-	constructor(x, y, rInactive, rActive, cFill, cStroke, wStroke, image = "None", link = "None")
+	constructor(x, y, rInactive, rActive, cFill, cActive, cStroke, wStroke, image = "None", link = "None")
 	{
 		this.x = x;
 		this.y = y;
@@ -8,6 +8,8 @@ class Button
 		this.rActive = rActive;
 		this.rCurrent = rInactive;
 		this.cFill = cFill;
+		this.cActive = cActive;
+		this.cCurrent = cFill;
 		this.cStroke = cStroke;
 		this.wStroke = wStroke;
 		this.image = image;
@@ -22,7 +24,7 @@ class Button
 		var r = this.rCurrent * Math.min(canvasWidth, canvasHeight)
 		ctx.arc(this.x * canvasWidth,this.y * canvasHeight,r,0,2*Math.PI);
 		ctx.stroke();
-		ctx.fillStyle = this.cFill;
+		ctx.fillStyle = this.cCurrent;
 		ctx.fill();
 		if (this.image != "None")
 		{
@@ -51,7 +53,14 @@ class Button
 	isClicked(isMouseDown, mouseX, mouseY, canvasWidth, canvasHeight)
 	{
 		if (this.isTouchingMouse(mouseX, mouseY, canvasWidth, canvasHeight) && isMouseDown)
+		{
+			this.cCurrent = this.cActive;
 			return true;
-		else return false;
+		}
+		else 
+		{
+			this.cCurrent = this.cFill;
+			return false;
+		}
 	}
 }

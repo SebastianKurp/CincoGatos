@@ -1,6 +1,6 @@
 var c = document.getElementById("myCanvas");
 var ctx = c.getContext("2d");
-var buttons, bars, mouseX = 0, mouseY = 0, keyPresses, mouseDown = false;
+var buttons, bars, mouseX = 0, mouseY = 0, keyPresses, mouseDown = false, clickBuffer = "None";
 c.style.backgroundColor = "#FFFFFF";
 
 function setup()
@@ -33,16 +33,16 @@ function setup()
 function initialize()
 {
 	buttons = 	[
-					new Button(0.3, 0.3, 0.07, 0.085, "rgb(100,100,100)", "rgb(0,0,0)", 6),
-					new Button(0.5, 0.3, 0.07, 0.085, "rgb(100,100,100)", "rgb(0,0,0)", 6),
-					new Button(0.7, 0.3, 0.07, 0.085, "rgb(100,100,100)", "rgb(0,0,0)", 6),
-					new Button(0.2, 0.5, 0.07, 0.085, "rgb(255,50,50)", "rgb(0,0,0)", 6, image = "animals.png", link = "/animals"),
-					new Button(0.4, 0.5, 0.07, 0.085, "rgb(0,150,255)", "rgb(0,0,0)", 6),
-					new Button(0.6, 0.5, 0.07, 0.085, "rgb(150,35,255)", "rgb(0,0,0)", 6),
-					new Button(0.8, 0.5, 0.07, 0.085, "rgb(255,150,0)", "rgb(0,0,0)", 6),
-					new Button(0.3, 0.7, 0.07, 0.085, "rgb(0,206,209)", "rgb(0,0,0)", 6),
-					new Button(0.5, 0.7, 0.07, 0.085, "rgb(255,100,125)", "rgb(0,0,0)", 6),
-					new Button(0.7, 0.7, 0.07, 0.085, "rgb(255,200,0)", "rgb(0,0,0)", 6),
+					new Button(0.3, 0.3, 0.07, 0.085, "rgb(100,100,100)", "rgb(150,150,150)", "rgb(0,0,0)", 6, "None", "/placeholder"),
+					new Button(0.5, 0.3, 0.07, 0.085, "rgb(100,100,100)", "rgb(150,150,150)", "rgb(0,0,0)", 6, "None", "/placeholder"),
+					new Button(0.7, 0.3, 0.07, 0.085, "rgb(100,100,100)", "rgb(150,150,150)", "rgb(0,0,0)", 6, "None", "/placeholder"),
+					new Button(0.2, 0.5, 0.07, 0.085, "rgb(255,50,50)", "rgb(255,100,100)", "rgb(0,0,0)", 6, "animals.png", "/animals"),
+					new Button(0.4, 0.5, 0.07, 0.085, "rgb(0,150,255)", "rgb(50,200,255)", "rgb(0,0,0)", 6, "None", "/household"),
+					new Button(0.6, 0.5, 0.07, 0.085, "rgb(150,35,255)", "rgb(200,85,255)", "rgb(0,0,0)", 6, "None", "/family"),
+					new Button(0.8, 0.5, 0.07, 0.085, "rgb(255,150,0)", "rgb(255,200,50)", "rgb(0,0,0)", 6, "None", "/school"),
+					new Button(0.3, 0.7, 0.07, 0.085, "rgb(0,206,209)", "rgb(50,255,255)", "rgb(0,0,0)", 6, "None", "/placeholder"),
+					new Button(0.5, 0.7, 0.07, 0.085, "rgb(255,100,125)", "rgb(255,150,175)", "rgb(0,0,0)", 6, "None", "/placeholder"),
+					new Button(0.7, 0.7, 0.07, 0.085, "rgb(255,200,0)", "rgb(255,255,50)", "rgb(0,0,0)", 6, "None", "/placeholder"),
 				];
 	bars =	[
 				new Bar(0.05, 0.05, 0.65, 0.1, "rgb(100,100,100)", "rgb(50,50,50)", "rgb(0,0,0)", 6),
@@ -68,7 +68,12 @@ function move()
 		buttons[i].size(mouseX - 10, mouseY - 10, c.width, c.height);
 		if (buttons[i].isClicked(mouseDown, mouseX - 10, mouseY - 10, c.width, c.height))
 		{
-			console.log(buttons[i].link);
+			clickBuffer = buttons[i].link;
+		}
+		if (!mouseDown && clickBuffer != "None")
+		{
+			console.log(clickBuffer);
+			clickBuffer = "None"
 		}
 		buttons[i].draw(ctx, c.width, c.height);
 	}
