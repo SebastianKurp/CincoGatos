@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import Button from './Button'
 import Bar from './Bar'
-import { Link } from 'react-router-dom'
+import { Link, Redirect, withRouter } from 'react-router-dom'
 
 class ShowSets extends Component {
 
@@ -90,7 +90,9 @@ class ShowSets extends Component {
 				if (!mouseDown && clickBuffer !== "None")
 				{
 					console.log(clickBuffer);
-					clickBuffer = "None"
+          var hardcodingisbad = "http://localhost:3000";    
+          window.location.href= hardcodingisbad+clickBuffer;
+          clickBuffer = "None";
 				}
 				buttons[j].draw(ctx, c.width, c.height);
 			}
