@@ -75,13 +75,13 @@ class ShowSets extends Component {
 	
 			ctx.beginPath();
 			ctx.arc(c.width/2, c.height/2, Math.min(c.width, c.height)/2, 0, 2*Math.PI);
-			ctx.fillStyle = "rgb(200,255,255)"
+			ctx.fillStyle = "rgb(225,225,225)"
 			ctx.fill();
 			
 			for (var j = 0; j < buttons.length; j++)
 			{
-				buttons[j].size(mouseX, mouseY - 50, c.width, c.height);
-				if (buttons[j].isClicked(mouseDown, mouseX, mouseY - 50, c.width, c.height))
+				buttons[j].size(mouseX, mouseY - 75, c.width, c.height);
+				if (buttons[j].isClicked(mouseDown, mouseX, mouseY - 75, c.width, c.height))
 				{
 					clickBuffer = buttons[j].link;
 				}
@@ -97,7 +97,7 @@ class ShowSets extends Component {
 			}
 			for (var i = 0; i < bars.length; i++)
 			{
-				bars[i].color(mouseX, mouseY-50, c.width, c.height)
+				bars[i].color(mouseX, mouseY - 75, c.width, c.height)
 				bars[i].draw(ctx, c.width, c.height);
 			}
     }
