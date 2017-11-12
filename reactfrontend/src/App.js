@@ -7,7 +7,7 @@ import ShowSets from './components/ShowSets'
 import Animals from './components/Animals'
 import NotFound from './components/NotFound'
 import Home from './components/Home'
-import { fbAuth } from './firebase'
+import firebase, { fbAuth } from './firebase'
 
 
 //... notation means you take the whole of the props
@@ -18,7 +18,7 @@ function PrivateRoute ({component: Component, authenticated, ...rest}) {
       {...rest}
       render={(props) => authenticated === true
         ? <Component {...props} />
-        : <Redirect to={{pathname: '/login', state: {from: props.location}}} />}
+        : <Redirect to={{pathname: '/', state: {from: props.location}}} />}
     />
   )
 }
@@ -29,7 +29,7 @@ function PublicRoute ({component: Component, authenticated, ...rest}) {
       {...rest}
       render={(props) => authenticated === false
         ? <Component {...props} />
-      : <Redirect to='/login' />}
+      : <Redirect to='/' />}
     />
   )
 }
@@ -38,25 +38,39 @@ export default class App extends Component {
   state = {
     authenticated: false,
     loading: true,
+    nativeLang: null,
+    learningLang: null
   }
 //default assumption of not logged in
 //loading necessary because of React pages having that 'flashing' effect
 
 //if they are authenticated set state to true, else, false. If component did mount then loading == false
+
   componentDidMount () {
     this.removeListener = fbAuth().onAuthStateChanged((user) => {
       if (user) {
+        var uId = user.uid;
+        firebase.database().ref(`users/`+uId).once('value').then((snapshot) => {
+        var nativeLang = snapshot.val().nativeLang;
+        var learningLang = snapshot.val().learningLang;
         this.setState({
           authenticated: true,
           loading: false,
+          nativeLang: nativeLang,
+          learningLang: learningLang
         })
+      })
+        
       } else {
         this.setState({
           authenticated: false,
-          loading: false
+          loading: false,
+          nativeLang: null,
+          learningLang: null
         })
       }
     })
+    
   }
   //return to defaults
   componentWillUnmount () {
