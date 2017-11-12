@@ -7,7 +7,7 @@ import ShowSets from './components/ShowSets'
 import Animals from './components/Animals'
 import NotFound from './components/NotFound'
 import Home from './components/Home'
-import { fbAuth } from './firebase'
+import firebase, { fbAuth } from './firebase'
 
 
 //... notation means you take the whole of the props
@@ -18,7 +18,7 @@ function PrivateRoute ({component: Component, authenticated, ...rest}) {
       {...rest}
       render={(props) => authenticated === true
         ? <Component {...props} />
-        : <Redirect to={{pathname: '/login', state: {from: props.location}}} />}
+        : <Redirect to={{pathname: '/', state: {from: props.location}}} />}
     />
   )
 }
@@ -29,7 +29,7 @@ function PublicRoute ({component: Component, authenticated, ...rest}) {
       {...rest}
       render={(props) => authenticated === false
         ? <Component {...props} />
-      : <Redirect to='/login' />}
+      : <Redirect to='/' />}
     />
   )
 }
@@ -57,6 +57,7 @@ export default class App extends Component {
         })
       }
     })
+    
   }
   //return to defaults
   componentWillUnmount () {
