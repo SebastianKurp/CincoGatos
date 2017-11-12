@@ -38,22 +38,35 @@ export default class App extends Component {
   state = {
     authenticated: false,
     loading: true,
+    nativeLang: null,
+    learningLang: null
   }
 //default assumption of not logged in
 //loading necessary because of React pages having that 'flashing' effect
 
 //if they are authenticated set state to true, else, false. If component did mount then loading == false
+
   componentDidMount () {
     this.removeListener = fbAuth().onAuthStateChanged((user) => {
       if (user) {
+        var uId = user.uid;
+        firebase.database().ref(`users/`+uId).once('value').then((snapshot) => {
+        var nativeLang = snapshot.val().nativeLang;
+        var learningLang = snapshot.val().learningLang;
         this.setState({
           authenticated: true,
           loading: false,
+          nativeLang: nativeLang,
+          learningLang: learningLang
         })
+      })
+        
       } else {
         this.setState({
           authenticated: false,
-          loading: false
+          loading: false,
+          nativeLang: null,
+          learningLang: null
         })
       }
     })
