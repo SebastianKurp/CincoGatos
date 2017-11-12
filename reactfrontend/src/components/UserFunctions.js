@@ -20,8 +20,8 @@ export function resetPassword (email) {
 export function saveUser (user) {
   var userId = user.uid;
   var username = "a username from the signup form";
-  var nativeLang = "english (from form";
-  var learningLang = "japanese (from form)";
+  var nativeLang = "en";
+  var learningLang = "jp";
   addUserDetails(userId, username, nativeLang, learningLang);
   return ref.child(`users/${user.uid}/info`)
     .set({
@@ -38,4 +38,18 @@ export function addUserDetails(userId, username, nativeLang, learningLang){
     nativeLang: nativeLang,
     learningLang: learningLang
   });
+  firebase.database().ref('premadesets/').once('value').then((snapshot) => {
+  //get the generic flashcard set and add to user profile
+  var flashsets = snapshot.val();
+  firebase.database().ref(`users/`+userId+`/premadesets`).set({
+    premadesets: flashsets
+  })
+})
+  firebase.database().ref('alphabets/').once('value').then((snapshot) => {
+  //get the generic alphabet set and add to user profile
+  var alphabets = snapshot.val();
+  firebase.database().ref(`users/`+userId+`/alphabets`).set({
+    alphabets: alphabets
+    })
+  })
 }
