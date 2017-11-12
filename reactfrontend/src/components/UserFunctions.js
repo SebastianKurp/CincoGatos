@@ -29,6 +29,7 @@ export function saveUser (user) {
   var username = name;
   var nativeLang = native;
   var learningLang = learning;
+
   addUserDetails(userId, username, nativeLang, learningLang);
   return ref.child(`users/${user.uid}/info`)
     .set({
@@ -45,4 +46,18 @@ export function addUserDetails(userId, username, nativeLang, learningLang){
     nativeLang: nativeLang,
     learningLang: learningLang
   });
+  firebase.database().ref('premadesets/').once('value').then((snapshot) => {
+  //get the generic flashcard set and add to user profile
+  var flashsets = snapshot.val();
+  firebase.database().ref(`users/`+userId+`/premadesets`).set({
+    premadesets: flashsets
+  })
+})
+  firebase.database().ref('alphabets/').once('value').then((snapshot) => {
+  //get the generic alphabet set and add to user profile
+  var alphabets = snapshot.val();
+  firebase.database().ref(`users/`+userId+`/alphabets`).set({
+    alphabets: alphabets
+    })
+  })
 }

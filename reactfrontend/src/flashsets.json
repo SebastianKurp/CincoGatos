@@ -1,0 +1,46 @@
+{
+    "premadesets": {
+        "animals": {
+            "en": ["cat", "tiger", "cheetah", "lion", "dog", "mouse", "horse", "camel", "giraffe", "lizard", "bear", "duck", "frog", "rabbit", "deer", "cow", "pig", "goose", "pigeon", "bird"],
+            "sp": ["gato", "tigre", "guepardo", "león", "perro", "ratón", "caballo", "camello", "jirafa", "lagarto", "oso", "pato", "rana", "conejo", "venado", "vaca", "cerdo", "ganso", "paloma", "pájaro"],
+            "pl": ["kot", "tygrys", "gepard", "lew", "pies", "mysz", "koń", "wielbłąd", "żyrafa", "jaszczurka", "niedźwiedź", "kaczka", "żaba", "królik", "jeleń", "krowa", "świnia", "gęś", "gołąb", "ptak"],
+            "ar": ["قِطَّة", "نِمر", "فَهد", "أَسَد", "كَلب", "فَأر", "حِصان", "جَمَل", "زَرافَة", "سِحْلِيّة", "دُبّ", "بَط", "ضِفدَع", "أرْنَب", "غَزال", "بَقَرة", "خِنْزير", "إوَزّة", "حَمامة", "طائر"],
+            "jp": ["ねこ","とら","チーター","ライオン","いぬ","ネズミ","うま","らくだ","キリン","くま","かも","かえる","うさぎ","しか","ぎゅう","ぶた","ガチョウ","はと","とり"]
+        },
+        "foods": {
+          "en": ["bread", "apple", "grapes", "rice", "ice cream", "candy", "coffee", "carrot", "mushroom", "cheese", "wine", "beer", "walnut", "almond", "plum", "pear", "strawberry", "banana", "pasta", "tomato"],
+          "sp": ["pan", "manzana", "uvas", "arroz", "helado", "caramelo", "café", "zanahoria", "champiñón", "queso", "vino", "cerveza", "nuez", "almendra", "ciruela", "pera", "fresa", "plátano", "pasta", "tomate"],
+          "pl": ["chleb", "jabłko", "winogrona", "ryż", "lody", "słodycze", "kawa", "marchewka", "pieczarka", "ser", "wino", "piwo", "orzech", "migdał", "śliwka", "gruszka", "truskawka", "banan", "makaron", "pomidor"],
+          "ar": ["خُبْز", "تُفّاحة", "عِنَب", "أُرْز", "مُثَلَّجات", "حَلْوى", "قَهْوة", "جَزَر", "فُطْر", "جُبْن", "نَبيذ", "بيرة", "جَوْز", "لَوْز", "خَوْخ", "أجاص", "فَراولة", "مَوز", "مَعْكَرونة", "طَماطِم"],
+          "jp": ["パン","りんご","ブドウ","こめ","アイスクリーム","おかし","コーヒー","にんじん","きのこ","チーズ","ワイン","ビール","くるみ","アーモンド","うめ","なし","いちご","バナナ","パスタ","トマト"]
+        },
+        "household": {
+          "en": ["plate", "cup", "knife", "spoon", "fork", "chopsticks", "oven", "bowl", "table", "dresser", "chair", "book", "lamp", "pillow", "bed", "bathroom", "clock", "television", "computer", "rug"],
+          "sp": ["placa", "taza", "cuchillo", "cuchara", "tenedor", "palillos", "horno", "tazón", "tabla", "aparador", "silla", "libro", "lámpara", "almohada", "cama", "baño", "reloj", "televisión", "computadora", "alfombra"],
+          "pl": ["płyta", "puchar", "nóż", "łyżka", "widelec", "pałeczki", "piekarnik", "miski", "tabela", "komoda", "krzesło", "książki", "lampa", "poduszka", "łóżko", "łazienka", "zegar", "telewizja", "komputer", "dywan"],
+          "ar": ["صَحْن", "كَأس", "سِكّين", "مِلْعَقة", "شَوْكة", "عَصا الطَعام", "فُرْن", "وِعاء", "طاوِلة", "خِزانة", "كُرْسي", "كِتاب", "مِصْباح", "وِسادة", "سَرِير", "حَمَّام", "ساعة", "تِلفاز", "حاسوب", "سَجّادة"],
+          "jp": ["さら","カップ","ナイフ","フォーク","はし","オーブン","わん","テーブル","ドレッサー","いす","ほん","ランプ","まくら","ベッド","トイレ","とけい","テレビ","パソコン","ラグ"]
+        },
+        "school": {
+          "en": ["notebook", "calculator", "pencil", "pen", "ruler", "backpack", "laptop", "uniform", "textbook", "desk", "eraser", "mathematics", "language", "science", "physics", "history", "paper", "teacher", "student"],
+          "sp": ["cuaderno", "calculadora", "lápiz", "pluma", "regla", "mochila", "portátil", "uniforme", "libro de texto", "escritorio", "goma de borrar", "matemáticas", "lenguaje", "ciencia", "física", "historia", "papel", "profesor", "estudiante"],
+          "pl": ["notatnik", "kalkulator", "ołówek", "pióro", "linijka", "plecak", "laptop", "jednolity", "podręcznik", "biurko", "gumka", "matematyka", "język", "nauka", "fizyka", "historia", "papier", "nauczyciel", "uczeń"],
+          "ar": ["دَفْتَر", "آلَة حاسِبة", "قَلَم رَصاص", "قَلَم", "مِسْطَرة", "حَقيْبة", "حاسوب نَقّال", "لِباس رَسْميّ", "كِتاب تَعْليمي", "مَكْتَب", "مِمحاة", "رِياضِيّات", "لُغة", "عُلوم", "فيزياء", "تاريخ", "وَرَق", "مُعَلِّم", "طالِب"],
+          "jp": ["ノート","でんたく","えんぴつ","ルーラー","バックパック","ノートパソコン","とういつ","きょうかしょ","つくえ","けしゴム","すうがく","げんご","かがく","ぶつり","れきし","かみ","せんせい","せいと"]
+        },
+        "colors":{
+          "en": ["green", "yellow", "blue", "orange", "black", "white", "gray", "red", "purple", "brown", "dark", "light"],
+          "sp": ["verde", "amarillo", "azul", "naranja", "negro", "blanco", "gris", "rojo", "púrpura", "marrón", "oscuro", "claro"],
+          "pl": ["zielony", "żółty", "niebieski", "pomarańczowy", "czarny", "biały", "szary", "czerwony", "purpurowy", "brązowy", "ciemny", "jasny"],
+          "ar": ["أَخْضَر", "أصفَر", "أَزْرَق", "بُرْتُقالي", "أسْوَد", "أبْيَض", "رَمادي", "أحْمَر", "بَنَفْسَجي", "بُنّي", "غامِق", "فاتِح"],
+          "jp": ["みどり","きいいろ","あおいろ","オレンジいろ","くろいろ","しろいろ","はいいろ","あかいろ","むらさき","ちゃいろ","あんしょく","めいしょく"]
+        },
+        "clothing":{
+          "en": ["shirt", "dress", "pants", "skirt", "shoes", "hat", "coat", "gloves", "socks", "zipper", "button"],
+          "sp": ["camisa", "vestido", "pantalones", "falda", "zapatos", "sombrero", "abrigo", "guantes", "calcetines", "cremallera", "botón"],
+          "pl": ["koszula", "sukienka", "spodnie", "spódnica", "buty", "czapka", "płaszcz", "rękawiczki", "skarpetki", "suwak", "guzik"],
+          "ar": ["قَميص", "ثَوب", "بِنْطال", "تَنّورة", "حِذاء", "قُبَّعة", "مِعْطَف", "قُفَّاز", "جَوْرَب", "سَحَّاب", "زُرّ"],
+          "jp": ["シャツ","ドレス","スカート","くつ","ぼうし","コート","てぶくろ","くつした","ジッパー","ボトルトン"]
+        }
+    }
+}
