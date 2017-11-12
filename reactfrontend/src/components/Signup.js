@@ -7,11 +7,13 @@ function setErrorMsg(error) {
   }
 }
 
+
 class Signup extends Component {
   state = { registerError: null }
+  
   handleSubmit = (e) => {
     e.preventDefault()
-    auth(this.email.value, this.pw.value)
+    auth(this.email.value, this.pw.value, this.native.value, this.learning.value, this.username.value)
       .catch(e => this.setState(setErrorMsg(e)))
   }
   render () {
@@ -20,12 +22,37 @@ class Signup extends Component {
         <h1>Register</h1>
         <form onSubmit={this.handleSubmit}>
           <div className="form-group">
+            <label>Username</label>
+            <input className="form-control" ref={(username) => this.username = username} placeholder="Username"/>
+          </div>
+          <div className="form-group">
             <label>Email</label>
             <input className="form-control" ref={(email) => this.email = email} placeholder="Email"/>
           </div>
           <div className="form-group">
             <label>Password</label>
             <input type="password" className="form-control" placeholder="Password" ref={(pw) => this.pw = pw} />
+          </div>
+          <div className="form-group">
+            <label>
+              What is your native language:
+              <select ref={(native) => this.native = native}>
+                <option value="null"></option>
+                <option value="english">English</option>
+              </select>
+            </label>
+          </div>
+          <div className="form-group">
+            <label>
+              Pick the Language you want to learn:
+              <select ref={(learning) => this.learning = learning}>
+                <option value="null"></option>
+                <option value="spanish">Spanish</option>
+                <option value="polish">Polish</option>
+                <option value="arabic">Arabic</option>
+                <option value="japanese">Japanese</option>
+              </select>
+            </label>
           </div>
           {
             this.state.registerError &&

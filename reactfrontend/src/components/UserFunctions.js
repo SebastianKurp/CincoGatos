@@ -1,6 +1,13 @@
 import firebase, { ref, fbAuth } from '../firebase'
 
-export function auth (email, pw) {
+var native;
+var learning;
+var name;
+
+export function auth (email, pw, nL,lL, useName) {
+  native = nL;
+  learning = lL;
+  name = useName;
   return fbAuth().createUserWithEmailAndPassword(email, pw)
     .then(saveUser);
 }
@@ -19,9 +26,9 @@ export function resetPassword (email) {
 
 export function saveUser (user) {
   var userId = user.uid;
-  var username = "a username from the signup form";
-  var nativeLang = "english (from form";
-  var learningLang = "japanese (from form)";
+  var username = name;
+  var nativeLang = native;
+  var learningLang = learning;
   addUserDetails(userId, username, nativeLang, learningLang);
   return ref.child(`users/${user.uid}/info`)
     .set({
