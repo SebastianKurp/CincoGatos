@@ -60,7 +60,6 @@ export default class App extends Component {
           learningLang: learningLang
         })
       })
-        
       } else {
         this.setState({
           authenticated: false,
@@ -70,8 +69,9 @@ export default class App extends Component {
         })
       }
     })
-    
+    console.log(this.props.lang);
   }
+  
   //return to defaults
   componentWillUnmount () {
     this.removeListener()

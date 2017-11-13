@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import Card from './Card'
 import Button from './Button'
 import Bar from './Bar'
-import { Link, Redirect, withRouter } from 'react-router-dom'
+import firebase, { fbAuth } from '../firebase'
 
 class Animals extends Component {
 
@@ -66,7 +66,7 @@ class Animals extends Component {
         if (!card.isFlipping)
         {
           startFlipFrame = frame;
-          if (otherColor[0] == 200 && otherColor[1] == 0 && otherColor[2] == 0) 
+          if (otherColor[0] === 200 && otherColor[1] === 0 && otherColor[2] === 0) 
           {
             otherColor = [255,255,255];
             card.text = "QUESTION";
