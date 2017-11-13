@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import Card from './Card'
 import CircleButton from './CircleButton'
 import Bar from './Bar'
-import { Link, Redirect, withRouter } from 'react-router-dom'
+import firebase, { fbAuth } from '../firebase'
 
 class Animals extends Component {
 

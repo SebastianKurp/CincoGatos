@@ -61,3 +61,24 @@ export function addUserDetails(userId, username, nativeLang, learningLang){
     })
   })
 }
+
+export function getUserFlashcards(userid){
+  console.log(userid);
+  return new Promise(
+    function(resolve, reject)
+    {
+    firebase.database().ref(`users/`+userid).once('value').then((snapshot) => {
+		var nativeLang = snapshot.val().nativeLang;
+    var learningLang = snapshot.val().learningLang;
+    var username = snapshot.val().username;
+    var langArray = [nativeLang, learningLang, username];
+    if(langArray != null){
+      resolve(langArray)
+    }
+    else{
+      reject(langArray);
+    }
+  })
+
+  })
+}

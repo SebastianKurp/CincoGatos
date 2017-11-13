@@ -2,11 +2,39 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import CircleButton from './CircleButton'
 import Bar from './Bar'
-import { Link, Redirect, withRouter } from 'react-router-dom'
+import firebase, { fbAuth } from '../firebase'
+import { getUserFlashcards } from './UserFunctions'
 
 class ShowSets extends Component {
 
+state = {
+    authenticated: false,
+    loading: true,
+    nativeLang: null,
+    learningLang: null
+  }
+
   componentDidMount(){
+
+	fbAuth().onAuthStateChanged(function(user) {
+			if (user) {
+				//use "then"!
+			getUserFlashcards(user.uid)
+			.then(function (value){
+			var langArray = value;
+			console.log(langArray);
+			})
+		.catch(function(err){
+			console.log(err);
+		})
+			}
+			else{
+				console.log("No valid user");
+				alert("You are not logged in!");
+			}
+	})
+
+
     let c = ReactDOM.findDOMNode(this.refs.myCanvas);
     let ctx = c.getContext('2d');
     var buttons, bars, mouseX = 0, mouseY = 0, keyPresses, mouseDown = false, clickBuffer = "None";
