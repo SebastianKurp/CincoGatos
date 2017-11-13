@@ -7,22 +7,31 @@ import { getUserFlashcards } from './UserFunctions'
 
 class ShowSets extends Component {
 
-state = {
+constructor(props){
+	super(props);
+	this.state = {
     authenticated: false,
     loading: true,
     nativeLang: null,
-    learningLang: null
-  }
+		learningLang: null,
+		username: null
+	}
+}
 
-  componentDidMount(){
-
+setStateAsync(){
+	var innerThis = this;
 	fbAuth().onAuthStateChanged(function(user) {
 			if (user) {
-				//use "then"!
 			getUserFlashcards(user.uid)
 			.then(function (value){
-			var langArray = value;
-			console.log(langArray);
+			console.log(value);
+			innerThis.setState({
+				authenticated: true,
+				loading: false,
+				nativeLang: value[0],
+				learningLang: value[1],
+				username: value[2]
+				})
 			})
 		.catch(function(err){
 			console.log(err);
@@ -33,8 +42,14 @@ state = {
 				alert("You are not logged in!");
 			}
 	})
+}
 
 
+ async componentDidMount(){
+		var innerThis = this;
+		await innerThis.setStateAsync();
+
+		console.log(innerThis.state.username);
     let c = ReactDOM.findDOMNode(this.refs.myCanvas);
     let ctx = c.getContext('2d');
     var buttons, bars, mouseX = 0, mouseY = 0, keyPresses, mouseDown = false, clickBuffer = "None";
@@ -76,7 +91,7 @@ state = {
 				new CircleButton(0.3, 0.3, 0.08, 0.1, "rgb(100,100,100)", "rgb(150,150,150)", "rgb(0,0,0)", 6, "None", "/alphabet", "alphabet"),
 				new CircleButton(0.5, 0.3, 0.08, 0.1, "rgb(100,100,100)", "rgb(150,150,150)", "rgb(0,0,0)", 6, "None", "/transliteration", "transliteration"),
 				new CircleButton(0.7, 0.3, 0.08, 0.1, "rgb(100,100,100)", "rgb(150,150,150)", "rgb(0,0,0)", 6, "None", "/reading", "reading"),
-				new CircleButton(0.2, 0.5, 0.08, 0.1, "rgb(255,50,50)", "rgb(255,100,100)", "rgb(0,0,0)", 6, "animals.png", "/animals", "animals"),
+				new CircleButton(0.2, 0.5, 0.08, 0.1, "rgb(255,50,50)", "rgb(255,100,100)", "rgb(0,0,0)", 6, "None", "/animals", "animals"),
 				new CircleButton(0.4, 0.5, 0.08, 0.1, "rgb(0,150,255)", "rgb(50,200,255)", "rgb(0,0,0)", 6, "None", "/foods", "foods"),
 				new CircleButton(0.6, 0.5, 0.08, 0.1, "rgb(150,35,255)", "rgb(200,85,255)", "rgb(0,0,0)", 6, "None", "/household", "household"),
 				new CircleButton(0.8, 0.5, 0.08, 0.1, "rgb(255,150,0)", "rgb(255,200,50)", "rgb(0,0,0)", 6, "None", "/school", "school"),
@@ -134,8 +149,7 @@ state = {
 			
       drawButtons();
 			drawBars();
-
-      var username = "abdulzakkar"
+			var username = innerThis.state.username;
       
       ctx.fillStyle = "rgb(0,0,0)";
       ctx.textAlign = "left";
