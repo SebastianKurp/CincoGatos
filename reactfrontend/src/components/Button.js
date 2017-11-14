@@ -2,7 +2,7 @@ import { Component } from 'react'
 
 class Button extends Component
 {
-	constructor(x, y, cFill, cActive, cStroke, wStroke, link = "None", text) {
+	constructor(x, y, cFill, cActive, cStroke, wStroke, link = "None", text, cText) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -13,6 +13,7 @@ class Button extends Component
 		this.wStroke = wStroke;
 		this.link = link;
 		this.text = text;
+		this.cText = cText;
 	}
 
 	draw(ctx, canvasWidth, canvasHeight)
