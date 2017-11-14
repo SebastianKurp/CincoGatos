@@ -18,7 +18,7 @@ constructor(props){
 	}
 }
 
-async setStateAsync(){
+async getUserFacts(){
 	var user = firebase.auth().currentUser;
 
 	let langArray = await getUserDetails(user.uid);
@@ -30,12 +30,12 @@ async setStateAsync(){
 		var userArray = [];
 
 		//await result of async function getting user's details
-	await	innerThis.setStateAsync().then(function(result){
+	await	innerThis.getUserFacts().then(function(result){
 			userArray = result;
 		});
 
 
-		console.log(userArray);
+	//	console.log(userArray);
 		var nativeLang = userArray[0];
 		var learningLang = userArray[1];
 		var username = userArray[2];

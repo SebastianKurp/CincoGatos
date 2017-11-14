@@ -4,7 +4,7 @@ import Card from './Card'
 import CircleButton from './CircleButton'
 import Bar from './Bar'
 import firebase, { fbAuth } from '../firebase'
-import { getFlashcards } from './UserFunctions'
+import { getFlashcards, getUserDetails } from './UserFunctions'
 
 class Animals extends Component {
 
@@ -14,13 +14,26 @@ class Animals extends Component {
 	return flashArray;
 }
 
+async getUserFacts(){
+	var user = firebase.auth().currentUser;
+
+	let langArray = await getUserDetails(user.uid);
+	return langArray;
+}
+
  async componentDidMount(){
 	 var innerThis = this;
 	var flash = [];
+	var userArray = [];
+
+		//await result of async function getting user's details
+	await	innerThis.getUserFacts().then(function(result){
+			userArray = result;
+		});	
   await innerThis.getCards().then(function(result){
 		flash = result;
 	})
-	
+	console.log(userArray);
 	console.log(flash);
 
 
