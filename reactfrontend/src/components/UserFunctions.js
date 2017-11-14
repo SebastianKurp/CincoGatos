@@ -62,7 +62,7 @@ export function addUserDetails(userId, username, nativeLang, learningLang){
   })
 }
 
-export function getUserFlashcards(userid){
+export function getUserDetails(userid){
   console.log(userid);
   return new Promise(
     function(resolve, reject)
@@ -72,6 +72,26 @@ export function getUserFlashcards(userid){
     var learningLang = snapshot.val().learningLang;
     var username = snapshot.val().username;
     var langArray = [nativeLang, learningLang, username];
+    if(langArray != null){
+      resolve(langArray)
+    }
+    else{
+      reject(langArray);
+    }
+  })
+
+  })
+}
+
+export function getFlashcards(userid){
+  return new Promise(
+    function(resolve, reject)
+    {
+    firebase.database().ref(`users/`+userid+`/premadesets/premadesets`).once('value').then((snapshot) => {
+		var animals = snapshot.val().animals;
+    var clothing = snapshot.val().clothing;
+    var colors = snapshot.val().colors;
+    var langArray = [animals, clothing, colors];
     if(langArray != null){
       resolve(langArray)
     }
