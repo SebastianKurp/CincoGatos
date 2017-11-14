@@ -11,7 +11,8 @@ class Animals extends Component {
     let c = ReactDOM.findDOMNode(this.refs.myCanvas);
     let ctx = c.getContext("2d");
     var frame = 0, card, otherColor = [255,255,255], startFlipFrame;
-    var buttons, bars, mouseX = 0, mouseY = 0, keyPresses, mouseDown = false, clickBuffer = "None";
+    var buttons, bars, mouseX = 0, mouseY = 0, keyPresses, mouseDown = false, clickBuffer = "None", 
+      clickedNext = false, answer = 0, complete = false, currentQuestion, currentAnswer, options, color;
     c.style.backgroundColor = "#FFFFFF";
 
     function setup()
@@ -43,48 +44,55 @@ class Animals extends Component {
 
     function initialize()
     {
-      var color = [255,255,255];
-      card = new Card(0.5, 0.3, 0.3, 0.2, 50, color, "Question?");
-      //constructor(x, y, rx, ry, cFill, cActive, cStroke, wStroke, link = "None", text = "")
+      currentQuestion = "cow";
+      currentAnswer = "baqara";
+      options = ["kharoof", "baqara", "fa'r", "qitta"];
+      color = [255,255,255];
+      card = new Card(0.5, 0.3, 0.3, 0.2, 50, color, currentQuestion);
+      //constructor(x, y, rx, ry, cFill, cActive, cStroke, wStroke, link = "None", text = "", cText)
       bars =  [
-            new Bar(0.5, 0.65, 0.3, 0.0375, "rgb(255,150,150)", "rgb(255,100,100)", "rgb(0,0,0)", 6, "None", "Option 1"),
-            new Bar(0.5, 0.75, 0.3, 0.0375, "rgb(255,150,150)", "rgb(255,100,100)", "rgb(0,0,0)", 6, "None", "Option 2"),
-            new Bar(0.5, 0.85, 0.3, 0.0375, "rgb(255,150,150)", "rgb(255,100,100)", "rgb(0,0,0)", 6, "None", "Option 3"),
-            new Bar(0.5, 0.95, 0.3, 0.0375, "rgb(255,150,150)", "rgb(255,100,100)", "rgb(0,0,0)", 6, "None", "Option 4")
+            new Bar(0.5, 0.65, 0.3, 0.0375, "rgb(255,0,0)", "rgb(150,0,0)", "rgb(0,0,0)", 6, "./option1", "Option 1", "rgb(255,255,255)"),
+            new Bar(0.5, 0.75, 0.3, 0.0375, "rgb(255,0,0)", "rgb(150,0,0)", "rgb(0,0,0)", 6, "./option2", "Option 2", "rgb(255,255,255)"),
+            new Bar(0.5, 0.85, 0.3, 0.0375, "rgb(255,0,0)", "rgb(150,0,0)", "rgb(0,0,0)", 6, "./option3", "Option 3", "rgb(255,255,255)"),
+            new Bar(0.5, 0.95, 0.3, 0.0375, "rgb(255,0,0)", "rgb(150,0,0)", "rgb(0,0,0)", 6, "./option4", "Option 4", "rgb(255,255,255)")
       ]
-      //constructor(x, y, rInactive, rActive, cFill, cActive, cStroke, wStroke, image = "None", link = "None", text = "")
+      //constructor(x, y, rInactive, rActive, cFill, cActive, cStroke, wStroke, image = "None", link = "None", text = "", cText)
       buttons = [
-        new CircleButton(0.9, 0.9, 0.07, 0.09, "rgb(100,100,100)", "rgb(150,150,150)", "rgb(0,0,0)", 6, "None", "None", "Next")
+        new CircleButton(0.9, 0.9, 0.07, 0.09, "rgb(100,100,100)", "rgb(150,150,150)", "rgb(0,0,0)", 6, "None", "./next", "Next", "rgb(0,0,0)")
       ]
     }
 
-    function drawButtons(buttons)
+    function drawButtons()
     {
-      for (var j = 0; j < buttons.length; j++)
+      for (var i = 0; i < buttons.length; i++)
       {
-        buttons[j].size(mouseX, mouseY - 75, c.width, c.height);
-        if (buttons[j].isClicked(mouseDown, mouseX, mouseY - 75, c.width, c.height))
+        buttons[i].size(mouseX, mouseY - 75, c.width, c.height);
+        if (buttons[i].isClicked(mouseDown, mouseX, mouseY - 75, c.width, c.height)) clickBuffer = buttons[i].link;
+        if (!mouseDown && clickBuffer === "./next" && complete === true)
         {
-          clickBuffer = buttons[j].link;
-        }
-        if (!mouseDown && clickBuffer !== "None")
-        {
-          console.log(clickBuffer);
-          var hardcodingisbad = "http://localhost:3000";    
-          window.location.href= hardcodingisbad+clickBuffer;
-
+          clickedNext = true;
           clickBuffer = "None";
         }
-        buttons[j].draw(ctx, c.width, c.height);
+        buttons[i].draw(ctx, c.width, c.height);
       }
     }
 
-    function drawBars(bars)
+    function drawBars(options)
     {
       for (var i = 0; i < bars.length; i++)
       {
+        bars[i].text = options[i];
         bars[i].isTouchingMouse(mouseX, mouseY - 75, c.width, c.height)
         bars[i].draw(ctx, c.width, c.height);
+        if (bars[i].isClicked(mouseDown, mouseX, mouseY - 75, c.width, c.height)) clickBuffer = bars[i].link;
+        if (!mouseDown && !complete)
+        {
+          if (clickBuffer === "./option1") answer = 1;
+          else if (clickBuffer === "./option2") answer = 2;
+          else if (clickBuffer === "./option3") answer = 3;
+          else if (clickBuffer === "./option4") answer = 4;
+          clickBuffer = "None";
+        }
       }
     }
 
@@ -94,28 +102,42 @@ class Animals extends Component {
       ctx.canvas.height = window.innerHeight - 100;
       ctx.clearRect(0, 0, c.width, c.height);
 
-      drawButtons(buttons);
-      drawBars(bars);
+      ctx.beginPath();
+      ctx.arc(c.width/2, c.height/2, Math.min(c.width, c.height)/2, 0, 2*Math.PI);
+      ctx.fillStyle = "rgb(255,225,225)"
+      ctx.fill();
 
-      if (keyPresses[32])
+      drawButtons();
+      drawBars(options);
+
+      if (answer !== 0)
       {
+        complete = true;
         if (!card.isFlipping)
         {
           startFlipFrame = frame;
-          if (otherColor[0] === 200 && otherColor[1] === 0 && otherColor[2] === 0) 
-          {
-            otherColor = [255,255,255];
-            card.text = "Question?";
-          }
-          else 
-          {
-            otherColor = [200,0,0];
-            card.text = "Answer!";
-          }
-          card.drawFlip(ctx, frame - startFlipFrame, otherColor, c.width, c.height);
+          if (currentAnswer === options[answer-1]) color = [150,255,150];
+          else color = [255,150,150];
+          card.text = currentAnswer;
+          card.drawFlip(ctx, frame - startFlipFrame, color, c.width, c.height);
         }
+        answer = 0;
       }
-      if (card.isFlipping) card.drawFlip(ctx, frame - startFlipFrame, otherColor, c.width, c.height);
+
+      if (clickedNext && complete)
+      {
+        complete = false;
+        clickedNext = false;
+        currentQuestion = "cow";
+        currentAnswer = "baqara";
+        options = ["kharoof", "baqara", "fa'r", "qitta"];
+        card.text = currentQuestion;
+        startFlipFrame = frame;
+        color = [255,255,255]
+        card.drawFlip(ctx, frame - startFlipFrame, color, c.width, c.height);
+      }
+
+      if (card.isFlipping) card.drawFlip(ctx, frame - startFlipFrame, color, c.width, c.height);
       else card.draw(ctx, c.width, c.height);
 
       frame++;

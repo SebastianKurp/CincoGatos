@@ -2,9 +2,9 @@ import Button from './Button'
 
 class Bar extends Button
 {
-	constructor(x, y, rx, ry, cFill, cActive, cStroke, wStroke, link = "None", text = "")
+	constructor(x, y, rx, ry, cFill, cActive, cStroke, wStroke, link = "None", text = "", cText = "rgb(0,0,0)")
 	{
-    	super(x, y, cFill, cActive, cStroke, wStroke, link, text); //react gave error w/o call to super
+    	super(x, y, cFill, cActive, cStroke, wStroke, link, text, cText); //react gave error w/o call to super
 		this.rx = rx;
 		this.ry = ry;
 	}
@@ -24,7 +24,7 @@ class Bar extends Button
 
 		var fontSize = Math.ceil(Math.min((this.ry * canvasHeight)*0.8, (this.rx * canvasWidth)*0.2))
 		ctx.font = "" + fontSize + "px Arial";
-	    ctx.fillStyle = "rgb(0,0,0)";
+	    ctx.fillStyle = this.cText;
 		ctx.textAlign = "center";
 		ctx.fillText(this.text, this.x * canvasWidth, this.y * canvasHeight + fontSize/2); 
 	}
