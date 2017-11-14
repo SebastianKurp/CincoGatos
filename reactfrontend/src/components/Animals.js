@@ -41,7 +41,7 @@ async getUserFacts(){
     let ctx = c.getContext("2d");
     var frame = 0, card, otherColor = [255,255,255], startFlipFrame;
     var buttons, bars, mouseX = 0, mouseY = 0, keyPresses, mouseDown = false, clickBuffer = "None", 
-      clickedNext = false, answer = 0, complete = false, currentQuestion, currentAnswer, options, color;
+      clickedNext = false, answer = 0, complete = false, currentQuestion, currentAnswer, options, color, cardSet = 0;
     c.style.backgroundColor = "#FFFFFF";
 
     function setup()
@@ -73,9 +73,7 @@ async getUserFacts(){
 
     function initialize()
     {
-      currentQuestion = "cow";
-      currentAnswer = "baqara";
-      options = ["kharoof", "baqara", "fa'r", "qitta"];
+      setCards();
       color = [255,255,255];
       card = new Card(0.5, 0.3, 0.3, 0.2, 50, color, currentQuestion);
       //constructor(x, y, rx, ry, cFill, cActive, cStroke, wStroke, link = "None", text = "", cText)
@@ -84,11 +82,40 @@ async getUserFacts(){
             new Bar(0.5, 0.75, 0.3, 0.0375, "rgb(255,0,0)", "rgb(150,0,0)", "rgb(0,0,0)", 6, "./option2", "Option 2", "rgb(255,255,255)"),
             new Bar(0.5, 0.85, 0.3, 0.0375, "rgb(255,0,0)", "rgb(150,0,0)", "rgb(0,0,0)", 6, "./option3", "Option 3", "rgb(255,255,255)"),
             new Bar(0.5, 0.95, 0.3, 0.0375, "rgb(255,0,0)", "rgb(150,0,0)", "rgb(0,0,0)", 6, "./option4", "Option 4", "rgb(255,255,255)")
-      ]
+      ];
       //constructor(x, y, rInactive, rActive, cFill, cActive, cStroke, wStroke, image = "None", link = "None", text = "", cText)
       buttons = [
         new CircleButton(0.9, 0.9, 0.07, 0.09, "rgb(100,100,100)", "rgb(150,150,150)", "rgb(0,0,0)", 6, "None", "./next", "Next", "rgb(0,0,0)")
-      ]
+      ];
+    }
+
+    function setCards()
+    {
+      var l = flash[cardSet]["ar"].length;
+      var r = Math.floor((Math.random() * l) + 1) - 1;
+      currentQuestion = flash[cardSet]["ar"][r];
+      currentAnswer = flash[cardSet]["en"][r];
+      var otherOptions = [r];
+      while (otherOptions.length < 4)
+      {
+        r = Math.floor((Math.random() * l) + 1) - 1;
+        if (!otherOptions.includes(r)) otherOptions.push(r);
+      }
+      console.log(otherOptions);
+      for (var i = 0; i < otherOptions.length; i++) otherOptions[i] = flash[cardSet]["en"][otherOptions[i]]
+      options = shuffleArray(otherOptions);
+      console.log(options);
+    }
+
+    function shuffleArray(a) {
+        var array = a;
+        for (var i = array.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+        return array;
     }
 
     function drawButtons()
@@ -157,9 +184,7 @@ async getUserFacts(){
       {
         complete = false;
         clickedNext = false;
-        currentQuestion = "cow";
-        currentAnswer = "baqara";
-        options = ["kharoof", "baqara", "fa'r", "qitta"];
+        setCards();
         card.text = currentQuestion;
         startFlipFrame = frame;
         color = [255,255,255]
