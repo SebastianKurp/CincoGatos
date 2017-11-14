@@ -18,38 +18,26 @@ constructor(props){
 	}
 }
 
-setStateAsync(){
+async setStateAsync(){
 	var innerThis = this;
-	fbAuth().onAuthStateChanged(function(user) {
-			if (user) {
-			getUserFlashcards(user.uid)
-			.then(function (value){
-			console.log(value);
-			innerThis.setState({
-				authenticated: true,
-				loading: false,
-				nativeLang: value[0],
-				learningLang: value[1],
-				username: value[2]
-				})
-			})
-		.catch(function(err){
-			console.log(err);
-		})
-			}
-			else{
-				console.log("No valid user");
-				alert("You are not logged in!");
-			}
-	})
+	var user = firebase.auth().currentUser;
+
+	let langArray = await getUserFlashcards(user.uid);
+	return langArray;
 }
 
 
  async componentDidMount(){
 		var innerThis = this;
-		await innerThis.setStateAsync();
-
-		console.log(innerThis.state.username);
+		var userArray = [];
+		//await result of async function getting user's details
+	await	innerThis.setStateAsync().then(function(result){
+			userArray = result;
+		});
+		console.log(userArray);
+		var nativeLang = userArray[0];
+		var learningLang = userArray[1];
+		var username = userArray[2];
     let c = ReactDOM.findDOMNode(this.refs.myCanvas);
     let ctx = c.getContext('2d');
     var buttons, bars, mouseX = 0, mouseY = 0, keyPresses, mouseDown = false, clickBuffer = "None";
@@ -149,7 +137,6 @@ setStateAsync(){
 			
       drawButtons();
 			drawBars();
-			var username = innerThis.state.username;
       
       ctx.fillStyle = "rgb(0,0,0)";
       ctx.textAlign = "left";
