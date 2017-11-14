@@ -4,10 +4,26 @@ import Card from './Card'
 import CircleButton from './CircleButton'
 import Bar from './Bar'
 import firebase, { fbAuth } from '../firebase'
+import { getFlashcards } from './UserFunctions'
 
 class Animals extends Component {
 
-  componentDidMount(){
+  async getCards(){
+	var user = firebase.auth().currentUser;
+	let flashArray = await getFlashcards(user.uid);
+	return flashArray;
+}
+
+ async componentDidMount(){
+	 var innerThis = this;
+	var flash = [];
+  await innerThis.getCards().then(function(result){
+		flash = result;
+	})
+	
+	console.log(flash);
+
+
     let c = ReactDOM.findDOMNode(this.refs.myCanvas);
     let ctx = c.getContext("2d");
     var frame = 0, card, otherColor = [255,255,255], startFlipFrame;

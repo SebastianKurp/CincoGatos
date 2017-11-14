@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import CircleButton from './CircleButton'
 import Bar from './Bar'
 import firebase, { fbAuth } from '../firebase'
-import { getUserFlashcards } from './UserFunctions'
+import { getUserDetails, getFlashcards } from './UserFunctions'
 
 class ShowSets extends Component {
 
@@ -19,21 +19,22 @@ constructor(props){
 }
 
 async setStateAsync(){
-	var innerThis = this;
 	var user = firebase.auth().currentUser;
 
-	let langArray = await getUserFlashcards(user.uid);
+	let langArray = await getUserDetails(user.uid);
 	return langArray;
 }
-
 
  async componentDidMount(){
 		var innerThis = this;
 		var userArray = [];
+
 		//await result of async function getting user's details
 	await	innerThis.setStateAsync().then(function(result){
 			userArray = result;
 		});
+
+
 		console.log(userArray);
 		var nativeLang = userArray[0];
 		var learningLang = userArray[1];
