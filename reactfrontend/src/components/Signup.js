@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { auth } from './UserFunctions'
+import './styles/styles.css'
 
 function setErrorMsg(error) {
   return {
@@ -19,9 +20,9 @@ class Signup extends Component {
   render () {
     return (
       <div className="col-sm-6 col-sm-offset-3">
-        <h1>Register</h1>
-        <form onSubmit={this.handleSubmit}>
-          <div className="form-group">
+        <h1 id="header">Sign Up</h1>
+        <form onSubmit={this.handleSubmit} className="form">
+          <div  className="form-group">
             <label>Username</label>
             <input className="form-control" ref={(username) => this.username = username} placeholder="Username"/>
           </div>
@@ -35,18 +36,18 @@ class Signup extends Component {
           </div>
           <div className="form-group">
             <label>
-              What is your native language:
+              What is your native language:<br />
               <select ref={(native) => this.native = native}>
-                <option value="null"></option>
+                <option value="Error">Select One</option>
                 <option value="english">English</option>
               </select>
             </label>
           </div>
           <div className="form-group">
             <label>
-              Pick the Language you want to learn:
+              Pick the language you want to learn: <br />
               <select ref={(learning) => this.learning = learning}>
-                <option value="null"></option>
+                <option value="Error">Select One</option>
                 <option value="spanish">Spanish</option>
                 <option value="polish">Polish</option>
                 <option value="arabic">Arabic</option>
@@ -62,7 +63,7 @@ class Signup extends Component {
               &nbsp;{this.state.registerError}
             </div>
           }
-          <button type="submit" className="btn btn-primary">Register</button>
+          <button id="signUpBtn" type="submit">Register</button>
         </form>
       </div>
     )
