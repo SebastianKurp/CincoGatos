@@ -14,7 +14,8 @@ constructor(props){
     loading: true,
     nativeLang: null,
 		learningLang: null,
-		username: null
+    username: null,
+    clickPage: null
 	}
 }
 
@@ -109,7 +110,9 @@ async getUserFacts(){
           console.log(clickBuffer);
           var hardcodingisbad = "http://localhost:3000";    
           window.location.href= hardcodingisbad+clickBuffer;
-
+          innerThis.setState({
+            clickPage: clickBuffer
+          })
           clickBuffer = "None";
         }
         buttons[j].draw(ctx, c.width, c.height);

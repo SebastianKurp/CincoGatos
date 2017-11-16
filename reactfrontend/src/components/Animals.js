@@ -5,6 +5,7 @@ import CircleButton from './CircleButton'
 import Bar from './Bar'
 import firebase from '../firebase'
 import { getFlashcards, getUserDetails, getAlphabets } from './UserFunctions'
+import { shuffleArray } from './FlashcardFunctions'
 
 class Animals extends Component {
   constructor(props){
@@ -92,7 +93,7 @@ class Animals extends Component {
       ];
     }
 
-    function setCards()
+  function setCards()
     {
       let langSet = "";
       switch(userArray[1]){
@@ -129,17 +130,6 @@ class Animals extends Component {
       for (var i = 0; i < otherOptions.length; i++) otherOptions[i] = flash[cardSet]["en"][otherOptions[i]]
       options = shuffleArray(otherOptions);
       console.log(options);
-    }
-
-    function shuffleArray(a) {
-        var array = a;
-        for (var i = array.length - 1; i > 0; i--) {
-            var j = Math.floor(Math.random() * (i + 1));
-            var temp = array[i];
-            array[i] = array[j];
-            array[j] = temp;
-        }
-        return array;
     }
 
     function drawButtons()
