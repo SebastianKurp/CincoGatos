@@ -16,18 +16,10 @@ class Animals extends Component {
     }
   }
   async getCards(){
-	let flashArray = await getFlashcards(this.state.user.uid);
-	return flashArray;
-}
-
-async getUserFacts(){
-	let langArray = await getUserDetails(this.state.user.uid);
-	return langArray;
-}
-
-async getAlpha(){
+  let flashArray = await getFlashcards(this.state.user.uid);
+  let langArray = await getUserDetails(this.state.user.uid);
   let alpharay = await getAlphabets(this.state.user.uid);
-  return alpharay;
+	return [flashArray, langArray, alpharay];
 }
 
  async componentDidMount(){
@@ -36,22 +28,17 @@ async getAlpha(){
   var userArray = [];
   var alpha = [];
 
-  //await result of async function getting user's details
-  //these are broken up because otherwise it would be arrays inside arrays inside arrays...and then some
-	await	innerThis.getUserFacts().then(function(result){
-			userArray = result;
-		});	
+  //await result of async function getting user's details and their flashcard sets
   await innerThis.getCards().then(function(result){
 		flash = result;
   });
-  await innerThis.getAlpha().then(function(result){
-    alpha = result;
-  })
-	console.log(userArray);
-  console.log(flash);
-  console.log(alpha);
+
+  userArray = flash[1];
+  alpha = flash[2];
+  flash = flash[0];
   //userarray in format of [nativelang, learnedlang, username]
   //flash is the premade sets
+  //alpha is the alphabets
 
     let c = ReactDOM.findDOMNode(this.refs.myCanvas);
     let ctx = c.getContext("2d");
