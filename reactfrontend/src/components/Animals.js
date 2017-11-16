@@ -4,7 +4,7 @@ import Card from './Card'
 import CircleButton from './CircleButton'
 import Bar from './Bar'
 import firebase, { fbAuth } from '../firebase'
-import { getFlashcards, getUserDetails } from './UserFunctions'
+import { getFlashcards, getUserDetails, getAlphabets } from './UserFunctions'
 
 class Animals extends Component {
 
@@ -21,10 +21,17 @@ async getUserFacts(){
 	return langArray;
 }
 
+async getAlpha(){
+  var user = firebase.auth().currentUser;
+  let alpharay = await getAlphabets(user.uid);
+  return alpharay;
+}
+
  async componentDidMount(){
 	 var innerThis = this;
 	var flash = [];
-	var userArray = [];
+  var userArray = [];
+  var alpha = [];
 
 		//await result of async function getting user's details
 	await	innerThis.getUserFacts().then(function(result){
@@ -32,10 +39,15 @@ async getUserFacts(){
 		});	
   await innerThis.getCards().then(function(result){
 		flash = result;
-	})
+  });
+  await innerThis.getAlpha().then(function(result){
+    alpha = result;
+  })
 	console.log(userArray);
-	console.log(flash);
-
+  console.log(flash);
+  console.log(alpha);
+  //userarray in format of [nativelang, learnedlang, username]
+  //flash is the premade sets
 
     let c = ReactDOM.findDOMNode(this.refs.myCanvas);
     let ctx = c.getContext("2d");

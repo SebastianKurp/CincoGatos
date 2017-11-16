@@ -63,7 +63,6 @@ export function addUserDetails(userId, username, nativeLang, learningLang){
 }
 
 export function getUserDetails(userid){
-  console.log(userid);
   return new Promise(
     function(resolve, reject)
     {
@@ -93,7 +92,7 @@ export function getFlashcards(userid){
     var colors = snapshot.val().colors;
     var langArray = [animals, clothing, colors];
     if(langArray != null){
-      resolve(langArray)
+      resolve(langArray);
     }
     else{
       reject(langArray);
@@ -101,4 +100,26 @@ export function getFlashcards(userid){
   })
 
   })
+}
+
+export function getAlphabets(userid){
+  return new Promise(
+    function(resolve, reject)
+    {
+      firebase.database().ref(`users/`+userid+`/alphabets/alphabets`).once('value').then((snapshot) =>
+    {
+      console.log(snapshot.val());
+      var arabic = snapshot.val().ar;
+      var polish = snapshot.val().pl;
+      var japanese = snapshot.val().jp;
+      var alpha = [arabic, polish, japanese];
+      if(alpha != null){
+        resolve(alpha);
+      }
+      else{
+        reject(alpha);
+      }
+    })
+    }
+  )
 }
