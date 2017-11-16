@@ -112,7 +112,7 @@ class Animals extends Component {
           console.log("Polish");
           langSet = 'pl';
           break;
-        case 4:
+        default:
           console.log("Something broke");
       }
       var l = flash[cardSet][langSet].length;
