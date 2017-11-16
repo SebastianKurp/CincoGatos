@@ -107,9 +107,30 @@ async getAlpha(){
 
     function setCards()
     {
-      var l = flash[cardSet]["ar"].length;
+      let langSet = "";
+      switch(userArray[1]){
+        case 'spanish':
+          console.log("Spanish");
+          langSet = 'sp';
+          break;
+        case 'japanese':
+          console.log("Japanese");
+          langSet = 'jp';
+          break;
+        case 'arabic':
+          console.log("Arabic");
+          langSet = 'ar';
+          break;
+        case 'polish':
+          console.log("Polish");
+          langSet = 'pl';
+          break;
+        case 4:
+          console.log("Something broke");
+      }
+      var l = flash[cardSet][langSet].length;
       var r = Math.floor((Math.random() * l) + 1) - 1;
-      currentQuestion = flash[cardSet]["ar"][r];
+      currentQuestion = flash[cardSet][langSet][r];
       currentAnswer = flash[cardSet]["en"][r];
       var otherOptions = [r];
       while (otherOptions.length < 4)
