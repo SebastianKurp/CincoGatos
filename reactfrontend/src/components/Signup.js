@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { auth } from './UserFunctions'
-import './styles/styles.css'
+import './styles/signUp-login.css'
 
 function setErrorMsg(error) {
   return {
