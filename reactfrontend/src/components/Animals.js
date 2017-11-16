@@ -3,37 +3,41 @@ import ReactDOM from 'react-dom'
 import Card from './Card'
 import CircleButton from './CircleButton'
 import Bar from './Bar'
-import firebase, { fbAuth } from '../firebase'
+import firebase from '../firebase'
 import { getFlashcards, getUserDetails, getAlphabets } from './UserFunctions'
 
 class Animals extends Component {
-
+  constructor(props){
+    super(props);
+    var user = firebase.auth().currentUser;
+    this.state =
+    {
+      user: user
+    }
+  }
   async getCards(){
-	var user = firebase.auth().currentUser;
-	let flashArray = await getFlashcards(user.uid);
+	let flashArray = await getFlashcards(this.state.user.uid);
 	return flashArray;
 }
 
 async getUserFacts(){
-	var user = firebase.auth().currentUser;
-
-	let langArray = await getUserDetails(user.uid);
+	let langArray = await getUserDetails(this.state.user.uid);
 	return langArray;
 }
 
 async getAlpha(){
-  var user = firebase.auth().currentUser;
-  let alpharay = await getAlphabets(user.uid);
+  let alpharay = await getAlphabets(this.state.user.uid);
   return alpharay;
 }
 
  async componentDidMount(){
-	 var innerThis = this;
+	var innerThis = this;
 	var flash = [];
   var userArray = [];
   var alpha = [];
 
-		//await result of async function getting user's details
+  //await result of async function getting user's details
+  //these are broken up because otherwise it would be arrays inside arrays inside arrays...and then some
 	await	innerThis.getUserFacts().then(function(result){
 			userArray = result;
 		});	
