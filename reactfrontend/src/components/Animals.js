@@ -204,7 +204,7 @@ class Animals extends Component {
         answer = 0;
       }
 
-      if (clickedNext && complete)
+      if ((clickedNext || keyPresses[32]) && complete)
       {
         complete = false;
         clickedNext = false;
