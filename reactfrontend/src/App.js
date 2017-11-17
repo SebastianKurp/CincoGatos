@@ -77,9 +77,13 @@ export default class App extends Component {
     this.removeListener()
   }
 
-
   render() {
-    return this.state.loading === true ? <h1>Loading</h1> : (
+    return this.state.loading === true ? 
+<div>
+    <h1>Loading</h1>
+    <img src={require('./images/loading_blue.gif')} />
+    </div>
+     : (
       <BrowserRouter>
         {/*Below is a navbar that renders everywhere the user is
           It will show different links based on whether or not this.state.authenticated is true
