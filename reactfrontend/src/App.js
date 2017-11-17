@@ -7,6 +7,7 @@ import ShowSets from './components/ShowSets'
 import Animals from './components/Animals'
 import NotFound from './components/NotFound'
 import Home from './components/Home'
+import UploadDoc from './components/UploadDoc'
 import firebase, { fbAuth } from './firebase'
 
 
@@ -98,6 +99,7 @@ export default class App extends Component {
                 <li>
                   {this.state.authenticated
                     ?<span>
+                    <Link to='/uploaddoc' className="navbar-brand">Create Flashcards</Link>
                     <Link to='/welcome' className="navbar-brand">Learn!</Link>
                     <button
                         style={{border: 'none', background: 'transparent'}}
@@ -120,6 +122,7 @@ export default class App extends Component {
                 <Route path='/' exact component={Home} />
                 <PublicRoute authenticated={this.state.authenticated} path='/login' component={Login} />
                 <PublicRoute authenticated={this.state.authenticated} path='/signup' component={Signup} />
+                <PrivateRoute authenticated={this.state.authenticated} path='/uploaddoc' component={UploadDoc} />
                 <PrivateRoute authenticated={this.state.authenticated} path='/welcome' component={ShowSets}/>
                 <PrivateRoute authenticated={this.state.authenticated} path='/animals' component={Animals}/>
                 <PublicRoute path="*" component={NotFound}/>
