@@ -1,6 +1,10 @@
 
 "# CincoGatos"
 
+CincoGatos is a language learning WebApp that allows a user to begin learning some basic vocabulary from one of four languages: Arabic, Japnese, Polish, and Spanish.  The user can also upload documents and words to create custom flashcard sets.
+
+Latest version is from commit ba76c0f, made 11/17
+
 
 ***To run:***
 
@@ -14,14 +18,8 @@ Go into 'reactfrontend' --> npm install (only first time) --> npm start
 Go to localhost specified by reactfrontend
 
 
-2 SENTENCE DESCRIPTION OF PROJECT
+Get started [here](https://github.com/SebastianKurp/CincoGatos/wiki/How-to-Use-the-Program-and-Get-Started)
 
-Latest version is from commit COMMIT, made DATE
-
-LINK TO HOSTED SITE
-
-HOW TO RUN
-
-“How To” documents and other documents of interest can be found in our Wiki
+Documentation can be found [here](https://github.com/SebastianKurp/CincoGatos/wiki)
 
 Paul Narup, Eva Martinuzzi, Cat Litten, Sebastian Kurpiel, and Abdul Zakkar © 2017, Loyola University Chicago
