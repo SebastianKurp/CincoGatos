@@ -1,0 +1,2 @@
+F.merge('/css/default.css', '/css/bootstrap.min.css', '/css/ui.css', '/css/default.css', 'css/landing.css');
+F.merge('/js/default.js', '/js/jctajr.min.js', '/js/ui.js', '/js/default.js', '/js/firebase.js');
