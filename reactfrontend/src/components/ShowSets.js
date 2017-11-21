@@ -4,6 +4,8 @@ import CircleButton from './CircleButton'
 import Bar from './Bar'
 import firebase, { fbAuth } from '../firebase'
 import { getUserDetails, getFlashcards } from './UserFunctions'
+import { PrivateRoute } from '../App'
+import Animals from './Animals'
 
 class ShowSets extends Component {
 
@@ -108,11 +110,17 @@ async getUserFacts(){
         if (!mouseDown && clickBuffer !== "None")
         {
           console.log(clickBuffer);
+
           var hardcodingisbad = "http://localhost:3000";    
           window.location.href= hardcodingisbad+clickBuffer;
-          innerThis.setState({
-            clickPage: clickBuffer
-          })
+
+        //<PrivateRoute> does not recognize component although is imported
+        //possibly because called within method rather than in render()?
+
+
+          //setprops for animals?
+          //if clickbuffer is passed we can dynamically change flashcard sets
+          //& background colors based on user clicks -- one canvas
           clickBuffer = "None";
         }
         buttons[j].draw(ctx, c.width, c.height);

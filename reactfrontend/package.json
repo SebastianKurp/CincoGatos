@@ -5,18 +5,7 @@
   "dependencies": {
     "@blueprintjs/core": "^1.32.0",
     "axios": "^0.16.2",
-    "firebase": "^4.6.0",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
-    "react-flexbox-grid": "^2.0.0",
-    "react-router-dom": "^4.1.1",
-    "react-scripts": "0.9.5"
+    "firebase": "^4.6.0"
   },
-  "devDependencies": {},
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
-  }
+  "devDependencies": {}
 }
