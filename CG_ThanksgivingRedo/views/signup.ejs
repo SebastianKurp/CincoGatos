@@ -1,0 +1,48 @@
+<% include partials/header %>
+<div class="col-sm-6 col-sm-offset-3">
+        <h1 id="header">Sign Up</h1>
+        <form class="form" action="/signup/complete" method="POST" id="signupform">
+          <div  class="form-group">
+            <label>Username</label>
+            <input name="username" class="form-control" placeholder="Username"/>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input name="email" class="form-control" placeholder="Email"/>
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input name="password" type="password" class="form-control" placeholder="Password"  />
+          </div>
+          <div class="form-group">
+            <label>
+              What is your native language:<br />
+              <select name="selectNL">
+                <option value="Error">Select One</option>
+                <option value="en">English</option>
+              </select>
+            </label>
+          </div>
+          <div class="form-group">
+            <label>
+              Pick the language you want to learn: <br />
+              <select name="selectLL">
+                <option value="Error">Select One</option>
+                <option value="sp">Spanish</option>
+                <option value="pl">Polish</option>
+                <option value="ar">Arabic</option>
+                <option value="jp">Japanese</option>
+              </select>
+            </label>
+          </div>
+          <!--
+            <div class="alert alert-danger" role="alert">
+              <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+              <span class="sr-only">Error:</span>
+              
+            </div>
+        -->
+          <button id="signUpBtn" type="submit">Register</button>
+        </form>
+      </div>
+      <% include partials/footer %>
