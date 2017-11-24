@@ -47,7 +47,6 @@ app.get('/login', function(req, res){
 });
 
 app.post('/login/complete', function(req, res){
-    console.log(req.body.email);
     req.checkBody('email', 'Email is required to login').isEmail();
     req.checkBody('password', 'Password is required to login').notEmpty();
     
@@ -61,10 +60,6 @@ app.post('/login/complete', function(req, res){
         })
     }
     else{
-        var userJson = {
-            email: req.body.email,
-            password: req.body.password
-        }
         var user = userfunctions.login(req.body.email, req.body.password);
         console.log('User created');
         console.log(user);
@@ -95,14 +90,37 @@ app.get('/signup', function(req, res){
 });
 
 app.post('/signup/complete', function(req, res){
-    var newUser = {
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.password,
-        nativeLang: req.body.selectNL,
-        learnLang: req.body.selectLL
-    }
-    console.log(newUser);
+    req.checkBody('email', 'A valid email is required to register').isEmail();
+    req.checkBody('password', 'Password is required to register').notEmpty();
+    req.checkBody('username', 'Please enter a username').notEmpty();
+    req.checkBody('selectNL', 'Select your native language').not().matches("Error");
+    req.checkBody('selectLL', 'Please enter the language you would like to learn').not().matches("Error");
+    var errors = req.validationErrors();
+    
+        if(errors){
+            res.render('signup', 
+            {
+                title: 'Register for Cinco Gatos',
+                errors: errors
+            })
+        }
+        else{
+            var newUser = {
+                username: req.body.username,
+                email: req.body.email,
+                password: req.body.password,
+                nativeLang: req.body.selectNL,
+                learnLang: req.body.selectLL
+            }
+            //(email, pw, nL,lL, useName) 
+            var user = userfunctions.auth(req.body.email, req.body.password, req.body.selectNL, req.body.selectLL, req.body.username);
+            console.log('User created');
+            console.log(user);
+            res.render('flashcards', {
+                title: 'Learn a new language!',
+                user: user
+            })
+        }
 });
 
 app.get('/flashcards', function(req, res){

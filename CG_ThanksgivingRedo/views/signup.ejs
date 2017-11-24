@@ -36,13 +36,16 @@
               </select>
             </label>
           </div>
-          <!--
+          <% if(errors != null){ %>
             <div class="alert alert-danger" role="alert">
-              <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-              <span class="sr-only">Error:</span>
-              
-            </div>
-        -->
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <ul>
+                <% errors.forEach(function(error){ %>
+                    <li><%= error.msg %> </li>
+                <% }) %>
+            </ul>
+          </div>
+            <% } %>
           <button id="signUpBtn" type="submit">Register</button>
         </form>
       </div>

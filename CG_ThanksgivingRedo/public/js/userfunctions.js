@@ -30,8 +30,113 @@ function logout () {
     return fbAuth().signOut()
   }
 
+function resetPassword (email) {
+    return fbAuth().sendPasswordResetEmail(email)
+  }
+
+function saveUser (user) {
+    var userId = user.uid;
+    var username = name;
+    var nativeLang = native;
+    var learningLang = learning;
+  
+    addUserDetails(userId, username, nativeLang, learningLang);
+    return ref.child(`users/${user.uid}/info`)
+      .set({
+        email: user.email,
+        uid: user.uid
+      })
+      .then(() => user)
+  }
+  
+function addUserDetails(userId, username, nativeLang, learningLang){
+    //add the user's native and learned lang to firebase
+    firebase.database().ref(`users/`+userId).set({
+      username: username,
+      nativeLang: nativeLang,
+      learningLang: learningLang
+    });
+    firebase.database().ref('premadesets/').once('value').then((snapshot) => {
+    //get the generic flashcard set and add to user profile
+    var flashsets = snapshot.val();
+    firebase.database().ref(`users/`+userId+`/premadesets`).set({
+      premadesets: flashsets
+    })
+  })
+    firebase.database().ref('alphabets/').once('value').then((snapshot) => {
+    //get the generic alphabet set and add to user profile
+    var alphabets = snapshot.val();
+    firebase.database().ref(`users/`+userId+`/alphabets`).set({
+      alphabets: alphabets
+      })
+    })
+  }
+  
+function getUserDetails(userid){
+    return new Promise(
+      function(resolve, reject)
+      {
+      firebase.database().ref(`users/`+userid).once('value').then((snapshot) => {
+          var nativeLang = snapshot.val().nativeLang;
+      var learningLang = snapshot.val().learningLang;
+      var username = snapshot.val().username;
+      var langArray = [nativeLang, learningLang, username];
+      if(langArray != null){
+        resolve(langArray)
+      }
+      else{
+        reject(langArray);
+      }
+    })
+  
+    })
+  }
+  
+function getFlashcards(userid){
+    return new Promise(
+      function(resolve, reject)
+      {
+      firebase.database().ref(`users/`+userid+`/premadesets/premadesets`).once('value').then((snapshot) => {
+          var animals = snapshot.val().animals;
+      var clothing = snapshot.val().clothing;
+      var colors = snapshot.val().colors;
+      var langArray = [animals, clothing, colors];
+      if(langArray != null){
+        resolve(langArray);
+      }
+      else{
+        reject(langArray);
+      }
+    })
+  
+    })
+  }
+  
+function getAlphabets(userid){
+    return new Promise(
+      function(resolve, reject)
+      {
+        firebase.database().ref(`users/`+userid+`/alphabets/alphabets`).once('value').then((snapshot) =>
+      {
+        console.log(snapshot.val());
+        var arabic = snapshot.val().ar;
+        var polish = snapshot.val().pl;
+        var japanese = snapshot.val().jp;
+        var alpha = [arabic, polish, japanese];
+        if(alpha != null){
+          resolve(alpha);
+        }
+        else{
+          reject(alpha);
+        }
+      })
+      }
+    )
+  }
+
 module.exports.auth = auth;
 module.exports.login = login;
 module.exports.logout = logout;
 module.exports.ref = ref;
 module.exports.fbAuth = fbAuth;
+module.exports.resetPassword = resetPassword;
