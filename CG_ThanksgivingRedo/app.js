@@ -57,8 +57,10 @@ function login (email, pw) {
 
 //homepage
 app.get('/', function(req, res){
+    var currUser = firebase.auth().currentUser;
     res.render('index', {
-        title: 'Cinco Gatos Homepage'
+        title: 'Cinco Gatos Homepage',
+        user: currUser
     });
 });
 
@@ -120,14 +122,18 @@ app.post('/signup/complete', function(req, res){
 });
 
 app.get('/flashcards', function(req, res){
+    var currUser = firebase.auth().currentUser;
     res.render('flashcards', {
-        title: 'Learn!'
+        title: 'Learn!',
+        user: currUser
     });
 });
 
 app.get('/customcards', function(req, res){
+    var currUser = firebase.auth().currentUser;
     res.render('uploadcards', {
-        title: 'Make custom flashcards'
+        title: 'Make custom flashcards',
+        user: currUser
     });
 });
 
