@@ -11,11 +11,14 @@
         <a href="javascript:void(0)" class="mainmenu-button"><i class="fa fa-navicon"></i></a>
         <a href="/"><img src="/img/logo2.png" border="0" height="30" /></a>
         <nav>
+            <% if(user === null) { %>
             <a href="/"><i class="fa fa-home"></i>Home</a>
-            <a href="/flashcards/">Learn!</a>
-            <a href="/customcards/">Custom Cards</a>
             <a href="/signup/">Register</a>
             <a href="/login/">Login</a>
+            <% } else { %>
+            <a href="/flashcards/">Learn!</a>
+            <a href="/customcards/">Custom Cards</a>
+                <% } %>
         </nav>
     </div>
 </header>
