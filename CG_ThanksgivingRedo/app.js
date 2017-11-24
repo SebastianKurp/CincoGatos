@@ -16,30 +16,16 @@ app.use(bodyParser.urlencoded({extended: false}));
 //Set path for static files
 app.use(express.static(path.join(__dirname, '/public')));
 
+//Set up form validation
+app.use(validator());
+
+
 //Global variables
 //I think we can put users here
 app.use(function(req, res, next){
     res.locals.errors = null;
     next();
 });
-
-//Set up form validation
-app.use(validator({
-    errorFormatter: function(param, msg, value){
-        var namespace = param.split('.'),
-        root = namespace.shift(),
-        formParam = root;
-
-    while(namespace.length){
-        formParam += '[' + namespace.shift() + ']';
-    }
-    return {
-        param: formParam,
-        msg: msg,
-        value: value
-    };
-    }
-}));
 
 //homepage
 app.get('/', function(req, res){
@@ -56,17 +42,18 @@ app.get('/login', function(req, res){
 });
 
 app.post('/login/complete', function(req, res){
+    console.log(req.body.email);
     req.checkBody('email', 'Email is required to login').notEmpty();
     req.checkBody('password', 'Password is required to login').notEmpty();
-
+    
     var errors = req.validationErrors();
 
     if(errors){
-        res.render('login'), {
+        res.render('login', 
+        {
             title: 'Login to Cinco Gatos',
             errors: errors
-        }
-        console.log("ERRORS");
+        })
     }
     else{
         var user = {
@@ -74,7 +61,7 @@ app.post('/login/complete', function(req, res){
             password: req.body.password
         }
         console.log('User created');
-    }
+    } 
 
     
 });
@@ -88,9 +75,6 @@ app.get('/signup', function(req, res){
 });
 
 app.post('/signup/complete', function(req, res){
-    req.checkBody('username', 'A username is required to signup').notEmpty();
-    req.checkBody('email', 'Email is required to signup').notEmpty();
-    req.checkBody('password', 'Password is required to signup').notEmpty();
     var newUser = {
         username: req.body.username,
         email: req.body.email,
@@ -112,9 +96,6 @@ app.get('/customcards', function(req, res){
         title: 'Make custom flashcards'
     });
 });
-
-
-
 
 app.listen(3000, function(){
     console.log("Server running on port 3000");
