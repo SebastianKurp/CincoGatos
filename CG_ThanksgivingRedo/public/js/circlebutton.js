@@ -1,10 +1,8 @@
-import Button from './Button'
-
 class CircleButton extends Button
 {
 	constructor(x, y, rInactive, rActive, cFill, cActive, cStroke, wStroke, image = "None", link = "None", text = "", cText = "rgb(0,0,0)")
 	{
-	    super(x, y, cFill, cActive, cStroke, wStroke, link, text, cText); //added this to Abdul's code b/c of error
+	    super(x, y, cFill, cActive, cStroke, wStroke, link, text, cText);
 		this.rInactive = rInactive;
 		this.rActive = rActive;
 		this.rCurrent = rInactive;

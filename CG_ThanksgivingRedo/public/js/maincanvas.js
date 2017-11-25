@@ -32,56 +32,84 @@ function setup()
 
 function initialize()
 {
+	//constructor(x, y, rInactive, rActive, cFill, cActive, cStroke, wStroke, image = "None", link = "None", text = "", cText)
 	buttons = 	[
-					new Button(0.3, 0.3, 0.07, 0.085, "rgb(100,100,100)", "rgb(150,150,150)", "rgb(0,0,0)", 6, "None", "/placeholder"),
-					new Button(0.5, 0.3, 0.07, 0.085, "rgb(100,100,100)", "rgb(150,150,150)", "rgb(0,0,0)", 6, "None", "/placeholder"),
-					new Button(0.7, 0.3, 0.07, 0.085, "rgb(100,100,100)", "rgb(150,150,150)", "rgb(0,0,0)", 6, "None", "/placeholder"),
-					new Button(0.2, 0.5, 0.07, 0.085, "rgb(255,50,50)", "rgb(255,100,100)", "rgb(0,0,0)", 6, "None", "/animals"),
-					new Button(0.4, 0.5, 0.07, 0.085, "rgb(0,150,255)", "rgb(50,200,255)", "rgb(0,0,0)", 6, "None", "/household"),
-					new Button(0.6, 0.5, 0.07, 0.085, "rgb(150,35,255)", "rgb(200,85,255)", "rgb(0,0,0)", 6, "None", "/family"),
-					new Button(0.8, 0.5, 0.07, 0.085, "rgb(255,150,0)", "rgb(255,200,50)", "rgb(0,0,0)", 6, "None", "/school"),
-					new Button(0.3, 0.7, 0.07, 0.085, "rgb(0,206,209)", "rgb(50,255,255)", "rgb(0,0,0)", 6, "None", "/placeholder"),
-					new Button(0.5, 0.7, 0.07, 0.085, "rgb(255,100,125)", "rgb(255,150,175)", "rgb(0,0,0)", 6, "None", "/placeholder"),
-					new Button(0.7, 0.7, 0.07, 0.085, "rgb(255,200,0)", "rgb(255,255,50)", "rgb(0,0,0)", 6, "None", "/placeholder"),
+			new CircleButton(0.3, 0.3, 0.08, 0.1, "rgb(100,100,100)", "rgb(150,150,150)", "rgb(0,0,0)", 6, "None", "/alphabet", "alphabet", "rgb(0,0,0)"),
+			new CircleButton(0.5, 0.3, 0.08, 0.1, "rgb(100,100,100)", "rgb(150,150,150)", "rgb(0,0,0)", 6, "None", "/transliteration", "transliteration", "rgb(0,0,0)"),
+			new CircleButton(0.7, 0.3, 0.08, 0.1, "rgb(100,100,100)", "rgb(150,150,150)", "rgb(0,0,0)", 6, "None", "/reading", "reading", "rgb(0,0,0)"),
+			new CircleButton(0.2, 0.5, 0.08, 0.1, "rgb(255,50,50)", "rgb(255,100,100)", "rgb(0,0,0)", 6, "None", "/animals", "animals", "rgb(0,0,0)"),
+			new CircleButton(0.4, 0.5, 0.08, 0.1, "rgb(0,150,255)", "rgb(50,200,255)", "rgb(0,0,0)", 6, "None", "/foods", "foods", "rgb(0,0,0)"),
+			new CircleButton(0.6, 0.5, 0.08, 0.1, "rgb(150,35,255)", "rgb(200,85,255)", "rgb(0,0,0)", 6, "None", "/household", "household", "rgb(0,0,0)"),
+			new CircleButton(0.8, 0.5, 0.08, 0.1, "rgb(255,150,0)", "rgb(255,200,50)", "rgb(0,0,0)", 6, "None", "/school", "school", "rgb(0,0,0)"),
+			new CircleButton(0.3, 0.7, 0.08, 0.1, "rgb(0,206,209)", "rgb(50,255,255)", "rgb(0,0,0)", 6, "None", "/colors", "colors", "rgb(0,0,0)"),
+			new CircleButton(0.5, 0.7, 0.08, 0.1, "rgb(255,100,125)", "rgb(255,150,175)", "rgb(0,0,0)", 6, "None", "/clothing", "clothing", "rgb(0,0,0)"),
+			new CircleButton(0.7, 0.7, 0.08, 0.1, "rgb(255,200,0)", "rgb(255,255,50)", "rgb(0,0,0)", 6, "None", "/placeholder", "placeholder", "rgb(0,0,0)"),
 				];
+		//constructor(x, y, rx, ry, cFill, cActive, cStroke, wStroke, link = "None", text = "", cText)
 	bars =	[
-				new Bar(0.05, 0.05, 0.65, 0.1, "rgb(100,100,100)", "rgb(50,50,50)", "rgb(0,0,0)", 6),
-				new Bar(0.70, 0.05, 0.95, 0.1, "rgb(255,255,255)", "rgb(200,200,200)", "rgb(0,0,0)", 6),
-				new Bar(0.50, 0.85, 0.70, 0.95, "rgb(255,255,255)", "rgb(200,200,200)", "rgb(0,0,0)", 6),
-				new Bar(0.75, 0.85, 0.95, 0.95, "rgb(255,255,255)", "rgb(200,200,200)", "rgb(0,0,0)", 6)
+				new Bar(0.60, 0.9, 0.1, 0.05, "rgb(255,255,255)", "rgb(200,200,200)", "rgb(0,0,0)", 6, "/settings", "settings", "rgb(0,0,0)"),
+				new Bar(0.80, 0.9, 0.1, 0.05, "rgb(255,255,255)", "rgb(200,200,200)", "rgb(0,0,0)", 6, "/achievements", "achievements", "rgb(0,0,0)")
 			]
+}
+
+function drawButtons()
+{
+  for (var j = 0; j < buttons.length; j++)
+  {
+    buttons[j].size(mouseX, mouseY - 75, c.width, c.height);
+    if (buttons[j].isClicked(mouseDown, mouseX, mouseY - 75, c.width, c.height))
+    {
+      clickBuffer = buttons[j].link;
+    }
+    if (!mouseDown && clickBuffer !== "None")
+    {
+      console.log(clickBuffer);
+
+      var hardcodingisbad = "http://localhost:3000";    
+      window.location.href= hardcodingisbad+clickBuffer;
+
+    //<PrivateRoute> does not recognize component although is imported
+    //possibly because called within method rather than in render()?
+
+
+      //setprops for animals?
+      //if clickbuffer is passed we can dynamically change flashcard sets
+      //& background colors based on user clicks -- one canvas
+      clickBuffer = "None";
+    }
+    buttons[j].draw(ctx, c.width, c.height);
+  }
+}
+
+function drawBars()
+{
+  for (var i = 0; i < bars.length; i++)
+  {
+    bars[i].isTouchingMouse(mouseX, mouseY - 75, c.width, c.height)
+    bars[i].draw(ctx, c.width, c.height);
+  }
 }
 
 function move()
 {
-  	ctx.canvas.width = window.innerWidth - 25;
-  	ctx.canvas.height = window.innerHeight - 25;
-  	ctx.clearRect(0, 0, c.width, c.height);
+	ctx.canvas.width = window.innerWidth;
+	ctx.canvas.height = window.innerHeight - 100;
+	ctx.clearRect(0, 0, c.width, c.height);
 
-  	ctx.beginPath();
+	ctx.beginPath();
 	ctx.arc(c.width/2, c.height/2, Math.min(c.width, c.height)/2, 0, 2*Math.PI);
-	ctx.fillStyle = "rgb(200,255,255)"
+	ctx.fillStyle = "rgb(225,225,225)"
 	ctx.fill();
-	
-	for (var i = 0; i < buttons.length; i++)
-	{
-		buttons[i].size(mouseX - 10, mouseY - 10, c.width, c.height);
-		if (buttons[i].isClicked(mouseDown, mouseX - 10, mouseY - 10, c.width, c.height))
-		{
-			clickBuffer = buttons[i].link;
-		}
-		if (!mouseDown && clickBuffer != "None")
-		{
-			console.log(clickBuffer);
-			clickBuffer = "None"
-		}
-		buttons[i].draw(ctx, c.width, c.height);
-	}
-	for (var i = 0; i < bars.length; i++)
-	{
-		bars[i].color(mouseX, mouseY, c.width, c.height)
-		bars[i].draw(ctx, c.width, c.height);
-	}
+		
+  	drawButtons();
+	drawBars();
+  
+    ctx.fillStyle = "rgb(0,0,0)";
+    ctx.textAlign = "left";
+    ctx.font = "" + Math.ceil(Math.min(c.width/20, c.height/20)) + "px Arial";
+    //ctx.fillText("Welcome, " + username + "!", 0.05*c.width, 0.05*c.height);
+    ctx.font = "" + Math.ceil(Math.min(c.width/30, c.height/30)) + "px Arial";
+    ctx.fillText("Choose a card set to begin learning.", 0.05*c.width, 0.09*c.height);
 }
 
 setup()

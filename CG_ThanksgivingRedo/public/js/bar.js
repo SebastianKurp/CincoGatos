@@ -1,17 +1,10 @@
-class Bar
+class Bar extends Button
 {
-	constructor(x1, y1, x2, y2, cActive, cInactive, cStroke, wStroke)
+	constructor(x, y, rx, ry, cFill, cActive, cStroke, wStroke, link = "None", text = "", cText = "rgb(0,0,0)")
 	{
-		this.x1 = x1;
-		this.y1 = y1;
-		this.x2 = x2;
-		this.y2 = y2;
-		this.r = (y2 - y1) / 2;
-		this.cActive = cActive;
-		this.cInactive = cInactive;
-		this.cCurrent = cInactive;
-		this.cStroke = cStroke;
-		this.wStroke = wStroke;
+    	super(x, y, cFill, cActive, cStroke, wStroke, link, text, cText); //react gave error w/o call to super
+		this.rx = rx;
+		this.ry = ry;
 	}
 
 	draw(ctx, canvasWidth, canvasHeight)
@@ -19,20 +12,33 @@ class Bar
 		ctx.beginPath();
 		ctx.lineWidth = this.wStroke;
 		ctx.strokeStyle = this.cStroke;
-		ctx.arc((this.x1 + this.r) * canvasWidth,(this.y1 + this.r) * canvasHeight,this.r * canvasHeight, Math.PI/2, 3*Math.PI/2);
-		ctx.lineTo((this.x2 - this.r) * canvasWidth, this.y1 * canvasHeight)
-		ctx.arc((this.x2 - this.r) * canvasWidth,(this.y1 + this.r) * canvasHeight,this.r * canvasHeight, 3*Math.PI/2, Math.PI/2);
-		ctx.lineTo((this.x1 + this.r) * canvasWidth, this.y2 * canvasHeight)
-		ctx.stroke();
+		ctx.arc((this.x - this.rx + this.ry) * canvasWidth, this.y * canvasHeight, this.ry * canvasHeight, Math.PI/2, 3*Math.PI/2);
+		ctx.lineTo((this.x + this.rx - this.ry) * canvasWidth, (this.y - this.ry) * canvasHeight)
+		ctx.arc((this.x + this.rx - this.ry) * canvasWidth, this.y * canvasHeight, this.ry * canvasHeight, 3*Math.PI/2, Math.PI/2);
+		ctx.lineTo((this.x - this.rx + this.ry) * canvasWidth, (this.y + this.ry) * canvasHeight)
 		ctx.fillStyle = this.cCurrent;
 		ctx.fill();
+		ctx.stroke();
+
+		var fontSize = Math.ceil(Math.min((this.ry * canvasHeight)*0.8, (this.rx * canvasWidth)*0.2))
+		ctx.font = "" + fontSize + "px Arial";
+	    ctx.fillStyle = this.cText;
+		ctx.textAlign = "center";
+		ctx.fillText(this.text, this.x * canvasWidth, this.y * canvasHeight + fontSize/2); 
 	}
 
-	color(mouseX, mouseY, canvasWidth, canvasHeight)
+	isTouchingMouse(mouseX, mouseY, canvasWidth, canvasHeight)
 	{
-		if (mouseX > this.x1 * canvasWidth - this.wStroke && mouseX < this.x2 * canvasWidth + this.wStroke && 
-			mouseY > this.y1 * canvasHeight - this.wStroke && mouseY < this.y2 * canvasHeight + this.wStroke)
+		if (mouseX > (this.x - this.rx) * canvasWidth - this.wStroke/2 && mouseX < (this.x + this.rx) * canvasWidth + this.wStroke/2 &&
+			mouseY > (this.y - this.ry) * canvasHeight - this.wStroke/2 && mouseY < (this.y + this.ry) * canvasHeight + this.wStroke/2)
+		{
 			this.cCurrent = this.cActive;
-		else this.cCurrent = this.cInactive;
+			return true;
+		}
+		else 
+		{
+			this.cCurrent = this.cFill;
+			return false;
+		}
 	}
 }
