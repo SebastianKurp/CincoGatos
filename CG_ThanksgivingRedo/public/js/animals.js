@@ -97,7 +97,6 @@ async function initialize()
 
 function drawButtons()
 {
-  console.log("drawButtons is called");
   for (var i = 0; i < buttons.length; i++)
   {
     buttons[i].size(mouseX, mouseY - 75, c.width, c.height);
@@ -113,7 +112,6 @@ function drawButtons()
 
 function drawBars(options)
 {
-  console.log("drawBars is callled");
   for (var i = 0; i < bars.length; i++)
   {
     bars[i].text = options[i];
@@ -131,9 +129,8 @@ function drawBars(options)
   }
 }
 
-function move()
+async function move()
 {
-  console.log("move is called")
   ctx.canvas.width = window.innerWidth;
   ctx.canvas.height = window.innerHeight - 100;
   ctx.clearRect(0, 0, c.width, c.height);
@@ -164,7 +161,7 @@ function move()
   {
     complete = false;
     clickedNext = false;
-    userfunctions.setCards();
+    await setCards();
     card.text = currentQuestion;
     startFlipFrame = frame;
     color = [255,255,255]
