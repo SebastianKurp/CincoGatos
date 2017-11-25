@@ -2,7 +2,6 @@ class Card
 {
 	constructor(x, y, rx, ry, flipSpeed, color, text)
 	{
-		super();
 		this.x = x;
 		this.y = y;
 		this.rx = rx;
