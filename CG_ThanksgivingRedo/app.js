@@ -84,6 +84,8 @@ app.post('/login/complete', function(req, res){
                 let username = userArray[2];
                 req.session.user = user;
                 req.session.username = username;
+                req.session.nativeL = userArray[0];
+                req.session.learningL = userArray[1];
                 console.log(req.session.username);
                 res.render('flashcards', {
                     title: 'Learn a new language!',
@@ -135,20 +137,16 @@ app.post('/signup/complete', function(req, res){
             })
         }
         else{
-            var newUser = {
-                username: req.body.username,
-                email: req.body.email,
-                password: req.body.password,
-                nativeLang: req.body.selectNL,
-                learnLang: req.body.selectLL
-            }
-            //(email, pw, nL,lL, useName) 
             var user = userfunctions.auth(req.body.email, req.body.password, req.body.selectNL, req.body.selectLL, req.body.username);
             console.log('User created');
             console.log(user);
+            req.session.user = user;
+            req.session.username = req.body.username;
+            req.session.nativeL = req.body.selectNL;
+            req.session.learningL = req.body.selectLL;
             res.render('flashcards', {
                 title: 'Learn a new language!',
-                user: user,
+                user: req.session.user,
                 username: req.session.username
             })
         }
