@@ -187,6 +187,30 @@ app.get('/animals', function(req, res){
     });
 });
 
+app.get('/clothing', function(req, res){
+    var currUser = firebase.auth().currentUser;
+    res.render('animals', {
+        title: 'Template...',
+        user: currUser,
+        username: req.session.username,
+        userArray: req.session.userArray,
+        username: req.session.username,
+        userId: req.session.userId
+    });
+});
+
+app.get('/colors', function(req, res){
+    var currUser = firebase.auth().currentUser;
+    res.render('animals', {
+        title: 'Template...',
+        user: currUser,
+        username: req.session.username,
+        userArray: req.session.userArray,
+        username: req.session.username,
+        userId: req.session.userId
+    });
+});
+
 app.listen(3000, function(){
     console.log("Server running on port 3000");
 })

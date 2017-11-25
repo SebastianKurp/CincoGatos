@@ -103,9 +103,7 @@ function move()
   
     ctx.fillStyle = "rgb(0,0,0)";
     ctx.textAlign = "left";
-    ctx.font = "" + Math.ceil(Math.min(c.width/20, c.height/20)) + "px Arial";
-    //ctx.fillText("Welcome, " + username + "!", 0.05*c.width, 0.05*c.height);
-		ctx.font = "" + Math.ceil(Math.min(c.width/30, c.height/30)) + "px Arial";
+	ctx.font = "" + Math.ceil(Math.min(c.width/30, c.height/30)) + "px Arial";
     ctx.fillText("Choose a card set to begin learning.", 0.05*c.width, 0.09*c.height);
 }
 

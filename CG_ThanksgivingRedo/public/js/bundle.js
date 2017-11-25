@@ -25065,7 +25065,7 @@ var c = document.getElementById("myCanvas");
 var ctx = c.getContext("2d");
 var frame = 0, card, otherColor = [255,255,255], startFlipFrame;
 var buttons, bars, mouseX = 0, mouseY = 0, keyPresses, mouseDown = false, clickBuffer = "None", 
-  clickedNext = false, answer = 0, complete = false, currentQuestion, currentAnswer, options, color, cardSet = 0;
+  clickedNext = false, answer = 0, complete = false, currentQuestion, currentAnswer, options, color, cardSet;
 c.style.backgroundColor = "#FFFFFF";
 
 function shuffleArray(a) {
@@ -25110,6 +25110,7 @@ async function setup()
 async function initialize()
 {
   console.log("Initialize is called");
+  getCardSet();
   await setCards();
   color = [255,255,255];
   card = new Card(0.5, 0.3, 0.3, 0.2, 50, color, currentQuestion);
@@ -25124,6 +25125,13 @@ async function initialize()
   buttons = [
     new CircleButton(0.9, 0.9, 0.07, 0.09, "rgb(100,100,100)", "rgb(150,150,150)", "rgb(0,0,0)", 6, "None", "./next", "Next", "rgb(0,0,0)")
   ];
+}
+
+function getCardSet()
+{
+  if (link == "/animals") cardSet = 0;
+  else if (link == "/clothing") cardSet = 1;
+  else if (link == "/colors") cardSet = 2;
 }
 
 function drawButtons()
