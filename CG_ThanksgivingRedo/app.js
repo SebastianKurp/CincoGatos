@@ -175,33 +175,9 @@ app.get('/customcards', function(req, res){
     });
 });
 
-app.get('/animals', function(req, res){
+app.get('/vocab', function(req, res){
     var currUser = firebase.auth().currentUser;
-    res.render('animals', {
-        title: 'Template...',
-        user: currUser,
-        username: req.session.username,
-        userArray: req.session.userArray,
-        username: req.session.username,
-        userId: req.session.userId
-    });
-});
-
-app.get('/clothing', function(req, res){
-    var currUser = firebase.auth().currentUser;
-    res.render('animals', {
-        title: 'Template...',
-        user: currUser,
-        username: req.session.username,
-        userArray: req.session.userArray,
-        username: req.session.username,
-        userId: req.session.userId
-    });
-});
-
-app.get('/colors', function(req, res){
-    var currUser = firebase.auth().currentUser;
-    res.render('animals', {
+    res.render('vocab', {
         title: 'Template...',
         user: currUser,
         username: req.session.username,

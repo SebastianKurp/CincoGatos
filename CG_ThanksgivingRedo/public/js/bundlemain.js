@@ -67,7 +67,7 @@ function drawButtons()
       console.log(clickBuffer);
 
       var hardcodingisbad = "http://localhost:3000";    
-      window.location.href= hardcodingisbad+clickBuffer;
+      window.location.href= hardcodingisbad+'/vocab';
 			localStorage.setItem("datadata", clickBuffer);
 			
       //if clickbuffer is passed we can dynamically change flashcard sets
