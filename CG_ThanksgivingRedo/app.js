@@ -60,13 +60,31 @@ app.post('/login/complete', function(req, res){
         })
     }
     else{
-        var user = userfunctions.login(req.body.email, req.body.password);
-        console.log('User created');
-        console.log(user);
-        res.render('flashcards', {
-            title: 'Learn a new language!',
-            user: user
-        })
+        userfunctions.login(req.body.email, req.body.password);
+        firebase.auth().onAuthStateChanged(async function(user) {
+            if (user) {
+                var user = firebase.auth().currentUser;
+                console.log(user.uid);
+                var flash = [];
+                await userfunctions.getCards(user.uid).then(function(result){
+                        flash = result;
+                    });
+                let userArray = flash[1];
+                let alpha = flash[2];
+                let flashcards = flash[0];
+                let username = userArray[2];
+                console.log("Inside this log" + userArray);
+                res.render('flashcards', {
+                    title: 'Learn a new language!',
+                    user: user,
+                    userfunctions: userfunctions,
+                    username: username
+                })
+                res.end();
+            } else {
+              console.log("Error logging in");
+            }
+          });
     } 
 
     

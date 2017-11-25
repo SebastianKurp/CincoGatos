@@ -77,7 +77,8 @@ function getUserDetails(userid){
       function(resolve, reject)
       {
       firebase.database().ref(`users/`+userid).once('value').then((snapshot) => {
-          var nativeLang = snapshot.val().nativeLang;
+      console.log("Getting user details");
+      var nativeLang = snapshot.val().nativeLang;
       var learningLang = snapshot.val().learningLang;
       var username = snapshot.val().username;
       var langArray = [nativeLang, learningLang, username];
@@ -97,7 +98,8 @@ function getFlashcards(userid){
       function(resolve, reject)
       {
       firebase.database().ref(`users/`+userid+`/premadesets/premadesets`).once('value').then((snapshot) => {
-          var animals = snapshot.val().animals;
+      console.log("Getting flashcards");
+      var animals = snapshot.val().animals;
       var clothing = snapshot.val().clothing;
       var colors = snapshot.val().colors;
       var langArray = [animals, clothing, colors];
@@ -118,7 +120,7 @@ function getAlphabets(userid){
       {
         firebase.database().ref(`users/`+userid+`/alphabets/alphabets`).once('value').then((snapshot) =>
       {
-        console.log(snapshot.val());
+        console.log("Getting alphabets");
         var arabic = snapshot.val().ar;
         var polish = snapshot.val().pl;
         var japanese = snapshot.val().jp;
@@ -134,9 +136,18 @@ function getAlphabets(userid){
     )
   }
 
+async function getCards(userid){
+    let flashArray = await getFlashcards(userid);
+    let langArray = await getUserDetails(userid);
+    let alpharay = await getAlphabets(userid);
+      return [flashArray, langArray, alpharay];
+  };
+
 module.exports.auth = auth;
 module.exports.login = login;
 module.exports.logout = logout;
 module.exports.ref = ref;
 module.exports.fbAuth = fbAuth;
 module.exports.resetPassword = resetPassword;
+module.exports.getUserDetails = getUserDetails;
+module.exports.getCards = getCards;
