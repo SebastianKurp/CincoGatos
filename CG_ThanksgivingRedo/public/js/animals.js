@@ -37,6 +37,17 @@ var buttons, bars, mouseX = 0, mouseY = 0, keyPresses, mouseDown = false, clickB
   clickedNext = false, answer = 0, complete = false, currentQuestion, currentAnswer, options, color, cardSet = 0;
 c.style.backgroundColor = "#FFFFFF";
 
+function shuffleArray(a) {
+  var array = a;
+  for (var i = array.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+  }
+  return array;
+}
+
 async function setup()
 {
   console.log("Setup is called");
@@ -210,7 +221,7 @@ async function setCards()
     if (!otherOptions.includes(r)) otherOptions.push(r);
   }
   console.log(otherOptions);
-  for (var i = 0; i < otherOptions.length; i++) otherOptions[i] = flash[cardSet]["en"][otherOptions[i]]
+  for (var i = 0; i < otherOptions.length; i++) otherOptions[i] = flashcards[cardSet]["en"][otherOptions[i]]
   options = shuffleArray(otherOptions);
   console.log(options);
 }
