@@ -5,7 +5,6 @@ var validator = require('express-validator');
 var firebase = require("firebase");
 var userfunctions = require('./public/js/userfunctions');
 var session = require('client-sessions');
-
 var app = express();
 
 //view engine using EJS

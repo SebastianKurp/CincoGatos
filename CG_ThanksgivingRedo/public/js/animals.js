@@ -10,25 +10,13 @@ flashcards = [];
 
 async function userInfo() {
   let flash = await userfunctions.getCards(userId);
-  console.log("Inside of userinfo");
   console.log(flash);
   return flash;
 }
-      // let flash = await userfunctions.getCards(userId).then(function(result){
-      //         flash = result;
-      //     });
-      /*    
-      let userArray = flash[1];
-      let alpha = flash[2];
-      let flashcards = flash[0];
-      let username = userArray[2];
-      let nativeL = userArray[0];
-      let learningL = userArray[1];
-      */
-      // console.log("Inside userInfo");
-      // console.log(flash);
-      // return flash;
-      //   }
+
+let link = localStorage["datadata"];
+localStorage.removeItem("datadata"); //clear out so can be used again
+console.log("Came here from " + link);
 
 var c = document.getElementById("myCanvas");
 var ctx = c.getContext("2d");
