@@ -4,6 +4,7 @@ var path = require('path');
 var validator = require('express-validator');
 var firebase = require("firebase");
 var userfunctions = require('./public/js/userfunctions');
+var session = require('client-sessions');
 
 var app = express();
 
@@ -30,12 +31,20 @@ app.use(function(req, res, next){
     next();
 });
 
+//C is for Cookie
+app.use(session({
+    cookieName: 'session',
+    secret: 'hkgviviugiohpoh90y68t7ufuyvkboikvjh',
+    duration: 30 * 60 * 1000,
+    activeDuration: 5 * 60 * 1000,
+  }));
+
 //homepage
 app.get('/', function(req, res){
-    var currUser = firebase.auth().currentUser;
     res.render('index', {
         title: 'Cinco Gatos Homepage',
-        user: currUser
+        user: req.session.user,
+        username: req.session.username
     });
 });
 
@@ -60,13 +69,32 @@ app.post('/login/complete', function(req, res){
         })
     }
     else{
-        var user = userfunctions.login(req.body.email, req.body.password);
-        console.log('User created');
-        console.log(user);
-        res.render('flashcards', {
-            title: 'Learn a new language!',
-            user: user
-        })
+        userfunctions.login(req.body.email, req.body.password);
+        firebase.auth().onAuthStateChanged(async function(user) {
+            if (user) {
+                var user = firebase.auth().currentUser;
+                console.log(user.uid);
+                var flash = [];
+                await userfunctions.getCards(user.uid).then(function(result){
+                        flash = result;
+                    });
+                let userArray = flash[1];
+                let alpha = flash[2];
+                let flashcards = flash[0];
+                let username = userArray[2];
+                req.session.user = user;
+                req.session.username = username;
+                console.log(req.session.username);
+                res.render('flashcards', {
+                    title: 'Learn a new language!',
+                    user: user,
+                    userfunctions: userfunctions,
+                    username: username
+                })
+            } else {
+              console.log("Error logging in");
+            }
+          });
     } 
 
     
@@ -75,10 +103,12 @@ app.post('/login/complete', function(req, res){
 //Logout (created a page as cannot load js into EJS)
 //https://stackoverflow.com/questions/47001537/how-to-include-external-js-file-to-ejs-node-template-page
 app.get('/seeyoulater', function(req, res){
-    userfunctions.logout();
+    req.session.reset(); //clear cookie
+    userfunctions.logout(); //actually logout
     res.render('logout', {
         title: 'Thanks for visiting!',
-        user: null
+        user: null,
+        username: null
     });
 });
 
@@ -118,7 +148,8 @@ app.post('/signup/complete', function(req, res){
             console.log(user);
             res.render('flashcards', {
                 title: 'Learn a new language!',
-                user: user
+                user: user,
+                username: req.session.username
             })
         }
 });
@@ -127,7 +158,8 @@ app.get('/flashcards', function(req, res){
     var currUser = firebase.auth().currentUser;
     res.render('flashcards', {
         title: 'Learn!',
-        user: currUser
+        user: currUser,
+        username: req.session.username
     });
 });
 
@@ -135,7 +167,8 @@ app.get('/customcards', function(req, res){
     var currUser = firebase.auth().currentUser;
     res.render('uploadcards', {
         title: 'Make custom flashcards',
-        user: currUser
+        user: currUser,
+        username: req.session.username
     });
 });
 
