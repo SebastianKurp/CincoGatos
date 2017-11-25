@@ -5,7 +5,6 @@ var validator = require('express-validator');
 var firebase = require("firebase");
 var userfunctions = require('./public/js/userfunctions');
 var session = require('client-sessions');
-
 var app = express();
 
 //view engine using EJS
@@ -79,16 +78,12 @@ app.post('/login/complete', function(req, res){
                         flash = result;
                     });
                 let userArray = flash[1];
-                let alpha = flash[2];
-                let flashcards = flash[0];
                 let username = userArray[2];
                 req.session.user = user;
                 userId = user.uid;
+                req.session.userId = userId;
                 console.log("User id:" + typeof userId);
                 req.session.username = username;
-              //  req.session.nativeL = userArray[0];
-               // req.session.learningL = userArray[1];
-              //  req.session.userArray = userArray;
                 res.render('flashcards', {
                     title: 'Learn a new language!',
                     user: req.session.user,
@@ -146,12 +141,12 @@ app.post('/signup/complete', function(req, res){
             console.log(user);
             req.session.user = user;
             req.session.username = req.body.username;
-            req.session.nativeL = req.body.selectNL;
-            req.session.learningL = req.body.selectLL;
+            console.log(req.session.userId);
             res.render('flashcards', {
                 title: 'Learn a new language!',
                 user: req.session.user,
-                username: req.session.username
+                username: req.session.username,
+                userId: req.session.userId
             })
         }
 });
@@ -164,7 +159,7 @@ app.get('/flashcards', function(req, res){
         username: req.session.username,
         userArray: req.session.userArray,
         username: req.session.username,
-        userArray: req.session.userArray
+        userId: req.session.userId
     });
 });
 
@@ -176,7 +171,7 @@ app.get('/customcards', function(req, res){
         username: req.session.username,
         userArray: req.session.userArray,
         username: req.session.username,
-        userArray: req.session.userArray
+        userId: req.session.userId
     });
 });
 
@@ -188,7 +183,7 @@ app.get('/animals', function(req, res){
         username: req.session.username,
         userArray: req.session.userArray,
         username: req.session.username,
-        userArray: req.session.userArray
+        userId: req.session.userId
     });
 });
 
