@@ -83,15 +83,19 @@ app.post('/login/complete', function(req, res){
                 let flashcards = flash[0];
                 let username = userArray[2];
                 req.session.user = user;
+                userId = user.uid;
+                console.log("User id:" + typeof userId);
                 req.session.username = username;
-                req.session.nativeL = userArray[0];
-                req.session.learningL = userArray[1];
-                console.log(req.session.username);
+              //  req.session.nativeL = userArray[0];
+               // req.session.learningL = userArray[1];
+              //  req.session.userArray = userArray;
                 res.render('flashcards', {
                     title: 'Learn a new language!',
-                    user: user,
+                    user: req.session.user,
                     userfunctions: userfunctions,
-                    username: username
+                    userId: userId,
+                    username: username,
+                    userArray: userArray
                 })
             } else {
               console.log("Error logging in");
@@ -157,7 +161,10 @@ app.get('/flashcards', function(req, res){
     res.render('flashcards', {
         title: 'Learn!',
         user: currUser,
-        username: req.session.username
+        username: req.session.username,
+        userArray: req.session.userArray,
+        username: req.session.username,
+        userArray: req.session.userArray
     });
 });
 
@@ -166,7 +173,22 @@ app.get('/customcards', function(req, res){
     res.render('uploadcards', {
         title: 'Make custom flashcards',
         user: currUser,
-        username: req.session.username
+        username: req.session.username,
+        userArray: req.session.userArray,
+        username: req.session.username,
+        userArray: req.session.userArray
+    });
+});
+
+app.get('/animals', function(req, res){
+    var currUser = firebase.auth().currentUser;
+    res.render('animals', {
+        title: 'Template...',
+        user: currUser,
+        username: req.session.username,
+        userArray: req.session.userArray,
+        username: req.session.username,
+        userArray: req.session.userArray
     });
 });
 

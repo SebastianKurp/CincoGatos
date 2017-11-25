@@ -143,6 +143,9 @@ async function getCards(userid){
       return [flashArray, langArray, alpharay];
   };
 
+
+
+
 module.exports.auth = auth;
 module.exports.login = login;
 module.exports.logout = logout;

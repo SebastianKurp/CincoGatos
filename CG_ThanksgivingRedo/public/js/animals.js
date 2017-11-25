@@ -1,3 +1,35 @@
+var userfunctions = require('./userfunctions');
+
+var userId = document.getElementById("bundle").getAttribute("data-userId");
+if (typeof userId === "undefined" ) {
+   var userId = ["No dice"];
+}
+console.log("Inside bundle ID is: " + userId);
+var userArray = [];
+flashcards = [];
+
+async function userInfo() {
+  let flash = await userfunctions.getCards(userId);
+  console.log("Inside of userinfo");
+  console.log(flash);
+  return flash;
+}
+      // let flash = await userfunctions.getCards(userId).then(function(result){
+      //         flash = result;
+      //     });
+      /*    
+      let userArray = flash[1];
+      let alpha = flash[2];
+      let flashcards = flash[0];
+      let username = userArray[2];
+      let nativeL = userArray[0];
+      let learningL = userArray[1];
+      */
+      // console.log("Inside userInfo");
+      // console.log(flash);
+      // return flash;
+      //   }
+
 var c = document.getElementById("myCanvas");
 var ctx = c.getContext("2d");
 var frame = 0, card, otherColor = [255,255,255], startFlipFrame;
@@ -5,14 +37,26 @@ var buttons, bars, mouseX = 0, mouseY = 0, keyPresses, mouseDown = false, clickB
   clickedNext = false, answer = 0, complete = false, currentQuestion, currentAnswer, options, color, cardSet = 0;
 c.style.backgroundColor = "#FFFFFF";
 
-function setup()
+function shuffleArray(a) {
+  var array = a;
+  for (var i = array.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+  }
+  return array;
+}
+
+async function setup()
 {
+  console.log("Setup is called");
   keyPresses = []
   for (var i = 0; i < 128; i++)
   {
     keyPresses.push(false)
   }
-  initialize();
+  await initialize();
   setInterval(move, 1000.0/60.0);
   document.body.addEventListener("mousemove", function(e) {
     mouseX = e.pageX;
@@ -32,9 +76,10 @@ function setup()
   });
 }
 
-function initialize()
+async function initialize()
 {
-  setCards();
+  console.log("Initialize is called");
+  await setCards();
   color = [255,255,255];
   card = new Card(0.5, 0.3, 0.3, 0.2, 50, color, currentQuestion);
   //constructor(x, y, rx, ry, cFill, cActive, cStroke, wStroke, link = "None", text = "", cText)
@@ -50,47 +95,9 @@ function initialize()
   ];
 }
 
-function setCards()
-{
-  let langSet = "";
-  switch(userArray[1]){
-    case 'spanish':
-      console.log("Spanish");
-      langSet = 'sp';
-      break;
-    case 'japanese':
-      console.log("Japanese");
-      langSet = 'jp';
-      break;
-    case 'arabic':
-      console.log("Arabic");
-      langSet = 'ar';
-      break;
-    case 'polish':
-      console.log("Polish");
-      langSet = 'pl';
-      break;
-    default:
-      console.log("Something broke");
-  }
-  var l = flash[cardSet][langSet].length;
-  var r = Math.floor((Math.random() * l) + 1) - 1;
-  currentQuestion = flash[cardSet][langSet][r];
-  currentAnswer = flash[cardSet]["en"][r];
-  var otherOptions = [r];
-  while (otherOptions.length < 4)
-  {
-    r = Math.floor((Math.random() * l) + 1) - 1;
-    if (!otherOptions.includes(r)) otherOptions.push(r);
-  }
-  console.log(otherOptions);
-  for (var i = 0; i < otherOptions.length; i++) otherOptions[i] = flash[cardSet]["en"][otherOptions[i]]
-  options = shuffleArray(otherOptions);
-  console.log(options);
-}
-
 function drawButtons()
 {
+  console.log("drawButtons is called");
   for (var i = 0; i < buttons.length; i++)
   {
     buttons[i].size(mouseX, mouseY - 75, c.width, c.height);
@@ -106,6 +113,7 @@ function drawButtons()
 
 function drawBars(options)
 {
+  console.log("drawBars is callled");
   for (var i = 0; i < bars.length; i++)
   {
     bars[i].text = options[i];
@@ -125,6 +133,7 @@ function drawBars(options)
 
 function move()
 {
+  console.log("move is called")
   ctx.canvas.width = window.innerWidth;
   ctx.canvas.height = window.innerHeight - 100;
   ctx.clearRect(0, 0, c.width, c.height);
@@ -155,7 +164,7 @@ function move()
   {
     complete = false;
     clickedNext = false;
-    setCards();
+    userfunctions.setCards();
     card.text = currentQuestion;
     startFlipFrame = frame;
     color = [255,255,255]
@@ -166,6 +175,55 @@ function move()
   else card.draw(ctx, c.width, c.height);
 
   frame++;
+}
+
+async function setCards()
+{
+  console.log("setCards is called -- next is awaiting userinfo");
+  var flash = await userInfo();
+  let userArray = flash[1];
+  let alpha = flash[2];
+  let flashcards = flash[0];
+  let username = userArray[2];
+  let nativeL = userArray[0];
+  let learningL = userArray[1];
+  console.log(userId); 
+  //userArray = req.session.userArray;
+  let langSet = "";
+  switch(userArray[1]){
+    case 'spanish':
+      console.log("Spanish");
+      langSet = 'sp';
+      break;
+    case 'japanese':
+      console.log("Japanese");
+      langSet = 'jp';
+      break;
+    case 'arabic':
+      console.log("Arabic");
+      langSet = 'ar';
+      break;
+    case 'polish':
+      console.log("Polish");
+      langSet = 'pl';
+      break;
+    default:
+      console.log("Something broke");
+  }
+  var l = flashcards[cardSet][langSet].length;
+  var r = Math.floor((Math.random() * l) + 1) - 1;
+  currentQuestion = flashcards[cardSet][langSet][r];
+  currentAnswer = flashcards[cardSet]["en"][r];
+  var otherOptions = [r];
+  while (otherOptions.length < 4)
+  {
+    r = Math.floor((Math.random() * l) + 1) - 1;
+    if (!otherOptions.includes(r)) otherOptions.push(r);
+  }
+  console.log(otherOptions);
+  for (var i = 0; i < otherOptions.length; i++) otherOptions[i] = flashcards[cardSet]["en"][otherOptions[i]]
+  options = shuffleArray(otherOptions);
+  console.log(options);
 }
 
 setup()
