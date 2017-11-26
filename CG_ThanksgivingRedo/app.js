@@ -181,7 +181,21 @@ app.post('/signup/complete', function(req, res){
         }
     });
 
-
+app.get('/profile', function(req, res){
+    var currUser = firebase.auth().currentUser;
+    if (req.session.user) {
+        res.render('profile', {
+            title: 'Your Profile',
+            user: currUser,
+            username: req.session.username,
+            userArray: req.session.userArray,
+            username: req.session.username,
+            userId: req.session.userId
+        });
+    } else {
+        res.redirect('/login'); //boot them out if they're not logged in
+    }
+});
 
 app.get('/flashcards', function(req, res){
     var currUser = firebase.auth().currentUser;

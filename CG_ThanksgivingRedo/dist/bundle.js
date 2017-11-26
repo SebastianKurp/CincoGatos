@@ -45529,6 +45529,15 @@ app.get('/flashcards', function (req, res) {
     });
 });
 
+app.get('/profile', function (req, res) {
+    var currUser = firebase.auth().currentUser;
+     res.render('profile', {
+        title: 'Your Profile',
+        user: currUser,
+        username: req.session.username
+    });
+});
+
 app.get('/customcards', function (req, res) {
     var currUser = firebase.auth().currentUser;
     res.render('uploadcards', {
