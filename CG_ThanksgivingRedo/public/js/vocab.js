@@ -67,7 +67,7 @@ async function setup()
 async function initialize()
 {
   console.log("Initialize is called");
-  getCardSet();
+  cardset = await getCardSet();
   await setCards();
   color = [255,255,255];
   card = new Card(0.5, 0.3, 0.3, 0.2, 50, color, currentQuestion);
@@ -86,13 +86,13 @@ async function initialize()
 
 function getCardSet()
 {
-  var langArray = [animals, clothing, colors, food, household, school];
-  if (link == "/animals") cardSet = 0;
-  else if (link == "/clothing") cardSet = 1;
-  else if (link == "/colors") cardSet = 2;
-  else if (link == "/food") cardset = 3;
-  else if (link == "/household") cardset = 4;
-  else if (link == "/school") cardset = 5;
+  console.log("Getting cardset");
+  if (link === "/animals") return 0;
+  else if (link === "/clothing") return 1;
+  else if (link === "/colors") return 2;
+  else if (link === "/foods") return 3;
+  else if (link === "/household") return 4;
+  else if (link === "/school") return 5;
 }
 
 function drawButtons()
@@ -207,9 +207,11 @@ async function setCards()
     default:
       console.log("Something broke");
   }
+  cardSet =  await getCardSet();
+  console.log(cardSet);
   var l = flashcards[cardSet][langSet].length;
   var r = Math.floor((Math.random() * l) + 1) - 1;
-  currentQuestion = flashcards[cardSet][langSet][r];
+  currentQuestion = flashcards[cardSet][langSet][r][0];
   currentAnswer = flashcards[cardSet]["en"][r];
   var otherOptions = [r];
   while (otherOptions.length < 4)
