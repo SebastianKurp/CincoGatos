@@ -23,6 +23,10 @@
     font-size: 5.75em;
 }
 
+.top-buffer {
+    margin-top: 35em;
+}
+
 #logo-name{
     text-orientation: upright;
     color:rgb(0, 125, 209);

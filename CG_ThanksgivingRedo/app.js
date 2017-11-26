@@ -101,7 +101,11 @@ app.post('/login/complete', function(req, res){
                     });
                 let userArray = flash[1];
                 let username = userArray[2];
+                let nativeL = userArray[0];
+                let learnL = userArray[1];
                 req.session.user = user;
+                req.session.native = nativeL;
+                req.session.learning = learnL;
                 userId = user.uid;
                 req.session.userId = userId;
                 req.session.username = username;
@@ -167,6 +171,8 @@ app.post('/signup/complete', function(req, res){
                     userId = user.uid;
                     req.session.userId = userId;
                     req.session.username = req.body.username;
+                    req.session.native = req.body.selectNL;
+                    req.session.learning = req.body.selectLL;
                     console.log('User created');
                     res.render('flashcards', {
                         title: 'Learn a new language!',
@@ -188,9 +194,9 @@ app.get('/profile', function(req, res){
             title: 'Your Profile',
             user: currUser,
             username: req.session.username,
-            userArray: req.session.userArray,
-            username: req.session.username,
-            userId: req.session.userId
+            userId: req.session.userId,
+            native: req.session.native,
+            learning: req.session.learning
         });
     } else {
         res.redirect('/login'); //boot them out if they're not logged in
