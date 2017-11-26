@@ -250,7 +250,7 @@ async function setCards()
 
   var cardIndex = r;
   currentQuestion = flashcards[cardSet][langSet][r][0];
-  currentAnswer = flashcards[cardSet]["en"][r][0];
+  currentAnswer = flashcards[cardSet]["en"][r];
 
   var otherOptions = [r];
   while (otherOptions.length < 4)
