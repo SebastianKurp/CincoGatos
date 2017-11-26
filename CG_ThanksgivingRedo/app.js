@@ -243,7 +243,7 @@ app.get('/vocab', function(req, res){
         res.redirect('/login');
     }
     res.render('vocab', {
-        title: 'Template...',
+        title: 'Learn Vocabulary!',
         user: currUser,
         username: req.session.username,
         userArray: req.session.userArray,
