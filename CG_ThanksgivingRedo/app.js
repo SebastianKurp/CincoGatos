@@ -104,7 +104,6 @@ app.post('/login/complete', function(req, res){
                 req.session.user = user;
                 userId = user.uid;
                 req.session.userId = userId;
-                console.log("User id:" + typeof userId);
                 req.session.username = username;
                 res.render('flashcards', {
                     title: 'Learn a new language!',
@@ -161,19 +160,28 @@ app.post('/signup/complete', function(req, res){
         else{
             var user = userfunctions
             .auth(req.body.email, req.body.password, req.body.selectNL, req.body.selectLL, req.body.username);
-            req.session.user = req.body.user;//store user data in session 'user'
-            console.log('User created');
-            console.log(user);
-            req.session.userId = user.uid;
-            req.session.user = user;
-            res.render('flashcards', {
-                title: 'Learn a new language!',
-                user: req.session.user,
-                username: req.session.username,
-                userId: req.session.userId
-            })
+            firebase.auth().onAuthStateChanged(function(user) {
+                if (user) {
+                    var user = firebase.auth().currentUser;
+                    req.session.user = user;
+                    userId = user.uid;
+                    req.session.userId = userId;
+                    req.session.username = req.body.username;
+                    console.log('User created');
+                    res.render('flashcards', {
+                        title: 'Learn a new language!',
+                        user: req.session.user,
+                        username: req.session.username,
+                        userId: req.session.userId
+                    })
+                } else {
+                    console.log("Waiting...");
+                }
+            });
         }
-});
+    });
+
+
 
 app.get('/flashcards', function(req, res){
     var currUser = firebase.auth().currentUser;
