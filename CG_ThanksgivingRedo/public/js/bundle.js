@@ -25495,17 +25495,11 @@ async function setCards()
       currSet = alpha[1];
     }
     else if(langSet === 'jp'){
-      while(which !== 'h' & which !== 'k'){
-        var which = prompt("Hiragana or Katakana? Type H or K");
-        which = which.toLowerCase();
-      }
-      if(which === 'h'){
-        //this is the array list like [?, 0], [?, 0]
-        console.log(alpha[2]["hiragana"]["jp"]);
+      randomAlpha = Math.floor((Math.random() * 2) + 1)
+      if(randomAlpha === 1){
         currSet = alpha[2]["hiragana"];
       }
-      else if(which === 'k'){
-        console.log("????");
+      else if(randomAlpha === 2){
         currSet = alpha[2]["katakana"];
       }
     }
