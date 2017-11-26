@@ -22,7 +22,7 @@ var c = document.getElementById("myCanvas");
 var ctx = c.getContext("2d");
 var frame = 0, card, otherColor = [255,255,255], startFlipFrame;
 var buttons, bars, mouseX = 0, mouseY = 0, keyPresses, mouseDown = false, clickBuffer = "None", 
-  clickedNext = false, answer = 0, complete = false, currentQuestion, currentAnswer, options, color, cardSet;
+  clickedNext = false, answer = 0, complete = false, currentQuestion, currentAnswer, options, color, cardSet, currCard;
 c.style.backgroundColor = "#FFFFFF";
 
 function shuffleArray(a) {
@@ -67,8 +67,9 @@ async function setup()
 async function initialize()
 {
   console.log("Initialize is called");
-  cardset = await getCardSet();
-  await setCards();
+  getCardSet();
+  let currCard = await setCards();
+
   color = [255,255,255];
   card = new Card(0.5, 0.3, 0.3, 0.2, 50, color, currentQuestion);
   //constructor(x, y, rx, ry, cFill, cActive, cStroke, wStroke, link = "None", text = "", cText)
@@ -149,8 +150,16 @@ async function move()
     if (!card.isFlipping)
     {
       startFlipFrame = frame;
-      if (currentAnswer === options[answer-1]) color = [150,255,150];
-      else color = [255,150,150];
+      if (currentAnswer === options[answer-1]) 
+      {
+        color = [150,255,150];
+        if (flashcards[cardSet][langSet][currCard][1] < 5) flashcards[cardSet][langSet][currCard][1] += 1
+      }
+      else
+      {
+        color = [255,150,150];
+        if (flashcards[cardSet][langSet][currCard][1] > 0) flashcards[cardSet][langSet][currCard][1] -= 1
+      }
       card.text = currentAnswer;
       card.drawFlip(ctx, frame - startFlipFrame, color, c.width, c.height);
     }
@@ -161,7 +170,7 @@ async function move()
   {
     complete = false;
     clickedNext = false;
-    await setCards();
+    let currCard = await setCards();
     card.text = currentQuestion;
     startFlipFrame = frame;
     color = [255,255,255]
@@ -211,8 +220,11 @@ async function setCards()
   console.log(cardSet);
   var l = flashcards[cardSet][langSet].length;
   var r = Math.floor((Math.random() * l) + 1) - 1;
+
+  var cardIndex = r;
   currentQuestion = flashcards[cardSet][langSet][r][0];
-  currentAnswer = flashcards[cardSet]["en"][r];
+  currentAnswer = flashcards[cardSet]["en"][r][0];
+
   var otherOptions = [r];
   while (otherOptions.length < 4)
   {
@@ -220,9 +232,10 @@ async function setCards()
     if (!otherOptions.includes(r)) otherOptions.push(r);
   }
   console.log(otherOptions);
-  for (var i = 0; i < otherOptions.length; i++) otherOptions[i] = flashcards[cardSet]["en"][otherOptions[i]]
+  for (var i = 0; i < otherOptions.length; i++) otherOptions[i] = flashcards[cardSet]["en"][otherOptions[i]][0]
   options = shuffleArray(otherOptions);
   console.log(options);
+  return cardIndex;
 }
 
 setup()
