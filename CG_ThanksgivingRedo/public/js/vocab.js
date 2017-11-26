@@ -86,9 +86,13 @@ async function initialize()
 
 function getCardSet()
 {
+  var langArray = [animals, clothing, colors, food, household, school];
   if (link == "/animals") cardSet = 0;
   else if (link == "/clothing") cardSet = 1;
   else if (link == "/colors") cardSet = 2;
+  else if (link == "/food") cardset = 3;
+  else if (link == "/household") cardset = 4;
+  else if (link == "/school") cardset = 5;
 }
 
 function drawButtons()

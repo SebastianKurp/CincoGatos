@@ -40,9 +40,14 @@ app.use(session({
 
 //homepage
 app.get('/', function(req, res){
+    if(req.session.user === undefined){
+        var user = null;
+    } else {
+        var user = req.session.user;
+    }
     res.render('index', {
         title: 'Cinco Gatos Homepage',
-        user: req.session.user,
+        user: user,
         username: req.session.username
     });
 });
@@ -106,6 +111,7 @@ app.post('/login/complete', function(req, res){
 app.get('/seeyoulater', function(req, res){
     req.session.reset(); //clear cookie
     userfunctions.logout(); //actually logout
+    console.log(req.session.user);
     res.render('logout', {
         title: 'Thanks for visiting!',
         user: null,

@@ -102,7 +102,10 @@ function getFlashcards(userid){
       var animals = snapshot.val().animals;
       var clothing = snapshot.val().clothing;
       var colors = snapshot.val().colors;
-      var langArray = [animals, clothing, colors];
+      var food = snapshot.val().food;
+      var household = snapshot.val().household;
+      var school = snapshot.val().school;
+      var langArray = [animals, clothing, colors, food, household, school];
       if(langArray != null){
         resolve(langArray);
       }
