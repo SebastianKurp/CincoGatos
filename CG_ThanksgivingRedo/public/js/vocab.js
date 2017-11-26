@@ -93,6 +93,7 @@ function getCardSet()
   else if (link === "/foods") return 3;
   else if (link === "/household") return 4;
   else if (link === "/school") return 5;
+  else if (link === "/alphabet") return 6;
 }
 
 function drawButtons()
@@ -208,21 +209,52 @@ async function setCards()
       console.log("Something broke");
   }
   cardSet =  await getCardSet();
-  console.log(cardSet);
-  var l = flashcards[cardSet][langSet].length;
-  var r = Math.floor((Math.random() * l) + 1) - 1;
-  currentQuestion = flashcards[cardSet][langSet][r][0];
-  currentAnswer = flashcards[cardSet]["en"][r];
-  var otherOptions = [r];
-  while (otherOptions.length < 4)
-  {
-    r = Math.floor((Math.random() * l) + 1) - 1;
-    if (!otherOptions.includes(r)) otherOptions.push(r);
+  if(cardSet >= 6){
+    console.log(alpha[0]);
+    console.log(alpha[1]);
+    console.log(alpha[2]);
+    console.log("Testing alphas...");
+    if(langSet === 'ar'){
+      console.log(alpha[0]);
+    }
+    else if(langSet === 'pl'){
+      console.log(alpha[1]);
+    }
+    else if(langSet === 'jp'){
+      while(which !== 'h' & which !== 'k'){
+        var which = prompt("Hiragana or Katakana? Type H or K");
+        which = which.toLowerCase();
+      }
+      if(which === 'h'){
+        console.log("ひらがな");
+      }
+      else if(which === 'k'){
+        console.log("カタカナ");
+      }
+      console.log(alpha[2]);
+    }
+    else{
+      alert("No alphabet for you!");
+      window.location.href = "http://localhost:3000/vocab";
+    }
   }
-  console.log(otherOptions);
-  for (var i = 0; i < otherOptions.length; i++) otherOptions[i] = flashcards[cardSet]["en"][otherOptions[i]]
-  options = shuffleArray(otherOptions);
-  console.log(options);
+  else{
+    var l = flashcards[cardSet][langSet].length;
+    var r = Math.floor((Math.random() * l) + 1) - 1;
+    currentQuestion = flashcards[cardSet][langSet][r][0];
+    currentAnswer = flashcards[cardSet]["en"][r];
+    var otherOptions = [r];
+    while (otherOptions.length < 4)
+    {
+      r = Math.floor((Math.random() * l) + 1) - 1;
+      if (!otherOptions.includes(r)) otherOptions.push(r);
+    }
+    console.log(otherOptions);
+    for (var i = 0; i < otherOptions.length; i++) otherOptions[i] = flashcards[cardSet]["en"][otherOptions[i]]
+    options = shuffleArray(otherOptions);
+    console.log(options);
+  }
+
 }
 
 setup()
