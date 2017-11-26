@@ -94,6 +94,7 @@ function getCardSet()
   else if (link === "/foods") return 3;
   else if (link === "/household") return 4;
   else if (link === "/school") return 5;
+  else if (link === "/alphabet") return 6;
 }
 
 function drawButtons()
@@ -217,7 +218,34 @@ async function setCards()
       console.log("Something broke");
   }
   cardSet =  await getCardSet();
-  console.log(cardSet);
+  if(cardSet >= 6){
+    if(langSet === 'ar'){
+      console.log(alpha[0]);
+    }
+    else if(langSet === 'pl'){
+      console.log(alpha[1]);
+    }
+    else if(langSet === 'jp'){
+      while(which !== 'h' & which !== 'k'){
+        var which = prompt("Hiragana or Katakana? Type H or K");
+        which = which.toLowerCase();
+      }
+      if(which === 'h'){
+        //this is the array list like [あ, 0], [い, 0]
+        console.log(alpha[2]["hiragana"]["jp"]);
+      }
+      else if(which === 'k'){
+        console.log("カタカナ");
+      }
+      console.log(alpha[2]);
+    }
+    else{
+      alert("No alphabet for you!");
+      window.location.href = "http://localhost:3000/vocab";
+    }
+  }
+  else{
+
   var l = flashcards[cardSet][langSet].length;
   var r = Math.floor((Math.random() * l) + 1) - 1;
 
@@ -236,6 +264,7 @@ async function setCards()
   options = shuffleArray(otherOptions);
   console.log(options);
   return cardIndex;
+
 }
 
 setup()
