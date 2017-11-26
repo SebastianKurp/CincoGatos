@@ -43,7 +43,7 @@ function initialize()
 			new CircleButton(0.8, 0.5, 0.08, 0.1, "rgb(255,150,0)", "rgb(255,200,50)", "rgb(0,0,0)", 6, "None", "/school", "school", "rgb(0,0,0)"),
 			new CircleButton(0.3, 0.7, 0.08, 0.1, "rgb(0,206,209)", "rgb(50,255,255)", "rgb(0,0,0)", 6, "None", "/colors", "colors", "rgb(0,0,0)"),
 			new CircleButton(0.5, 0.7, 0.08, 0.1, "rgb(255,100,125)", "rgb(255,150,175)", "rgb(0,0,0)", 6, "None", "/clothing", "clothing", "rgb(0,0,0)"),
-			new CircleButton(0.7, 0.7, 0.08, 0.1, "rgb(255,200,0)", "rgb(255,255,50)", "rgb(0,0,0)", 6, "None", "/placeholder", "placeholder", "rgb(0,0,0)"),
+			new CircleButton(0.7, 0.7, 0.08, 0.1, "rgb(255,200,0)", "rgb(255,255,50)", "rgb(0,0,0)", 6, "None", "/numbers", "numbers", "rgb(0,0,0)"),
 				];
 		//constructor(x, y, rx, ry, cFill, cActive, cStroke, wStroke, link = "None", text = "", cText)
 	bars =	[
@@ -82,6 +82,18 @@ function drawBars()
   for (var i = 0; i < bars.length; i++)
   {
     bars[i].isTouchingMouse(mouseX, mouseY - 75, c.width, c.height)
+      if (!mouseDown && clickBuffer !== "None")
+      {
+          console.log(clickBuffer);
+
+          var hardcodingisbad = "http://localhost:3000";
+          window.location.href= hardcodingisbad+'/achievements';
+          localStorage.setItem("datadata", clickBuffer);
+
+          //if clickbuffer is passed we can dynamically change flashcard sets
+          //& background colors based on user clicks -- one canvas
+          clickBuffer = "None";
+      }
     bars[i].draw(ctx, c.width, c.height);
   }
 }
