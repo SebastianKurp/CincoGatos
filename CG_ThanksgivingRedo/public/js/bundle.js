@@ -25226,7 +25226,7 @@ var c = document.getElementById("myCanvas");
 var ctx = c.getContext("2d");
 var frame = 0, card, otherColor = [255,255,255], startFlipFrame;
 var buttons, bars, mouseX = 0, mouseY = 0, keyPresses, mouseDown = false, clickBuffer = "None", 
-  clickedNext = false, answer = 0, complete = false, currentQuestion, currentAnswer, options, color, cardSet, currCard;
+  clickedNext = false, answer = 0, complete = false, currentQuestion, currentAnswer, options, color, cardSet, currCard, baseColor;
 c.style.backgroundColor = "#FFFFFF";
 
 function shuffleArray(a) {
@@ -25279,11 +25279,13 @@ async function initialize()
   color = [255,255,255];
   card = new Card(0.5, 0.3, 0.3, 0.2, 50, color, currentQuestion);
   //constructor(x, y, rx, ry, cFill, cActive, cStroke, wStroke, link = "None", text = "", cText)
+  var color1 = "rgb(" + baseColor[0] + ',' + baseColor[1] + ',' + baseColor[2] + ')';
+  var color2 = "rgb(" + Math.floor((baseColor[0] + 0) / 2)  + ',' + Math.floor((baseColor[1] + 0) / 2) + ',' + Math.floor((baseColor[2] + 0) / 2) + ')';
   bars =  [
-        new Bar(0.5, 0.65, 0.3, 0.0375, "rgb(255,0,0)", "rgb(150,0,0)", "rgb(0,0,0)", 6, "./option1", "Option 1", "rgb(255,255,255)"),
-        new Bar(0.5, 0.75, 0.3, 0.0375, "rgb(255,0,0)", "rgb(150,0,0)", "rgb(0,0,0)", 6, "./option2", "Option 2", "rgb(255,255,255)"),
-        new Bar(0.5, 0.85, 0.3, 0.0375, "rgb(255,0,0)", "rgb(150,0,0)", "rgb(0,0,0)", 6, "./option3", "Option 3", "rgb(255,255,255)"),
-        new Bar(0.5, 0.95, 0.3, 0.0375, "rgb(255,0,0)", "rgb(150,0,0)", "rgb(0,0,0)", 6, "./option4", "Option 4", "rgb(255,255,255)")
+        new Bar(0.5, 0.65, 0.3, 0.0375, color1, color2, "rgb(0,0,0)", 6, "./option1", "Option 1", "rgb(255,255,255)"),
+        new Bar(0.5, 0.75, 0.3, 0.0375, color1, color2, "rgb(0,0,0)", 6, "./option2", "Option 2", "rgb(255,255,255)"),
+        new Bar(0.5, 0.85, 0.3, 0.0375, color1, color2, "rgb(0,0,0)", 6, "./option3", "Option 3", "rgb(255,255,255)"),
+        new Bar(0.5, 0.95, 0.3, 0.0375, color1, color2, "rgb(0,0,0)", 6, "./option4", "Option 4", "rgb(255,255,255)")
   ];
   //constructor(x, y, rInactive, rActive, cFill, cActive, cStroke, wStroke, image = "None", link = "None", text = "", cText)
   buttons = [
@@ -25294,13 +25296,34 @@ async function initialize()
 function getCardSet()
 {
   console.log("Getting cardset");
-  if (link === "/animals") return 0;
-  else if (link === "/clothing") return 1;
-  else if (link === "/colors") return 2;
-  else if (link === "/foods") return 3;
-  else if (link === "/household") return 4;
-  else if (link === "/school") return 5;
-  else if (link === "/alphabet") return 6;
+  if (link === "/animals") {
+    baseColor = [255,0,0];
+    return 0;
+  }
+  else if (link === "/clothing") {
+    baseColor = [255,100,125];
+    return 1;
+  }
+  else if (link === "/colors") {
+    baseColor = [0,206,209];
+    return 2;
+  }
+  else if (link === "/foods") {
+    baseColor = [0,150,255];
+    return 3;
+  }
+  else if (link === "/household") {
+    baseColor = [150,35,255];
+    return 4;
+  }
+  else if (link === "/school") {
+    baseColor = [255,150,0];
+    return 5;
+  }
+  else if (link === "/alphabet") {
+    baseColor = [100,100,100];
+    return 6;
+  }
 }
 
 function drawButtons()
@@ -25345,7 +25368,8 @@ async function move()
 
   ctx.beginPath();
   ctx.arc(c.width/2, c.height/2, Math.min(c.width, c.height)/2, 0, 2*Math.PI);
-  ctx.fillStyle = "rgb(255,225,225)"
+  var color3 = "rgb(" + Math.floor((baseColor[0] + 255*4) / 5)  + ',' + Math.floor((baseColor[1] + 255*4) / 5) + ',' + Math.floor((baseColor[2] + 255*4) / 5) + ')';
+  ctx.fillStyle = color3;
   ctx.fill();
 
   drawButtons();
@@ -25360,12 +25384,12 @@ async function move()
       if (currentAnswer === options[answer-1]) 
       {
         color = [150,255,150];
-        if (flashcards[cardSet][langSet][currCard][1] < 5) flashcards[cardSet][langSet][currCard][1] += 1
+        //if (flashcards[cardSet][langSet][currCard][1] < 5) flashcards[cardSet][langSet][currCard][1] += 1
       }
       else
       {
         color = [255,150,150];
-        if (flashcards[cardSet][langSet][currCard][1] > 0) flashcards[cardSet][langSet][currCard][1] -= 1
+        //if (flashcards[cardSet][langSet][currCard][1] > 0) flashcards[cardSet][langSet][currCard][1] -= 1
       }
       card.text = currentAnswer;
       card.drawFlip(ctx, frame - startFlipFrame, color, c.width, c.height);
@@ -25427,21 +25451,48 @@ async function getLang(){
 
 async function setCards()
 {
-  let langArray = await getLang();
-  langSet = langArray[0];
-  userArray = langArray[1];
-  alpha = langArray[2];
-  flashcards = langArray[3];
-  username = langArray[4];
-  nativeL = langArray[5];
-  learningL = langArray[6];
-   cardSet =  await getCardSet();
+  console.log("setCards is called -- next is awaiting userinfo");
+  var flash = await userInfo();
+  let userArray = flash[1];
+  let alpha = flash[2];
+  let flashcards = flash[0];
+  let username = userArray[2];
+  let nativeL = userArray[0];
+  let learningL = userArray[1];
+  console.log(userId); 
+  //userArray = req.session.userArray;
+  let langSet = "";
+  switch(userArray[1]){
+    case 'spanish':
+      console.log("Spanish");
+      langSet = 'sp';
+      break;
+    case 'japanese':
+      console.log("Japanese");
+      langSet = 'jp';
+      break;
+    case 'arabic':
+      console.log("Arabic");
+      langSet = 'ar';
+      break;
+    case 'polish':
+      console.log("Polish");
+      langSet = 'pl';
+      break;
+    default:
+      console.log("Something broke");
+  }
+  cardSet =  await getCardSet();
+  var currSet = 'None';
   if(cardSet >= 6){
     if(langSet === 'ar'){
+      console.log("picked arabic letters ");
       console.log(alpha[0]);
+      currSet = alpha[0];
     }
     else if(langSet === 'pl'){
       console.log(alpha[1]);
+      currSet = alpha[1];
     }
     else if(langSet === 'jp'){
       while(which !== 'h' & which !== 'k'){
@@ -25449,27 +25500,35 @@ async function setCards()
         which = which.toLowerCase();
       }
       if(which === 'h'){
-        //this is the array list like [あ, 0], [い, 0]
+        //this is the array list like [?, 0], [?, 0]
         console.log(alpha[2]["hiragana"]["jp"]);
+        currSet = alpha[2]["hiragana"]["jp"];
       }
       else if(which === 'k'){
-        console.log("カタカナ");
+        console.log("????");
       }
       console.log(alpha[2]);
+      currSet = alpha[2];
     }
     else{
       alert("No alphabet for you!");
       window.location.href = "http://localhost:3000/vocab";
     }
   }
-  else{
-  var l = flashcards[cardSet][langSet].length;
+
+  if (currSet === 'None') currSet = flashcards[cardSet]
+
+  console.log("currSet");
+  console.log(currSet);
+
+  var l = currSet[langSet].length;
   var r = Math.floor((Math.random() * l) + 1) - 1;
 
+  console.log(langSet + " " + r);
+
   var cardIndex = r;
-  currentQuestion = flashcards[cardSet][langSet][r][0];
-  currentAnswer = flashcards[cardSet]["en"][r];
-  console.log(flashcards[cardSet]["en"][r]);
+  currentQuestion = currSet[langSet][r][0];
+  currentAnswer = currSet["en"][r];
 
   var otherOptions = [r];
   while (otherOptions.length < 4)
@@ -25478,12 +25537,11 @@ async function setCards()
     if (!otherOptions.includes(r)) otherOptions.push(r);
   }
   console.log(otherOptions);
-  for (var i = 0; i < otherOptions.length; i++) otherOptions[i] = flashcards[cardSet]["en"][otherOptions[i]]
+  for (var i = 0; i < otherOptions.length; i++) otherOptions[i] = currSet["en"][otherOptions[i]]
   options = shuffleArray(otherOptions);
   console.log(options);
   return cardIndex;
 }
-}
 
-setup()
+setup();
 },{"./userfunctions":159}]},{},[160]);
