@@ -25249,6 +25249,7 @@ async function setup()
     keyPresses.push(false)
   }
   await initialize();
+  await getLang();
   setInterval(move, 1000.0/60.0);
   document.body.addEventListener("mousemove", function(e) {
     mouseX = e.pageX;
@@ -25272,7 +25273,8 @@ async function initialize()
 {
   console.log("Initialize is called");
   getCardSet();
-  let currCard = await setCards();
+  langset = await getLang();
+  currCard = await setCards();
 
   color = [255,255,255];
   card = new Card(0.5, 0.3, 0.3, 0.2, 50, color, currentQuestion);
@@ -25388,8 +25390,7 @@ async function move()
   frame++;
 }
 
-async function setCards()
-{
+async function getLang(){
   console.log("setCards is called -- next is awaiting userinfo");
   var flash = await userInfo();
   let userArray = flash[1];
@@ -25421,7 +25422,20 @@ async function setCards()
     default:
       console.log("Something broke");
   }
-  cardSet =  await getCardSet();
+  return [langSet, userArray, alpha, flashcards, username, nativeL, learningL];
+}
+
+async function setCards()
+{
+  let langArray = await getLang();
+  langSet = langArray[0];
+  userArray = langArray[1];
+  alpha = langArray[2];
+  flashcards = langArray[3];
+  username = langArray[4];
+  nativeL = langArray[5];
+  learningL = langArray[6];
+   cardSet =  await getCardSet();
   if(cardSet >= 6){
     if(langSet === 'ar'){
       console.log(alpha[0]);
