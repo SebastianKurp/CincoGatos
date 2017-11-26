@@ -4,7 +4,8 @@ var path = require('path');
 var validator = require('express-validator');
 var firebase = require("firebase");
 var userfunctions = require('./public/js/userfunctions');
-var session = require('client-sessions');
+//var session = require('client-sessions');
+var session = require('express-session');
 var app = express();
 
 //view engine using EJS
@@ -32,11 +33,25 @@ app.use(function(req, res, next){
 
 //C is for Cookie
 app.use(session({
-    cookieName: 'session',
-    secret: 'hkgviviugiohpoh90y68t7ufuyvkboikvjh',
-    duration: 30 * 60 * 1000,
-    activeDuration: 5 * 60 * 1000,
+    key: 'user',
+    secret: 'ebfebfriehnforenvofdlnvplfd',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        expires: 600000
+    }
   }));
+
+  //if cookie in browser but user is not valid
+  //log out
+  /*
+  app.use((req, res, next) => {
+    if (req.cookies.user_id && !req.session.user) {
+        res.clearCookie('user_id');        
+    }
+    next();
+}); */
+
 
 //homepage
 app.get('/', function(req, res){
@@ -74,6 +89,8 @@ app.post('/login/complete', function(req, res){
     }
     else{
         userfunctions.login(req.body.email, req.body.password);
+        var username = req.body.username;
+        var password = req.body.password;
         firebase.auth().onAuthStateChanged(async function(user) {
             if (user) {
                 var user = firebase.auth().currentUser;
@@ -109,9 +126,9 @@ app.post('/login/complete', function(req, res){
 //Logout (created a page as cannot load js into EJS)
 //https://stackoverflow.com/questions/47001537/how-to-include-external-js-file-to-ejs-node-template-page
 app.get('/seeyoulater', function(req, res){
-    req.session.reset(); //clear cookie
+    req.session.destroy(); //clear cookie
     userfunctions.logout(); //actually logout
-    console.log(req.session.user);
+    //console.log(req.session.user);
     res.render('logout', {
         title: 'Thanks for visiting!',
         user: null,
@@ -142,12 +159,13 @@ app.post('/signup/complete', function(req, res){
             })
         }
         else{
-            var user = userfunctions.auth(req.body.email, req.body.password, req.body.selectNL, req.body.selectLL, req.body.username);
+            var user = userfunctions
+            .auth(req.body.email, req.body.password, req.body.selectNL, req.body.selectLL, req.body.username);
+            req.session.user = req.body.user;//store user data in session 'user'
             console.log('User created');
             console.log(user);
+            req.session.userId = user.uid;
             req.session.user = user;
-            req.session.username = req.body.username;
-            console.log(req.session.userId);
             res.render('flashcards', {
                 title: 'Learn a new language!',
                 user: req.session.user,
@@ -159,18 +177,25 @@ app.post('/signup/complete', function(req, res){
 
 app.get('/flashcards', function(req, res){
     var currUser = firebase.auth().currentUser;
-    res.render('flashcards', {
-        title: 'Learn!',
-        user: currUser,
-        username: req.session.username,
-        userArray: req.session.userArray,
-        username: req.session.username,
-        userId: req.session.userId
-    });
+    if (req.session.user) {
+        //res.sendFile(__dirname + '/flashcards.ejs');
+        res.render('flashcards', {
+            title: 'Learn!',
+            user: currUser,
+            username: req.session.username,
+            userArray: req.session.userArray,
+            username: req.session.username,
+            userId: req.session.userId
+        });
+    } else {
+        res.redirect('/login'); //boot them out if they're not logged in
+    }
+
 });
 
 app.get('/customcards', function(req, res){
     var currUser = firebase.auth().currentUser;
+    if (req.session.user) {
     res.render('uploadcards', {
         title: 'Make custom flashcards',
         user: currUser,
@@ -178,17 +203,22 @@ app.get('/customcards', function(req, res){
         userArray: req.session.userArray,
         username: req.session.username,
         userId: req.session.userId
-    });
+    });   
+    } else {
+        res.redirect('/login'); //boot them out if they're not logged in
+    }
 });
 
 app.get('/vocab', function(req, res){
     var currUser = firebase.auth().currentUser;
+    if(!req.session.user){
+        res.redirect('/login');
+    }
     res.render('vocab', {
         title: 'Template...',
         user: currUser,
         username: req.session.username,
         userArray: req.session.userArray,
-        username: req.session.username,
         userId: req.session.userId
     });
 });

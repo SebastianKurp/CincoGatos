@@ -25455,6 +25455,7 @@ async function setCards()
   var cardIndex = r;
   currentQuestion = flashcards[cardSet][langSet][r][0];
   currentAnswer = flashcards[cardSet]["en"][r];
+  console.log(flashcards[cardSet]["en"][r]);
 
   var otherOptions = [r];
   while (otherOptions.length < 4)
@@ -25463,7 +25464,7 @@ async function setCards()
     if (!otherOptions.includes(r)) otherOptions.push(r);
   }
   console.log(otherOptions);
-  for (var i = 0; i < otherOptions.length; i++) otherOptions[i] = flashcards[cardSet]["en"][otherOptions[i]][0]
+  for (var i = 0; i < otherOptions.length; i++) otherOptions[i] = flashcards[cardSet]["en"][otherOptions[i]]
   options = shuffleArray(otherOptions);
   console.log(options);
   return cardIndex;
