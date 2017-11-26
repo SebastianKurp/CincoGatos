@@ -25502,13 +25502,12 @@ async function setCards()
       if(which === 'h'){
         //this is the array list like [?, 0], [?, 0]
         console.log(alpha[2]["hiragana"]["jp"]);
-        currSet = alpha[2]["hiragana"]["jp"];
+        currSet = alpha[2]["hiragana"];
       }
       else if(which === 'k'){
         console.log("????");
+        currSet = alpha[2]["katakana"];
       }
-      console.log(alpha[2]);
-      currSet = alpha[2];
     }
     else{
       alert("No alphabet for you!");
@@ -25520,7 +25519,6 @@ async function setCards()
 
   console.log("currSet");
   console.log(currSet);
-
   var l = currSet[langSet].length;
   var r = Math.floor((Math.random() * l) + 1) - 1;
 
