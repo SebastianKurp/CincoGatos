@@ -3,7 +3,7 @@
 
 CincoGatos is a language learning WebApp that allows a user to begin learning some basic vocabulary from one of four languages: Arabic, Japnese, Polish, and Spanish.  The user can also upload documents and words to create custom flashcard sets.
 
-Latest version is from commit ba76c0f, made 11/17
+Latest version is from commit 645bdc1, made 11/26
 
 
 ***To run:***
