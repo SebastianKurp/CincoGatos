@@ -8,14 +8,11 @@ Latest version is from commit 645bdc1, made 11/26
 
 ***To run:***
 
+cd into CG_ThanksgivingRedo
 
-Go into 'expressbackend' --> npm install (only first time) --> npm start
-
-
-Go into 'reactfrontend' --> npm install (only first time) --> npm start
-
-
-Go to localhost specified by reactfrontend
+type npm install  
+type node app  
+go to localhost:3000 to begin  
 
 
 Get started [here](https://github.com/SebastianKurp/CincoGatos/wiki/How-to-Use-the-Program-and-Get-Started)
