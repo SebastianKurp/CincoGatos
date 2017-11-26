@@ -11,7 +11,7 @@
         <a href="javascript:void(0)" class="mainmenu-button"><i class="fa fa-navicon"></i></a>
         <a href="/"><img src="/img/logo2.png" border="0" height="30" /></a>
         <nav>
-            <% if(user === null) { %>
+            <% if(user === null && user !== undefined) { %>
             <a href="/"><i class="fa fa-home"></i>Home</a>
             <a href="/signup/">Register</a>
             <a href="/login/">Login</a>
