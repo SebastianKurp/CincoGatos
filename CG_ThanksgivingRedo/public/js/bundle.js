@@ -25414,10 +25414,6 @@ async function setCards()
   }
   cardSet =  await getCardSet();
   if(cardSet >= 6){
-    console.log(alpha[0]);
-    console.log(alpha[1]);
-    console.log(alpha[2]);
-    console.log("Testing alphas...");
     if(langSet === 'ar'){
       console.log(alpha[0]);
     }
@@ -25431,6 +25427,7 @@ async function setCards()
       }
       if(which === 'h'){
         console.log("ひらがな");
+        console.log(alpha[2]["hiragana"]["jp"]);
       }
       else if(which === 'k'){
         console.log("カタカナ");
