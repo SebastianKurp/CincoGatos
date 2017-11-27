@@ -47,8 +47,8 @@ function initialize()
 				];
 		//constructor(x, y, rx, ry, cFill, cActive, cStroke, wStroke, link = "None", text = "", cText)
 	bars =	[
-				new Bar(0.60, 0.9, 0.1, 0.05, "rgb(255,255,255)", "rgb(200,200,200)", "rgb(0,0,0)", 6, "/settings", "settings", "rgb(0,0,0)"),
-				new Bar(0.80, 0.9, 0.1, 0.05, "rgb(255,255,255)", "rgb(200,200,200)", "rgb(0,0,0)", 6, "/achievements", "achievements", "rgb(0,0,0)")
+				new Bar(0.60, 0.9, 0.075, 0.05, "rgb(255,255,255)", "rgb(200,200,200)", "rgb(0,0,0)", 6, "/settings", "settings", "rgb(0,0,0)"),
+				new Bar(0.80, 0.9, 0.075, 0.05, "rgb(255,255,255)", "rgb(200,200,200)", "rgb(0,0,0)", 6, "/achievements", "achievements", "rgb(0,0,0)")
 			]
 }
 

@@ -12,10 +12,10 @@ class Bar extends Button
 		ctx.beginPath();
 		ctx.lineWidth = this.wStroke;
 		ctx.strokeStyle = this.cStroke;
-		ctx.arc((this.x - this.rx + this.ry) * canvasWidth, this.y * canvasHeight, this.ry * canvasHeight, Math.PI/2, 3*Math.PI/2);
-		ctx.lineTo((this.x + this.rx - this.ry) * canvasWidth, (this.y - this.ry) * canvasHeight)
-		ctx.arc((this.x + this.rx - this.ry) * canvasWidth, this.y * canvasHeight, this.ry * canvasHeight, 3*Math.PI/2, Math.PI/2);
-		ctx.lineTo((this.x - this.rx + this.ry) * canvasWidth, (this.y + this.ry) * canvasHeight)
+		ctx.arc((this.x - this.rx) * canvasWidth + this.ry * canvasHeight, this.y * canvasHeight, this.ry * canvasHeight, Math.PI/2, 3*Math.PI/2);
+		ctx.lineTo((this.x + this.rx) * canvasWidth - this.ry * canvasHeight, (this.y - this.ry) * canvasHeight);
+		ctx.arc((this.x + this.rx) * canvasWidth - this.ry * canvasHeight, this.y * canvasHeight, this.ry * canvasHeight, 3*Math.PI/2, Math.PI/2);
+		ctx.lineTo((this.x - this.rx) * canvasWidth + this.ry * canvasHeight, (this.y + this.ry) * canvasHeight);
 		ctx.fillStyle = this.cCurrent;
 		ctx.fill();
 		ctx.stroke();
