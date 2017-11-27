@@ -25148,7 +25148,8 @@ function getFlashcards(userid){
       var foods = snapshot.val().foods;
       var household = snapshot.val().household;
       var school = snapshot.val().school;
-      var langArray = [animals, clothing, colors, foods, household, school];
+      var numbers = snapshot.val().numbers;
+      var langArray = [animals, clothing, colors, foods, household, school, numbers];
       if(langArray != null){
         resolve(langArray);
       }
@@ -25320,9 +25321,13 @@ function getCardSet()
     baseColor = [255,150,0];
     return 5;
   }
+  else if (link === "/numbers") {
+    baseColor = [255,200,0];
+    return 6;
+  }
   else if (link === "/alphabet") {
     baseColor = [100,100,100];
-    return 6;
+    return 7;
   }
 }
 
@@ -25484,7 +25489,7 @@ async function setCards()
   }
   cardSet =  await getCardSet();
   var currSet = 'None';
-  if(cardSet >= 6){
+  if(cardSet === 7){
     if(langSet === 'ar'){
       console.log("picked arabic letters ");
       console.log(alpha[0]);
