@@ -47,7 +47,7 @@
         reader.onload = success;                                            
         function success(evt) { 
             var contents = evt.target.result;
-            var result = contents.split(/\W+/);
+            var result = contents.split(/[^a-zA-Z0-9']/);
             
 
             for(i=0;i<result.length;i++){
