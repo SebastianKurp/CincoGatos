@@ -25230,7 +25230,7 @@ var c = document.getElementById("myCanvas");
 var ctx = c.getContext("2d");
 var frame = 0, card, otherColor = [255,255,255], startFlipFrame;
 var buttons, bars, mouseX = 0, mouseY = 0, keyPresses, mouseDown = false, clickBuffer = "None", 
-  clickedNext = false, answer = 0, complete = false, currentQuestion, currentAnswer, options, color, cardSet, currCard, baseColor;
+  clickedNext = false, answer = 0, complete = false, currentQuestion, currentAnswer, options, color, cardSet, currCard, langset, baseColor;
 c.style.backgroundColor = "#FFFFFF";
 
 function shuffleArray(a) {
@@ -25385,6 +25385,8 @@ async function move()
 
   if (answer !== 0)
   {
+    console.log(langset[3]);
+    console.log(cardSet + " " + langset[0] + " " + currCard);
     complete = true;
     if (!card.isFlipping)
     {
@@ -25392,12 +25394,13 @@ async function move()
       if (currentAnswer === options[answer-1]) 
       {
         color = [150,255,150];
-        //if (flashcards[cardSet][langSet][currCard][1] < 5) flashcards[cardSet][langSet][currCard][1] += 1
+        
+        if (langset[3][cardSet][langset[0]][currCard][1] < 5) langset[3][cardSet][langset[0]][currCard][1] += 1
       }
       else
       {
         color = [255,150,150];
-        //if (flashcards[cardSet][langSet][currCard][1] > 0) flashcards[cardSet][langSet][currCard][1] -= 1
+        if (langset[3][cardSet][langset[0]][currCard][1] > 0) langset[3][cardSet][langset[0]][currCard][1] -= 1
       }
       card.text = currentAnswer;
       card.drawFlip(ctx, frame - startFlipFrame, color, c.width, c.height);
@@ -25409,7 +25412,7 @@ async function move()
   {
     complete = false;
     clickedNext = false;
-    let currCard = await setCards();
+    currCard = await setCards();
     card.text = currentQuestion;
     startFlipFrame = frame;
     color = [255,255,255]
@@ -25434,20 +25437,21 @@ async function getLang(){
   console.log(userId); 
   //userArray = req.session.userArray;
   let langSet = "";
+  console.log("userArray 1: '" + userArray[1] + "'");
   switch(userArray[1]){
-    case 'spanish':
+    case 'Spanish':
       console.log("Spanish");
       langSet = 'sp';
       break;
-    case 'japanese':
+    case 'Japanese':
       console.log("Japanese");
       langSet = 'jp';
       break;
-    case 'arabic':
+    case 'Arabic':
       console.log("Arabic");
       langSet = 'ar';
       break;
-    case 'polish':
+    case 'Polish':
       console.log("Polish");
       langSet = 'pl';
       break;
