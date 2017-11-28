@@ -38,8 +38,8 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        expires: 600000
-    }
+        maxAge: 3600000
+    } //3600000ms is 1 hour
   }));
 
   //if cookie in browser but user is not valid

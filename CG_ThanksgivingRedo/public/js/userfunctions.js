@@ -147,8 +147,11 @@ async function getCards(userid){
       return [flashArray, langArray, alpharay];
   };
 
+  /*
+async function writeScore(userId){
 
-
+}
+*/
 
 module.exports.auth = auth;
 module.exports.login = login;

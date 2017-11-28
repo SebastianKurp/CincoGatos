@@ -260,22 +260,22 @@ async function setCards()
   let nativeL = userArray[0];
   let learningL = userArray[1];
   console.log(userId); 
-  //userArray = req.session.userArray;
+  console.log("User lang is " + learningL)
   let langSet = "";
-  switch(userArray[1]){
-    case 'spanish':
+  switch(learningL){
+    case 'Spanish':
       console.log("Spanish");
       langSet = 'sp';
       break;
-    case 'japanese':
+    case 'Japanese':
       console.log("Japanese");
       langSet = 'jp';
       break;
-    case 'arabic':
+    case 'Arabic':
       console.log("Arabic");
       langSet = 'ar';
       break;
-    case 'polish':
+    case 'Polish':
       console.log("Polish");
       langSet = 'pl';
       break;
@@ -306,6 +306,7 @@ async function setCards()
     else{
       alert("No alphabet for you!");
       window.location.href = "http://localhost:3000/vocab";
+      return;
     }
   }
 
@@ -313,6 +314,7 @@ async function setCards()
 
   console.log("currSet");
   console.log(currSet);
+  console.log(learningL);
   var l = currSet[langSet].length;
   var r = Math.floor((Math.random() * l) + 1) - 1;
 
