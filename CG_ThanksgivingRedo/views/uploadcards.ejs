@@ -5,8 +5,8 @@
 <body>
     <div id="body">
         <h2 id="header">Upload Your Own Flashcards</h2>
-        <h6>(Currently Supports .txt files)</h6>
-        <form id="form" onsubmit="test()">
+        <h6>(Currently only supports .txt files, Sorry)</h6>
+        <form id="form">
             <label for="file">Choose a file</label></br>  
             <input id="file" type="file" accept=".txt"/>                 
             <span id="fileName">test</span>
@@ -65,8 +65,8 @@
             $.getJSON(url, function(json){
                 if(json !== "Nothing found."){
                     try{
-                        var word = json.tuc[0].phrase.text;
-                        console.log(word);
+                        var transWord = json.tuc[0].phrase.text;
+                        console.log(transWord);
                     }catch(err){
                         alert("We currently don't have translation for that word...mostly likely a name");
                     }
@@ -74,11 +74,6 @@
             })                                  
         };
         reader.readAsText(file);   
-
-        $(document).ready(function(){
-            
-            
-        })
     } 
 
     function showFileName(name){
@@ -164,7 +159,7 @@
     }
 
     #fileName{
-        color: rgb(0,125,209);
+        color: rgb(0, 125, 209);
         font-size: x-large;
         visibility: hidden;
     }
