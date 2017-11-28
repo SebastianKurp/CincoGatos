@@ -25461,12 +25461,12 @@ async function setCards()
 {
   console.log("setCards is called -- next is awaiting userinfo");
   var flash = await userInfo();
-  let userArray = flash[1];
+  userArray = flash[1];
   let alpha = flash[2];
   let flashcards = flash[0];
   let username = userArray[2];
   let nativeL = userArray[0];
-  let learningL = userArray[1];
+  learningL = userArray[1];
   console.log(userId); 
   console.log("User lang is " + learningL)
   let langSet = "";
@@ -25512,9 +25512,9 @@ async function setCards()
       }
     }
     else{
-      alert("No alphabet for you!");
-      window.location.href = "http://localhost:3000/vocab";
-      return;
+      //alert("No alphabet for you!");
+     // window.location.replace = "http://localhost:3000/vocab";
+      return false;
     }
   }
 
@@ -25545,5 +25545,29 @@ async function setCards()
   return cardIndex;
 }
 
-setup();
+async function SetUpCheck(){
+  var flash = await userInfo();
+  console.log("Link is " + link);
+  if(link === '/alphabet'){
+    let userArray = flash[1];
+    let learningL = userArray[1];
+    if(learningL === 'Spanish'){
+      alert("No alphabet for you!");
+      var sadcat = new Image();
+      sadcat.src = './img/cryingcat.jpeg';
+      sadcat.addEventListener('load', function(){
+        ctx.drawImage(sadcat, 300, 20);
+      }, false)
+      return;
+    }else {
+      setup();
+    } 
+  }else{
+    setup();
+  }
+}
+
+SetUpCheck();
+
+
 },{"./userfunctions":159}]},{},[160]);
