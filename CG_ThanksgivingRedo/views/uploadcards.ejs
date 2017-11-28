@@ -58,7 +58,7 @@
                 if(noDuplicates.indexOf(lowerCase[i])<0 && lowerCase[i].length>1){
                     noDuplicates.push(lowerCase[i]);
                 }
-            } /*
+            } 
             
             for(i=0; i<noDuplicates.length;i++){
                 var url = "https://glosbe.com/gapi/translate?from=eng&dest=" + langCodes() +"&format=json&phrase=" + noDuplicates[i] +
@@ -73,7 +73,7 @@
                         }
                     }
                 })
-            }*/
+            }
         };
         console.log(noDuplicates);
         reader.readAsText(file);   
