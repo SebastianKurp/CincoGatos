@@ -25212,9 +25212,6 @@ var userId = document.getElementById("bundle").getAttribute("data-userId");
 if (typeof userId === "undefined" ) {
    var userId = ["No dice"];
 }
-console.log("Inside bundle ID is: " + userId);
-var userArray = [];
-flashcards = [];
 
 async function userInfo() {
   let flash = await userfunctions.getCards(userId);
@@ -25276,7 +25273,7 @@ async function setup()
 async function initialize()
 {
   console.log("Initialize is called");
-  getCardSet();
+  cardSet =  await getCardSet();
   langset = await getLang();
   currCard = await setCards();
 
@@ -25427,6 +25424,7 @@ async function move()
 
 async function getLang(){
   console.log("setCards is called -- next is awaiting userinfo");
+  //[langSet, userArray, alpha, flashcards, username, nativeL, learningL]
   var flash = await userInfo();
   let userArray = flash[1];
   let alpha = flash[2];
@@ -25464,37 +25462,16 @@ async function getLang(){
 async function setCards()
 {
   console.log("setCards is called -- next is awaiting userinfo");
-  var flash = await userInfo();
-  userArray = flash[1];
-  let alpha = flash[2];
-  let flashcards = flash[0];
-  let username = userArray[2];
-  let nativeL = userArray[0];
-  learningL = userArray[1];
-  console.log(userId); 
-  console.log("User lang is " + learningL)
-  let langSet = "";
-  switch(learningL){
-    case 'Spanish':
-      console.log("Spanish");
-      langSet = 'sp';
-      break;
-    case 'Japanese':
-      console.log("Japanese");
-      langSet = 'jp';
-      break;
-    case 'Arabic':
-      console.log("Arabic");
-      langSet = 'ar';
-      break;
-    case 'Polish':
-      console.log("Polish");
-      langSet = 'pl';
-      break;
-    default:
-      console.log("Something broke");
-  }
-  cardSet =  await getCardSet();
+  //[langSet, userArray, alpha, flashcards, username, nativeL, learningL]
+  console.log(langset[0]);
+  var userArray = langset[1];
+  var alpha = langset[2];
+  var flashcards = langset[3];
+  var username = langset[4];
+  var nativeL = langset[5];
+  var learningL = langset[6];
+  var langSet = langset[0];
+
   var currSet = 'None';
   if(cardSet === 7){
     if(langSet === 'ar'){
