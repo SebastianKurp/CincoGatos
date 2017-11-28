@@ -5,7 +5,7 @@
 <body>
     <div id="body">
         <h2 id="header">Upload Your Own Flashcards</h2>
-        <h6>(Currently only supports .txt files, Sorry)</h6>
+        <h6>(Currently only supports .txt files)</h6>
         <form id="form">
             <label for="file">Choose a file</label></br>  
             <input id="file" type="file" accept=".txt"/>                 
@@ -42,6 +42,7 @@
         langCodes();
         var lowerCase = [];
         var noDuplicates= [];
+        var translations = [];
     
         var reader = new FileReader();
         reader.onload = success;                                            
@@ -57,22 +58,24 @@
                 if(noDuplicates.indexOf(lowerCase[i])<0 && lowerCase[i].length>1){
                     noDuplicates.push(lowerCase[i]);
                 }
-            } 
-            var lang = langCodes();
-            var url = "https://glosbe.com/gapi/translate?from=eng&dest=" + langCodes() +"&format=json&phrase=" + noDuplicates[1] +
-                        "&pretty=true&callback=?";
+            } /*
             
-            $.getJSON(url, function(json){
-                if(json !== "Nothing found."){
-                    try{
-                        var transWord = json.tuc[0].phrase.text;
-                        console.log(transWord);
-                    }catch(err){
-                        alert("We currently don't have translation for that word...mostly likely a name");
+            for(i=0; i<noDuplicates.length;i++){
+                var url = "https://glosbe.com/gapi/translate?from=eng&dest=" + langCodes() +"&format=json&phrase=" + noDuplicates[i] +
+                        "&pretty=true&callback=?";
+                $.getJSON(url, function(json){
+                    if(json != "Nothing found."){
+                        try{
+                            var transWord = json.tuc[0].phrase.text;
+                            translations.push(transWord);
+                        }catch(err){
+                            translations.push("-1");
+                        }
                     }
-                }
-            })                                  
+                })
+            }*/
         };
+        console.log(noDuplicates);
         reader.readAsText(file);   
     } 
 
