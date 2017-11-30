@@ -4,9 +4,6 @@ var userId = document.getElementById("bundle").getAttribute("data-userId");
 if (typeof userId === "undefined" ) {
    var userId = ["No dice"];
 }
-console.log("Inside bundle ID is: " + userId);
-var userArray = [];
-flashcards = [];
 
 async function userInfo() {
   let flash = await userfunctions.getCards(userId);
@@ -22,7 +19,7 @@ var c = document.getElementById("myCanvas");
 var ctx = c.getContext("2d");
 var frame = 0, card, otherColor = [255,255,255], startFlipFrame;
 var buttons, bars, mouseX = 0, mouseY = 0, keyPresses, mouseDown = false, clickBuffer = "None", 
-  clickedNext = false, answer = 0, complete = false, currentQuestion, currentAnswer, options, color, cardSet, currCard, baseColor;
+  clickedNext = false, answer = 0, complete = false, currentQuestion, currentAnswer, options, color, cardSet, currCard, langset, baseColor;
 c.style.backgroundColor = "#FFFFFF";
 
 function shuffleArray(a) {
@@ -68,7 +65,7 @@ async function setup()
 async function initialize()
 {
   console.log("Initialize is called");
-  getCardSet();
+  cardSet =  await getCardSet();
   langset = await getLang();
   currCard = await setCards();
 
@@ -177,6 +174,8 @@ async function move()
 
   if (answer !== 0)
   {
+    console.log(langset[3]);
+    console.log(cardSet + " " + langset[0] + " " + currCard);
     complete = true;
     if (!card.isFlipping)
     {
@@ -184,12 +183,13 @@ async function move()
       if (currentAnswer === options[answer-1]) 
       {
         color = [150,255,150];
-        //if (flashcards[cardSet][langSet][currCard][1] < 5) flashcards[cardSet][langSet][currCard][1] += 1
+        
+        if (langset[3][cardSet][langset[0]][currCard][1] < 5) langset[3][cardSet][langset[0]][currCard][1] += 1
       }
       else
       {
         color = [255,150,150];
-        //if (flashcards[cardSet][langSet][currCard][1] > 0) flashcards[cardSet][langSet][currCard][1] -= 1
+        if (langset[3][cardSet][langset[0]][currCard][1] > 0) langset[3][cardSet][langset[0]][currCard][1] -= 1
       }
       card.text = currentAnswer;
       card.drawFlip(ctx, frame - startFlipFrame, color, c.width, c.height);
@@ -201,7 +201,7 @@ async function move()
   {
     complete = false;
     clickedNext = false;
-    let currCard = await setCards();
+    currCard = await setCards();
     card.text = currentQuestion;
     startFlipFrame = frame;
     color = [255,255,255]
@@ -216,6 +216,7 @@ async function move()
 
 async function getLang(){
   console.log("setCards is called -- next is awaiting userinfo");
+  //[langSet, userArray, alpha, flashcards, username, nativeL, learningL]
   var flash = await userInfo();
   let userArray = flash[1];
   let alpha = flash[2];
@@ -226,43 +227,8 @@ async function getLang(){
   console.log(userId); 
   //userArray = req.session.userArray;
   let langSet = "";
+  console.log("userArray 1: '" + userArray[1] + "'");
   switch(userArray[1]){
-    case 'spanish':
-      console.log("Spanish");
-      langSet = 'sp';
-      break;
-    case 'japanese':
-      console.log("Japanese");
-      langSet = 'jp';
-      break;
-    case 'arabic':
-      console.log("Arabic");
-      langSet = 'ar';
-      break;
-    case 'polish':
-      console.log("Polish");
-      langSet = 'pl';
-      break;
-    default:
-      console.log("Something broke");
-  }
-  return [langSet, userArray, alpha, flashcards, username, nativeL, learningL];
-}
-
-async function setCards()
-{
-  console.log("setCards is called -- next is awaiting userinfo");
-  var flash = await userInfo();
-  let userArray = flash[1];
-  let alpha = flash[2];
-  let flashcards = flash[0];
-  let username = userArray[2];
-  let nativeL = userArray[0];
-  let learningL = userArray[1];
-  console.log(userId); 
-  console.log("User lang is " + learningL)
-  let langSet = "";
-  switch(learningL){
     case 'Spanish':
       console.log("Spanish");
       langSet = 'sp';
@@ -282,7 +248,22 @@ async function setCards()
     default:
       console.log("Something broke");
   }
-  cardSet =  await getCardSet();
+  return [langSet, userArray, alpha, flashcards, username, nativeL, learningL];
+}
+
+async function setCards()
+{
+  console.log("setCards is called -- next is awaiting userinfo");
+  //[langSet, userArray, alpha, flashcards, username, nativeL, learningL]
+  console.log(langset[0]);
+  var userArray = langset[1];
+  var alpha = langset[2];
+  var flashcards = langset[3];
+  var username = langset[4];
+  var nativeL = langset[5];
+  var learningL = langset[6];
+  var langSet = langset[0];
+
   var currSet = 'None';
   if(cardSet === 7){
     if(langSet === 'ar'){
@@ -304,9 +285,9 @@ async function setCards()
       }
     }
     else{
-      alert("No alphabet for you!");
-      window.location.href = "http://localhost:3000/vocab";
-      return;
+      //alert("No alphabet for you!");
+     // window.location.replace = "http://localhost:3000/vocab";
+      return false;
     }
   }
 
@@ -337,4 +318,27 @@ async function setCards()
   return cardIndex;
 }
 
-setup();
+async function SetUpCheck(){
+  var flash = await userInfo();
+  console.log("Link is " + link);
+  if(link === '/alphabet'){
+    let userArray = flash[1];
+    let learningL = userArray[1];
+    if(learningL === 'Spanish'){
+      alert("No alphabet for you!");
+      var sadcat = new Image();
+      sadcat.src = './img/cryingcat.jpeg';
+      sadcat.addEventListener('load', function(){
+        ctx.drawImage(sadcat, 300, 20);
+      }, false)
+      return;
+    }else {
+      setup();
+    } 
+  }else{
+    setup();
+  }
+}
+
+SetUpCheck();
+
