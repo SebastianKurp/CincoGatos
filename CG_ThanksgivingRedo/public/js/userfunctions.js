@@ -10,6 +10,7 @@ var config = {
     messagingSenderId: "821202238986"
   };
   firebase.initializeApp(config);
+  //firebase.enableLogging(true);
   const ref = firebase.database().ref();
   const fbAuth = firebase.auth;
 
