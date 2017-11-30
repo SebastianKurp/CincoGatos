@@ -109,6 +109,7 @@ app.post('/login/complete', function(req, res){
                 userId = user.uid;
                 req.session.userId = userId;
                 req.session.username = username;
+                console.log("Stored userID " + userId);
                 res.render('flashcards', {
                     title: 'Learn a new language!',
                     user: req.session.user,
@@ -118,7 +119,7 @@ app.post('/login/complete', function(req, res){
                     userArray: userArray
                 })
             } else {
-              console.log("Error logging in");
+              console.log("Waiting to hear a user...");
             }
           });
     } 
@@ -228,7 +229,8 @@ app.get('/customcards', function(req, res){
         title: 'Make custom flashcards',
         user: currUser,
         username: req.session.username,
-        userArray: req.session.userArray,
+        learning: req.session.learning,
+        native: req.session.native,
         username: req.session.username,
         userId: req.session.userId
     });   

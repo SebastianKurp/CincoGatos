@@ -7,13 +7,11 @@ if (typeof userId === "undefined" ) {
 
 async function userInfo() {
   let flash = await userfunctions.getCards(userId);
-  console.log(flash);
   return flash;
 }
 
 let link = localStorage["datadata"];
 localStorage.removeItem("datadata"); //clear out so can be used again
-console.log("Came here from " + link);
 
 var c = document.getElementById("myCanvas");
 var ctx = c.getContext("2d");
@@ -174,8 +172,6 @@ async function move()
 
   if (answer !== 0)
   {
-    console.log(langset[3]);
-    console.log(cardSet + " " + langset[0] + " " + currCard);
     complete = true;
     if (!card.isFlipping)
     {
@@ -183,7 +179,7 @@ async function move()
       if (currentAnswer === options[answer-1]) 
       {
         color = [150,255,150];
-        
+        console.log(langset[3]);
         if (langset[3][cardSet][langset[0]][currCard][1] < 5) langset[3][cardSet][langset[0]][currCard][1] += 1
       }
       else
@@ -215,8 +211,7 @@ async function move()
 }
 
 async function getLang(){
-  console.log("setCards is called -- next is awaiting userinfo");
-  //[langSet, userArray, alpha, flashcards, username, nativeL, learningL]
+  console.log("getLang is called -- next is awaiting userinfo");
   var flash = await userInfo();
   let userArray = flash[1];
   let alpha = flash[2];
@@ -227,22 +222,17 @@ async function getLang(){
   console.log(userId); 
   //userArray = req.session.userArray;
   let langSet = "";
-  console.log("userArray 1: '" + userArray[1] + "'");
   switch(userArray[1]){
     case 'Spanish':
-      console.log("Spanish");
       langSet = 'sp';
       break;
     case 'Japanese':
-      console.log("Japanese");
       langSet = 'jp';
       break;
     case 'Arabic':
-      console.log("Arabic");
       langSet = 'ar';
       break;
     case 'Polish':
-      console.log("Polish");
       langSet = 'pl';
       break;
     default:
@@ -253,9 +243,6 @@ async function getLang(){
 
 async function setCards()
 {
-  console.log("setCards is called -- next is awaiting userinfo");
-  //[langSet, userArray, alpha, flashcards, username, nativeL, learningL]
-  console.log(langset[0]);
   var userArray = langset[1];
   var alpha = langset[2];
   var flashcards = langset[3];
@@ -267,12 +254,9 @@ async function setCards()
   var currSet = 'None';
   if(cardSet === 7){
     if(langSet === 'ar'){
-      console.log("picked arabic letters ");
-      console.log(alpha[0]);
       currSet = alpha[0];
     }
     else if(langSet === 'pl'){
-      console.log(alpha[1]);
       currSet = alpha[1];
     }
     else if(langSet === 'jp'){
@@ -285,42 +269,36 @@ async function setCards()
       }
     }
     else{
-      //alert("No alphabet for you!");
-     // window.location.replace = "http://localhost:3000/vocab";
+      //Spanish
       return false;
     }
   }
 
   if (currSet === 'None') currSet = flashcards[cardSet]
-
-  console.log("currSet");
-  console.log(currSet);
-  console.log(learningL);
+  console.log(currSet)
   var l = currSet[langSet].length;
   var r = Math.floor((Math.random() * l) + 1) - 1;
-
-  console.log(langSet + " " + r);
 
   var cardIndex = r;
   currentQuestion = currSet[langSet][r][0];
   currentAnswer = currSet["en"][r];
 
   var otherOptions = [r];
+  console.log("other options "+otherOptions)
   while (otherOptions.length < 4)
   {
     r = Math.floor((Math.random() * l) + 1) - 1;
     if (!otherOptions.includes(r)) otherOptions.push(r);
   }
-  console.log(otherOptions);
   for (var i = 0; i < otherOptions.length; i++) otherOptions[i] = currSet["en"][otherOptions[i]]
+  
   options = shuffleArray(otherOptions);
-  console.log(options);
+  console.log("options " + options);
   return cardIndex;
 }
 
 async function SetUpCheck(){
   var flash = await userInfo();
-  console.log("Link is " + link);
   if(link === '/alphabet'){
     let userArray = flash[1];
     let learningL = userArray[1];
