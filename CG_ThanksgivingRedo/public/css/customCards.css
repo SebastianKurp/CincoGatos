@@ -1,0 +1,75 @@
+#body{
+    text-align: center;
+}
+
+#language{
+    visibility: hidden;
+}
+
+#file{
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+label{
+    margin: 2em auto;
+    border-radius: 10px;
+    box-shadow: 0px 9px rgb(0, 0, 0);
+    padding: 5px;
+    color: white;
+    background-color: rgb(0,125,209);
+    font-size: xx-large;
+    margin-bottom: .8em;
+}
+
+label:hover{
+    cursor: pointer;
+}
+
+label:active{
+    box-shadow: 0px 5px  rgb(0, 0, 0);
+    transform: translateY(.1em);
+}
+
+#header{
+    color: rgb(0,125,209);
+}
+
+#form{
+    margin: 0 auto;
+    text-align: center;
+    background-color: lightgrey;
+    box-shadow: 2px 2px 5px grey;
+    border-radius: 10px;
+    width: 30%;
+}
+
+#name{
+    color: black;
+    border: 2px solid rgb(0,125,209);
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+}
+#submit{
+    margin: 2em auto;
+    border-radius: 10px;
+    padding: 5px;
+    color: white;
+    background-color: rgb(0,125,209);
+    font-size: small;
+    margin-bottom: .8em;
+}
+
+#submit:focus{
+    outline: 0;
+}
+
+#fileName{
+    color: rgb(0, 125, 209);
+    font-size: x-large;
+    visibility: hidden;
+}

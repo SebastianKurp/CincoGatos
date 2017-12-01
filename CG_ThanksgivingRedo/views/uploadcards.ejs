@@ -1,4 +1,32 @@
 <% include partials/header %>
-<h2>Content goes here...</h2>
-<p>Native lang: <%= native %> , learning lang: <%= learning %></p>
+<link href="/css/customCards.css" rel="stylesheet" type="text/css">
+
+
+<body>
+    <div id="body">
+        <span id="language"><%= learning %></span> <!-- language not passed to js file, used to get textcontent to customcards.js -->
+        <h2 id="header">Upload Your Own Flashcards</h2>
+        <h6>(Currently only supports .txt files)</h6>
+        <form id="form">
+            <label for="file">Choose a file</label></br>  
+            <input id="file" type="file" accept=".txt"/>                 
+            <span id="fileName">test</span>
+        </form>
+    </div>
+</body>
+
+<script src="/js/customCards.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+
+
+    
+    
+
+
+
+
+
+
 <% include partials/footer %>
