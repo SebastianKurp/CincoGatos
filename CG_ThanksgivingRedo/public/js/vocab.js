@@ -58,6 +58,7 @@ async function setup()
   document.body.addEventListener("keyup", function(e) {
     keyPresses[e.keyCode] = false;
   });
+  document.getElementById("loadingcat").remove();
 }
 
 async function initialize()

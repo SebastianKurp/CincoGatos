@@ -25053,6 +25053,7 @@ var config = {
     messagingSenderId: "821202238986"
   };
   firebase.initializeApp(config);
+  //firebase.enableLogging(true);
   const ref = firebase.database().ref();
   const fbAuth = firebase.auth;
 
@@ -25266,6 +25267,7 @@ async function setup()
   document.body.addEventListener("keyup", function(e) {
     keyPresses[e.keyCode] = false;
   });
+  document.getElementById("loadingcat").remove();
 }
 
 async function initialize()
