@@ -1,9 +1,10 @@
 <% include partials/header %>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="/css/customCards.css" rel="stylesheet" type="text/css">
 
 
 <body>
     <div id="body">
+        <span id="language"><%= learning %></span> <!-- language not passed to js file, used to get textcontent to customcards.js -->
         <h2 id="header">Upload Your Own Flashcards</h2>
         <h6>(Currently only supports .txt files)</h6>
         <form id="form">
@@ -14,159 +15,17 @@
     </div>
 </body>
 
+<script src="/js/customCards.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
-<script>
-
-    function langCodes(){
-        var learning = "<%= learning %>";
-        switch(learning){
-            case "sp":
-                learning = "spa";
-                break;
-            case "ar":
-                learning = "ara";
-                break;
-            case "pl":
-                learning = "pol";
-                break;
-            case "jp":
-                learning = "jpn";
-                break;
-        }
-        return learning;
-    }
 
 
-    function readFile(file) {       
-        langCodes();
-        var lowerCase = [];
-        var noDuplicates= [];
-        var translations = [];
     
-        var reader = new FileReader();
-        reader.onload = success;                                            
-        function success(evt) { 
-            var contents = evt.target.result;
-            var result = contents.split(/[^a-zA-Z0-9']/);
-            
-
-            for(i=0;i<result.length;i++){
-                lowerCase.push(result[i].toLowerCase());
-            }
-            for(i=0;i<lowerCase.length;i++){
-                if(noDuplicates.indexOf(lowerCase[i])<0 && lowerCase[i].length>1){
-                    noDuplicates.push(lowerCase[i]);
-                }
-            } 
-            
-            for(i=0; i<noDuplicates.length;i++){
-                var url = "https://glosbe.com/gapi/translate?from=eng&dest=" + langCodes() +"&format=json&phrase=" + noDuplicates[i] +
-                        "&pretty=true&callback=?";
-                $.getJSON(url, function(json){
-                    if(json != "Nothing found."){
-                        try{
-                            var transWord = json.tuc[0].phrase.text;
-                            translations.push(transWord);
-                        }catch(err){
-                            translations.push("-1");
-                        }
-                    }
-                })
-            }
-        };
-        console.log(noDuplicates);
-        reader.readAsText(file);   
-    } 
-
-    function showFileName(name){
-        var txtIndex = name.search(".txt");
-        var finalName = name.substring(0,txtIndex);
-        document.getElementById("fileName").textContent = finalName;
-        document.getElementById("fileName").setAttribute("style","visibility: visible");
-    }
-
-    document.getElementById('file').onchange = function(e) {
-        readFile(e.srcElement.files[0]);
-        showFileName(e.srcElement.files[0].name);
-    };
     
 
-</script>
 
-<style>
-    #body{
-        text-align: center;
-    }
 
-    #file{
-        width: 0.1px;
-        height: 0.1px;
-        opacity: 0;
-        overflow: hidden;
-        position: absolute;
-        z-index: -1;
-    }
-    label{
-        margin: 2em auto;
-        border-radius: 10px;
-        box-shadow: 0px 9px rgb(0, 0, 0);
-        padding: 5px;
-        color: white;
-        background-color: rgb(0,125,209);
-        font-size: xx-large;
-        margin-bottom: .8em;
-    }
-
-    label:hover{
-        cursor: pointer;
-    }
-
-    label:active{
-        box-shadow: 0px 5px  rgb(0, 0, 0);
-        transform: translateY(.1em);
-    }
-
-    #header{
-        color: rgb(0,125,209);
-    }
-
-    #form{
-        margin: 0 auto;
-        text-align: center;
-        background-color: lightgrey;
-        box-shadow: 2px 2px 5px grey;
-        border-radius: 10px;
-        width: 30%;
-    }
-
-    #name{
-        color: black;
-        border: 2px solid rgb(0,125,209);
-        border-radius: 5px;
-        padding: 10px;
-        text-align: center;
-    }
-    #submit{
-        margin: 2em auto;
-        border-radius: 10px;
-        padding: 5px;
-        color: white;
-        background-color: rgb(0,125,209);
-        font-size: small;
-        margin-bottom: .8em;
-    }
-
-    #submit:focus{
-        outline: 0;
-    }
-
-    #fileName{
-        color: rgb(0, 125, 209);
-        font-size: x-large;
-        visibility: hidden;
-    }
-</style>
 
 
 
