@@ -13,9 +13,7 @@ function langCodes(){
         case "Japanese":
             learning = "jpn";
             break;
-    }
-    console.log(learning);
-    
+    }    
     return learning;
 }
 
@@ -27,15 +25,14 @@ function readFile(file) {
 
     var reader = new FileReader();
     reader.onload = success;                                            
-    function success(evt) { 
+    async function success(evt) { 
         var contents = evt.target.result;
         var result = contents.split(/[^a-zA-Z0-9']/);
         
-
         for(i=0;i<result.length;i++){
             lowerCase.push(result[i].toLowerCase());
         }
-        for(i=0;i<lowerCase.length;i++){
+        for(i=0;i<lowerCase.length;i++){//remove duplicates
             if(noDuplicates.indexOf(lowerCase[i])<0 && lowerCase[i].length>1){
                 noDuplicates.push(lowerCase[i]);
             }
@@ -44,19 +41,19 @@ function readFile(file) {
         for(i=0; i<noDuplicates.length;i++){
             var url = "https://glosbe.com/gapi/translate?from=eng&dest=" + learning +"&format=json&phrase=" + noDuplicates[i] +
                     "&pretty=true&callback=?";
-            console.log(noDuplicates[i]);
-            getJSONAsync(url);
+            await getJSONAsync(url);
         }
-       
+
+        for(i=0; i<noDuplicates.length;i++){
+            console.log(noDuplicates[i]+ " : " + translations[i]);
+        }
     };
-    console.log(noDuplicates);
     reader.readAsText(file);   
 } 
 
+var translations = [];
 async function getJSONAsync(url){
-    var translations = [];
-    
-    /*await $.getJSON(url, function(json){
+    await $.getJSON(url, function(json){
         if(json != "Nothing found."){
             try{
                 var transWord = json.tuc[0].phrase.text;
@@ -64,12 +61,8 @@ async function getJSONAsync(url){
             }catch(err){
                 translations.push("-1");
             }
-        }
-        console.log(transWord);        
-    })*/
-
-    var json = await $.getJSON(url);
-    console.log(json);
+        }       
+    })
 }
 
 function showFileName(name){
