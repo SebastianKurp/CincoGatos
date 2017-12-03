@@ -6,7 +6,7 @@ CincoGatos is a language learning WebApp that allows a user to begin learning so
 Latest version is from commits made on 12/2
 
 
-***Dependencies***
+***Dependencies***  
 Latest version of NPM
 
 Get started [here](https://github.com/SebastianKurp/CincoGatos/wiki/How-to-Use-the-Program-and-Get-Started)
