@@ -12,7 +12,7 @@ cd into CG_ThanksgivingRedo
 
 type npm install  
 type node app  
-go to localhost:3000 to begin  
+go [here](http://localhost:3000/) to begin  
 
 
 Get started [here](https://github.com/SebastianKurp/CincoGatos/wiki/How-to-Use-the-Program-and-Get-Started)
