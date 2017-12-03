@@ -24,7 +24,6 @@ app.use(validator());
 
 
 //Global variables
-//I think we can put users here
 app.use(function(req, res, next){
     res.locals.errors = null;
     res.locals.user = null;
@@ -41,16 +40,6 @@ app.use(session({
         maxAge: 3600000
     } //3600000ms is 1 hour
   }));
-
-  //if cookie in browser but user is not valid
-  //log out
-  /*
-  app.use((req, res, next) => {
-    if (req.cookies.user_id && !req.session.user) {
-        res.clearCookie('user_id');        
-    }
-    next();
-}); */
 
 
 //homepage
@@ -89,8 +78,6 @@ app.post('/login/complete', function(req, res){
     }
     else{
         userfunctions.login(req.body.email, req.body.password);
-        var username = req.body.username;
-        var password = req.body.password;
         firebase.auth().onAuthStateChanged(async function(user) {
             if (user) {
                 var user = firebase.auth().currentUser;
@@ -99,6 +86,7 @@ app.post('/login/complete', function(req, res){
                 await userfunctions.getCards(user.uid).then(function(result){
                         flash = result;
                     });
+                //return [flashArray, langArray, alpharay];
                 let userArray = flash[1];
                 let username = userArray[2];
                 let nativeL = userArray[0];
@@ -109,7 +97,7 @@ app.post('/login/complete', function(req, res){
                 userId = user.uid;
                 req.session.userId = userId;
                 req.session.username = username;
-                console.log("Stored userID " + userId);
+                console.log("Stored userID in server session " + userId);
                 res.render('flashcards', {
                     title: 'Learn a new language!',
                     user: req.session.user,
@@ -130,9 +118,8 @@ app.post('/login/complete', function(req, res){
 //Logout (created a page as cannot load js into EJS)
 //https://stackoverflow.com/questions/47001537/how-to-include-external-js-file-to-ejs-node-template-page
 app.get('/seeyoulater', function(req, res){
-    req.session.destroy(); //clear cookie
+    req.session.destroy(); //clear server cookie
     userfunctions.logout(); //actually logout
-    //console.log(req.session.user);
     res.render('logout', {
         title: 'Thanks for visiting!',
         user: null,
@@ -151,7 +138,8 @@ app.post('/signup/complete', function(req, res){
     req.checkBody('email', 'A valid email is required to register').isEmail();
     req.checkBody('password', 'Password is required to register').notEmpty();
     req.checkBody('username', 'Please enter a username').notEmpty();
-    req.checkBody('selectNL', 'Select your native language').not().matches("Error");
+    req.checkBody('selectNL', 'Select your native language').not().matches("Error"); 
+    //Paul set default val to 'Error'
     req.checkBody('selectLL', 'Please enter the language you would like to learn').not().matches("Error");
     var errors = req.validationErrors();
     
@@ -249,7 +237,8 @@ app.get('/vocab', function(req, res){
         user: currUser,
         username: req.session.username,
         userArray: req.session.userArray,
-        userId: req.session.userId
+        userId: req.session.userId,
+        token: req.session.token
     });
 });
 

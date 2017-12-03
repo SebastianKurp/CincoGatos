@@ -25041,6 +25041,7 @@ require('@firebase/storage');
 })(this);
 
 },{}],159:[function(require,module,exports){
+
 var firebase = require('firebase');
 
 //Initialize Firebase
@@ -25053,6 +25054,7 @@ var config = {
     messagingSenderId: "821202238986"
   };
   firebase.initializeApp(config);
+  //firebase.enableLogging(true);
   const ref = firebase.database().ref();
   const fbAuth = firebase.auth;
 
@@ -25117,14 +25119,18 @@ function addUserDetails(userId, username, nativeLang, learningLang){
   
 function getUserDetails(userid){
     return new Promise(
-      function(resolve, reject)
+      async function(resolve, reject)
       {
+      var user = await firebase.auth().currentUser;
+    //  console.log("User details: Uid is "+ user.uid);
+    //  var uid = user.uid;
       firebase.database().ref(`users/`+userid).once('value').then((snapshot) => {
       console.log("Getting user details");
       var nativeLang = snapshot.val().nativeLang;
       var learningLang = snapshot.val().learningLang;
       var username = snapshot.val().username;
       var langArray = [nativeLang, learningLang, username];
+      console.log("Retrieved user details");
       if(langArray != null){
         resolve(langArray)
       }
@@ -25132,14 +25138,16 @@ function getUserDetails(userid){
         reject(langArray);
       }
     })
-  
     })
   }
   
 function getFlashcards(userid){
     return new Promise(
-      function(resolve, reject)
+      async function(resolve, reject)
       {
+      var user = await firebase.auth().currentUser;
+    //  console.log("Flashcards: Uid is "+ user.uid);
+    //  var uid = user.uid;
       firebase.database().ref(`users/`+userid+`/premadesets/premadesets`).once('value').then((snapshot) => {
       console.log("Getting flashcards");
       var animals = snapshot.val().animals;
@@ -25150,6 +25158,7 @@ function getFlashcards(userid){
       var school = snapshot.val().school;
       var numbers = snapshot.val().numbers;
       var langArray = [animals, clothing, colors, foods, household, school, numbers];
+      console.log("Retrieved flashcards");
       if(langArray != null){
         resolve(langArray);
       }
@@ -25163,8 +25172,14 @@ function getFlashcards(userid){
   
 function getAlphabets(userid){
     return new Promise(
-      function(resolve, reject)
+      async function(resolve, reject)
       {
+        var user = await firebase.auth().currentUser;
+        //console.log("Alphabets: Uid is "+ user.uid);
+        //var uid = user.uid;
+        //this logs on server side/terminal, but is null on client side
+        //even after retrieving a user from firebase it claims they are unauthed
+        //data logs successfully in terminal though
         firebase.database().ref(`users/`+userid+`/alphabets/alphabets`).once('value').then((snapshot) =>
       {
         console.log("Getting alphabets");
@@ -25172,6 +25187,8 @@ function getAlphabets(userid){
         var polish = snapshot.val().pl;
         var japanese = snapshot.val().jp;
         var alpha = [arabic, polish, japanese];
+        console.log(alpha);
+        console.log("Retrieved alphabets");
         if(alpha != null){
           resolve(alpha);
         }
@@ -25191,10 +25208,40 @@ async function getCards(userid){
   };
 
   /*
-async function writeScore(userId){
-
+function writeScore(userId){
+  //discuss with Abdul how he wants this written
 }
 */
+async function confirmUser(){
+  return new Promise(
+    async function(resolve, reject)
+    {
+      var user = await firebase.auth().currentUser;
+      firebase.auth().onAuthStateChanged(async function(user) {
+        if (user) {
+            console.log(user);
+            resolve(user);
+      }
+      else{
+        console.log("waiting....");
+      }
+})
+  })
+};
+
+function verifyToken(token){
+  firebase.auth().verifyIdToken(token)
+.then(decodedToken => {
+    const uid = decodedToken.sub;
+    console.log('User is authenticated for this request', uid);
+    // renderWithUser();
+})
+.catch(err => {
+    console.error('WARNING token invalid or user not found', err);
+    // renderWithoutUser();
+});
+}
+
 
 module.exports.auth = auth;
 module.exports.login = login;
@@ -25204,14 +25251,19 @@ module.exports.fbAuth = fbAuth;
 module.exports.resetPassword = resetPassword;
 module.exports.getUserDetails = getUserDetails;
 module.exports.getCards = getCards;
+module.exports.confirmUser = confirmUser;
+module.exports.verifyToken = verifyToken;
 
 },{"firebase":155}],160:[function(require,module,exports){
 var userfunctions = require('./userfunctions');
 
+//this is now storing a token
 var userId = document.getElementById("bundle").getAttribute("data-userId");
 if (typeof userId === "undefined" ) {
    var userId = ["No dice"];
 }
+
+userfunctions.verifyToken(userId);
 
 async function userInfo() {
   let flash = await userfunctions.getCards(userId);
@@ -25266,6 +25318,7 @@ async function setup()
   document.body.addEventListener("keyup", function(e) {
     keyPresses[e.keyCode] = false;
   });
+  document.getElementById("loadingcat").remove();
 }
 
 async function initialize()
@@ -25428,7 +25481,6 @@ async function getLang(){
   let nativeL = userArray[0];
   let learningL = userArray[1];
   console.log(userId); 
-  //userArray = req.session.userArray;
   let langSet = "";
   switch(userArray[1]){
     case 'Spanish':
@@ -25526,7 +25578,14 @@ async function SetUpCheck(){
   }
 }
 
-SetUpCheck();
+async function userInfo() {
+  let currentUid = await userfunctions.confirmUser();
+  console.log("inside vocab.js " + currentUid);
+  let flash = await userfunctions.getCards(currentUid);
+  return flash;
+}
 
+
+SetUpCheck();
 
 },{"./userfunctions":159}]},{},[160]);

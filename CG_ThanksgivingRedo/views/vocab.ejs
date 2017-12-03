@@ -1,10 +1,15 @@
 <% include partials/header %>
+<link href="/css/landing.css" rel="stylesheet" type="text/css">
 <title><%= title %></title>
-<h1><%= userArray %></h1>
+<div id="loadingcat">
+    <img src="/img/loading_blue.gif"/>
+</div>
 <canvas id="myCanvas" width="1000" height="632"></canvas>
 <script src = "/js/button.js"></script>
 <script src = "/js/circlebutton.js"></script>
 <script src = "/js/bar.js"></script>
 <script src = "/js/card.js"></script>
-<script data-userId="<%= userId %>" id="bundle" src = "/js/bundle.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+<script src = "/js/clientFirebase.js"></script>
+<script data-userId="<%= token %>" id="bundle" src = "/js/vocab.js"></script>
 <% include partials/footer %>
