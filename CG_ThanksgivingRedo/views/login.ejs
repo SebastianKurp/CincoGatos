@@ -5,11 +5,11 @@
         <form class="form" action="/login/complete" method="POST" name="loginform">
           <div class="form-group">
             <label>Email</label>
-            <input name="email" class="form-control" placeholder="Email"/>
+            <input name="email" class="form-control" id="email" placeholder="Email"/>
           </div>
           <div class="form-group">
             <label>Password</label>
-            <input name="password" type="password" class="form-control" placeholder="Password"  />
+            <input name="password" type="password" id="password" class="form-control" placeholder="Password"  />
           </div>        
           <% if(errors != null){ %>
             <div class="alert alert-danger" role="alert">
@@ -21,8 +21,10 @@
             </ul>
           </div>
             <% } %>
-          <input type="submit" name="loginBtn" value="Login">
+          <input type="submit" onClick="clientLog()" name="loginBtn" value="Login">
         </form>
 </div>
+<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+<script src = "/js/clientFirebase.js"></script>
 
 <% include partials/footer %>

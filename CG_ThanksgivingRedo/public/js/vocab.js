@@ -1,13 +1,7 @@
-var userfunctions = require('./userfunctions');
-
+//this is now storing a token
 var userId = document.getElementById("bundle").getAttribute("data-userId");
 if (typeof userId === "undefined" ) {
    var userId = ["No dice"];
-}
-
-async function userInfo() {
-  let flash = await userfunctions.getCards(userId);
-  return flash;
 }
 
 let link = localStorage["datadata"];
@@ -17,7 +11,8 @@ var c = document.getElementById("myCanvas");
 var ctx = c.getContext("2d");
 var frame = 0, card, otherColor = [255,255,255], startFlipFrame;
 var buttons, bars, mouseX = 0, mouseY = 0, keyPresses, mouseDown = false, clickBuffer = "None", 
-  clickedNext = false, answer = 0, complete = false, currentQuestion, currentAnswer, options, color, cardSet, currCard, langset, baseColor;
+  clickedNext = false, answer = 0, complete = false, currentQuestion, 
+  currentAnswer, options, color, cardSet, currCard, langset, baseColor, userArray;
 c.style.backgroundColor = "#FFFFFF";
 
 function shuffleArray(a) {
@@ -40,7 +35,7 @@ async function setup()
     keyPresses.push(false)
   }
   await initialize();
-  await getLang();
+  await getLang(); //
   setInterval(move, 1000.0/60.0);
   document.body.addEventListener("mousemove", function(e) {
     mouseX = e.pageX;
@@ -64,9 +59,9 @@ async function setup()
 async function initialize()
 {
   console.log("Initialize is called");
-  cardSet =  await getCardSet();
-  langset = await getLang();
-  currCard = await setCards();
+  cardSet =  await getCardSet(); //
+  langset = await getLang(); //
+  currCard = await setCards(); //
 
   color = [255,255,255];
   card = new Card(0.5, 0.3, 0.3, 0.2, 50, color, currentQuestion);
@@ -211,17 +206,23 @@ async function move()
   frame++;
 }
 
+async function userInfo() {
+  let flash = await getCards(userId);
+  console.log("User info triggered, awaited get cards");
+  console.log(flash);
+  return flash;
+}
+
 async function getLang(){
   console.log("getLang is called -- next is awaiting userinfo");
-  var flash = await userInfo();
-  let userArray = flash[1];
-  let alpha = flash[2];
-  let flashcards = flash[0];
-  let username = userArray[2];
-  let nativeL = userArray[0];
-  let learningL = userArray[1];
+ // var flash = await userInfo();
+  // let userArray = flash[1];
+  // let alpha = flash[2];
+  // let flashcards = flash[0];
+  // let username = userArray[2];
+  // let nativeL = userArray[0];
+  // let learningL = userArray[1];
   console.log(userId); 
-  //userArray = req.session.userArray;
   let langSet = "";
   switch(userArray[1]){
     case 'Spanish':
@@ -299,7 +300,15 @@ async function setCards()
 }
 
 async function SetUpCheck(){
-  var flash = await userInfo();
+  let flash = await userInfo();
+  console.log("inside setup check, should have waited for userinfo to complete");
+   userArray = flash[1];
+   console.log(userArray + " user array");
+   alpha = flash[2];
+   flashcards = flash[0];
+   username = userArray[2];
+   nativeL = userArray[0];
+   learningL = userArray[1];
   if(link === '/alphabet'){
     let userArray = flash[1];
     let learningL = userArray[1];
@@ -320,4 +329,3 @@ async function SetUpCheck(){
 }
 
 SetUpCheck();
-
