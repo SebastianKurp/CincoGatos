@@ -45,10 +45,16 @@ function readFile(file) {
         }
 
         for(i=0; i<noDuplicates.length;i++){
+            console.log(translations[i] + " " + typeof translations[i]);
+            if(typeof translations[i] === "number"){
+                translations.splice(i, 1);
+                noDuplicates.splice(i, 1);
+            } //for some reason this only removes some of the '1' values.
             console.log(noDuplicates[i]+ " : " + translations[i]);
         }
+        console.log(translations);
     };
-    reader.readAsText(file);   
+    reader.readAsText(file);  
 } 
 
 var translations = [];
@@ -59,11 +65,12 @@ async function getJSONAsync(url){
                 var transWord = json.tuc[0].phrase.text;
                 translations.push(transWord);
             }catch(err){
-                translations.push("-1");
+                translations.push(1);
             }
         }       
     })
 }
+
 
 function showFileName(name){
     var txtIndex = name.search(".txt");
