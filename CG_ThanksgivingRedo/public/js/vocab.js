@@ -12,7 +12,8 @@ var ctx = c.getContext("2d");
 var frame = 0, card, otherColor = [255,255,255], startFlipFrame;
 var buttons, bars, mouseX = 0, mouseY = 0, keyPresses, mouseDown = false, clickBuffer = "None", 
   clickedNext = false, answer = 0, complete = false, currentQuestion, 
-  currentAnswer, options, color, cardSet, currCard, langset, baseColor, userArray, currSet, language;
+  currentAnswer, options, color, cardSet, currCard, langset, baseColor, 
+  userArray, currSet, language, cardBatch = 0;
 c.style.backgroundColor = "#FFFFFF";
 
 function shuffleArray(a) {
@@ -168,6 +169,8 @@ async function move()
 
   if (answer !== 0)
   {
+    cardBatch++;
+    console.log("# of cards practiced " + cardBatch);
     complete = true;
     if (!card.isFlipping)
     {
