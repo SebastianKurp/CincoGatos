@@ -175,28 +175,38 @@ async function move()
       if (currentAnswer === options[answer-1]) 
       {
         color = [150,255,150];
-        console.log("card set is " + cardSet);
         if(cardSet === 7){
-          console.log("7 triggered");
-          console.log(currSet);
-
-        }
-        else{
-          if (langset[3][cardSet][langset[0]][currCard][1] < 5)
-          {
-            langset[3][cardSet][langset[0]][currCard][1] += 1
-          }else
-          {
-            color = [255,150,150];
-            if (langset[3][cardSet][langset[0]][currCard][1] > 0)
-            {
-              langset[3][cardSet][langset[0]][currCard][1] -= 1
-            }
-
+          //if alphabet cards & correct answer
+          console.log(currSet[language][currCard]);
+          if(currSet[language][currCard][1] < 5){
+            currSet[language][currCard][1] += 1;
           }
         }
-        
+        else{
+          //reg set & right answer
+          if (langset[3][cardSet][langset[0]][currCard][1] < 5){
+            langset[3][cardSet][langset[0]][currCard][1] += 1;
+          }
         }
+      }
+         else { //else for 'wrong answer'
+          if(cardSet === 7){
+            //alphabet & wrong answer
+              color = [255,150,150];
+              if(currSet[language][currCard][1] > 0){
+                currSet[language][currCard][1] -= 1;
+              }
+            }
+            else
+            {
+              //reg set & wrong answer
+              color = [255,150,150];
+              if (langset[3][cardSet][langset[0]][currCard][1] > 0)
+              {
+                langset[3][cardSet][langset[0]][currCard][1] -= 1;
+              }
+          }
+      }
 
       card.text = currentAnswer;
       card.drawFlip(ctx, frame - startFlipFrame, color, c.width, c.height);
@@ -229,7 +239,6 @@ async function userInfo() {
 }
 
 async function getLang(){
-  let language = "";
   switch(userArray[1]){
     case 'Spanish':
       language = 'sp';
@@ -259,7 +268,7 @@ async function setCards()
   var learningL = langset[6];
   var language = langset[0];
 
-  //var currSet = 'None';
+  currSet = 'None';
   if(cardSet === 7){
     if(language === 'ar'){
       currSet = alpha[0];
