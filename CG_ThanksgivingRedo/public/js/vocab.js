@@ -12,7 +12,7 @@ var ctx = c.getContext("2d");
 var frame = 0, card, otherColor = [255,255,255], startFlipFrame;
 var buttons, bars, mouseX = 0, mouseY = 0, keyPresses, mouseDown = false, clickBuffer = "None", 
   clickedNext = false, answer = 0, complete = false, currentQuestion, 
-  currentAnswer, options, color, cardSet, currCard, langset, baseColor, userArray;
+  currentAnswer, options, color, cardSet, currCard, langset, baseColor, userArray, currSet, language;
 c.style.backgroundColor = "#FFFFFF";
 
 function shuffleArray(a) {
@@ -175,14 +175,29 @@ async function move()
       if (currentAnswer === options[answer-1]) 
       {
         color = [150,255,150];
-        console.log(langset[3]);
-        if (langset[3][cardSet][langset[0]][currCard][1] < 5) langset[3][cardSet][langset[0]][currCard][1] += 1
-      }
-      else
-      {
-        color = [255,150,150];
-        if (langset[3][cardSet][langset[0]][currCard][1] > 0) langset[3][cardSet][langset[0]][currCard][1] -= 1
-      }
+        console.log("card set is " + cardSet);
+        if(cardSet === 7){
+          console.log("7 triggered");
+          console.log(currSet);
+
+        }
+        else{
+          if (langset[3][cardSet][langset[0]][currCard][1] < 5)
+          {
+            langset[3][cardSet][langset[0]][currCard][1] += 1
+          }else
+          {
+            color = [255,150,150];
+            if (langset[3][cardSet][langset[0]][currCard][1] > 0)
+            {
+              langset[3][cardSet][langset[0]][currCard][1] -= 1
+            }
+
+          }
+        }
+        
+        }
+
       card.text = currentAnswer;
       card.drawFlip(ctx, frame - startFlipFrame, color, c.width, c.height);
     }
@@ -214,33 +229,24 @@ async function userInfo() {
 }
 
 async function getLang(){
-  console.log("getLang is called -- next is awaiting userinfo");
- // var flash = await userInfo();
-  // let userArray = flash[1];
-  // let alpha = flash[2];
-  // let flashcards = flash[0];
-  // let username = userArray[2];
-  // let nativeL = userArray[0];
-  // let learningL = userArray[1];
-  console.log(userId); 
-  let langSet = "";
+  let language = "";
   switch(userArray[1]){
     case 'Spanish':
-      langSet = 'sp';
+      language = 'sp';
       break;
     case 'Japanese':
-      langSet = 'jp';
+      language = 'jp';
       break;
     case 'Arabic':
-      langSet = 'ar';
+      language = 'ar';
       break;
     case 'Polish':
-      langSet = 'pl';
+      language = 'pl';
       break;
     default:
       console.log("Something broke");
   }
-  return [langSet, userArray, alpha, flashcards, username, nativeL, learningL];
+  return [language, userArray, alpha, flashcards, username, nativeL, learningL];
 }
 
 async function setCards()
@@ -251,17 +257,17 @@ async function setCards()
   var username = langset[4];
   var nativeL = langset[5];
   var learningL = langset[6];
-  var langSet = langset[0];
+  var language = langset[0];
 
-  var currSet = 'None';
+  //var currSet = 'None';
   if(cardSet === 7){
-    if(langSet === 'ar'){
+    if(language === 'ar'){
       currSet = alpha[0];
     }
-    else if(langSet === 'pl'){
+    else if(language === 'pl'){
       currSet = alpha[1];
     }
-    else if(langSet === 'jp'){
+    else if(language === 'jp'){
       randomAlpha = Math.floor((Math.random() * 2) + 1)
       if(randomAlpha === 1){
         currSet = alpha[2]["hiragana"];
@@ -275,14 +281,13 @@ async function setCards()
       return false;
     }
   }
-
   if (currSet === 'None') currSet = flashcards[cardSet]
   console.log(currSet)
-  var l = currSet[langSet].length;
+  var l = currSet[language].length;
   var r = Math.floor((Math.random() * l) + 1) - 1;
 
   var cardIndex = r;
-  currentQuestion = currSet[langSet][r][0];
+  currentQuestion = currSet[language][r][0];
   currentAnswer = currSet["en"][r];
 
   var otherOptions = [r];
@@ -301,7 +306,6 @@ async function setCards()
 
 async function SetUpCheck(){
   let flash = await userInfo();
-  console.log("inside setup check, should have waited for userinfo to complete");
    userArray = flash[1];
    console.log(userArray + " user array");
    alpha = flash[2];
