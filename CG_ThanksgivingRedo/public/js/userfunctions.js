@@ -30,7 +30,11 @@ function login (email, pw) {
       var errorMessage = error.message;
       if (errorCode == 'auth/user-not-found') {
       console.log('User not found');
-      } else {
+      } 
+      if(errorCode == 'auth/wrong-password'){
+      console.log('Opps Wrong Passowrd')
+      }
+      else {
       console.log(errorMessage);
       }
       console.log(error);
