@@ -29,13 +29,9 @@ function login (email, pw) {
       var errorCode = error.code;
       var errorMessage = error.message;
       if (errorCode == 'auth/user-not-found') {
-        console.log('User not found');
-      } 
-      if(errorCode == 'auth/wrong-password'){
-        console.log('Opps Wrong Passowrd')
-      }
-      else {
-        console.log(errorMessage);
+      console.log('User not found');
+      } else {
+      console.log(errorMessage);
       }
       console.log(error);
       });
