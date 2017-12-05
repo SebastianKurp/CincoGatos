@@ -60,12 +60,13 @@ async function setup()
 async function initialize()
 {
   console.log("Initialize is called");
+  color = [255,255,255];
+  card = new Card(0,0,0,0,0,0,0,0);
+
   cardSet =  await getCardSet(); //
   langset = await getLang(); //
   currCard = await setCards(); //
-
-  color = [255,255,255];
-  card = new Card(0.5, 0.3, 0.3, 0.2, 50, color, currentQuestion);
+  card = new Card(0.5, 0.3, 0.3, 0.2, 50, color, currentQuestion, 0, 5);
   //constructor(x, y, rx, ry, cFill, cActive, cStroke, wStroke, link = "None", text = "", cText)
   var color1 = "rgb(" + baseColor[0] + ',' + baseColor[1] + ',' + baseColor[2] + ')';
   var color2 = "rgb(" + Math.floor((baseColor[0] + 0) / 2)  + ',' + Math.floor((baseColor[1] + 0) / 2) + ',' + Math.floor((baseColor[2] + 0) / 2) + ')';
@@ -183,12 +184,14 @@ async function move()
           console.log(currSet[language][currCard]);
           if(currSet[language][currCard][1] < 5){
             currSet[language][currCard][1] += 1;
+            card.val = currSet[language][currCard][1];
           }
         }
         else{
           //reg set & right answer
           if (langset[3][cardSet][langset[0]][currCard][1] < 5){
             langset[3][cardSet][langset[0]][currCard][1] += 1;
+            card.val = langset[3][cardSet][langset[0]][currCard][1];
           }
         }
       }
@@ -198,6 +201,7 @@ async function move()
               color = [255,150,150];
               if(currSet[language][currCard][1] > 0){
                 currSet[language][currCard][1] -= 1;
+                card.val = currSet[language][currCard][1];
               }
             }
             else
@@ -207,6 +211,7 @@ async function move()
               if (langset[3][cardSet][langset[0]][currCard][1] > 0)
               {
                 langset[3][cardSet][langset[0]][currCard][1] -= 1;
+                card.val = langset[3][cardSet][langset[0]][currCard][1];
               }
           }
       }
@@ -300,6 +305,7 @@ async function setCards()
 
   var cardIndex = r;
   currentQuestion = currSet[language][r][0];
+  card.val = currSet[language][r][1];
   currentAnswer = currSet["en"][r];
 
   var otherOptions = [r];
