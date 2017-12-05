@@ -25,7 +25,16 @@ function auth (email, pw, nL,lL, useName) {
   }
 
 function login (email, pw) {
-    return fbAuth().signInWithEmailAndPassword(email, pw)
+    return fbAuth().signInWithEmailAndPassword(email, pw).catch(function(error){
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      if (errorCode == 'auth/user-not-found') {
+      console.log('User not found');
+      } else {
+      console.log(errorMessage);
+      }
+      console.log(error);
+      });
   }
 
 function logout () {
