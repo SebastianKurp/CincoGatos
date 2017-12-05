@@ -93,7 +93,7 @@ app.post('/login/complete', function(req, res){
             } 
             if(errorCode == 'auth/wrong-password'){
               console.log('Opps Wrong Passowrd');
-              req.flash('message','Username Not Found');
+              req.flash('message','Opps wrong Password!');
               res.redirect('/login');
             }
             else {
