@@ -25,21 +25,8 @@ function auth (email, pw, nL,lL, useName) {
   }
 
 function login (email, pw) {
-    return fbAuth().signInWithEmailAndPassword(email, pw).catch(function(error){
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      if (errorCode == 'auth/user-not-found') {
-        console.log('User not found');
-      } 
-      if(errorCode == 'auth/wrong-password'){
-        console.log('Opps Wrong Passowrd')
-      }
-      else {
-        console.log(errorMessage);
-      }
-      console.log(error);
-      });
-  }
+    return fbAuth().signInWithEmailAndPassword(email, pw)
+}
 
 function logout () {
     return fbAuth().signOut()

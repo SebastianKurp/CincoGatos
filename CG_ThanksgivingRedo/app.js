@@ -1,11 +1,13 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 var path = require('path');
 var validator = require('express-validator');
 var firebase = require("firebase");
 var userfunctions = require('./public/js/userfunctions');
 //var session = require('client-sessions');
 var session = require('express-session');
+var flash = require('connect-flash');
 var app = express();
 
 //view engine using EJS
@@ -21,6 +23,9 @@ app.use(express.static(path.join(__dirname, '/public')));
 
 //Set up form validation
 app.use(validator());
+
+//Set up flash messages
+app.use(flash());
 
 
 //Global variables
@@ -59,7 +64,8 @@ app.get('/', function(req, res){
 //login page
 app.get('/login', function(req, res){
     res.render('login', {
-        title: 'Login to Cinco Gatos'
+        title: 'Login to Cinco Gatos',
+        message : req.flash('message')
     });
 });
 
@@ -69,7 +75,7 @@ app.post('/login/complete', function(req, res){
     
     var errors = req.validationErrors();
 
-    if(errors){
+    if(errors){git 
         res.render('login', 
         {
             title: 'Login to Cinco Gatos',
@@ -77,7 +83,24 @@ app.post('/login/complete', function(req, res){
         })
     }
     else{
-        userfunctions.login(req.body.email, req.body.password);
+        userfunctions.login(req.body.email, req.body.password).catch(function(error){
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            if (errorCode == 'auth/user-not-found') {
+              console.log('User not found');
+              req.flash('message','Username Not Found');
+              res.redirect('/login');
+            } 
+            if(errorCode == 'auth/wrong-password'){
+              console.log('Opps Wrong Passowrd');
+              req.flash('message','Username Not Found');
+              res.redirect('/login');
+            }
+            else {
+              console.log(errorMessage);
+            }
+            console.log(error);
+        });
         firebase.auth().onAuthStateChanged(async function(user) {
             if (user) {
                 var user = firebase.auth().currentUser;
