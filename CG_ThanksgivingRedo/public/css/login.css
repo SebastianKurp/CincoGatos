@@ -1,0 +1,14 @@
+.form{
+    text-align: center;
+}
+
+input[type="password"], input[type="text"]{
+    margin: 0 auto;
+    text-align: center;
+    width: 20em;
+}
+
+input[type="submit"]{
+    background-color: rgb(0, 125, 209);
+    color: white;
+}
