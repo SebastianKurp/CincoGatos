@@ -258,6 +258,8 @@ async function userInfo() {
   return flash;
 }
 
+//this function returns various this about the user that we need to set the cards & draw on the
+//canvas. Username, their native language, their learning language, etc.
 async function getLang(){
   switch(userArray[1]){
     case 'Spanish':
