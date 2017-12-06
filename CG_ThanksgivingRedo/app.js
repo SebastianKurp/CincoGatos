@@ -178,25 +178,7 @@ app.post('/signup/complete', function(req, res){
             })
         }
         else{
-            var user = userfunctions
-.auth(req.body.email, req.body.password, req.body.selectNL, req.body.selectLL, req.body.username).catch(function(error){
-                var errorCode = error.code;
-                var errorMessage = error.message;
-            if (errorCode == 'auth/email-already-exists') {
-                console.log('Email Already Exists');
-                req.flash('message','Email Already Exists');
-                res.redirect('/signup');
-            } 
-            if(errorCode == 'auth/uid-alread-exists'){
-                console.log('Username is already taken');
-                req.flash('message','Username is already taken');
-                res.redirect('/signup');
-            }
-            else {
-                console.log(errorMessage);
-            }
-                console.log(error);
-            });
+            var user = userfunctions.auth(req.body.email, req.body.password, req.body.selectNL, req.body.selectLL, req.body.username)
             firebase.auth().onAuthStateChanged(function(user) {
                 if (user) {
                     var user = firebase.auth().currentUser;

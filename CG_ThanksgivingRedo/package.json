@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
+    // "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
@@ -19,6 +20,7 @@
     "express-validator": "^4.3.0",
     "firebase": "^4.6.2",
     "jquery": "^3.2.1",
+    "mocha": "^4.0.1",
     "nodemon": "^1.12.1"
   },
   "devDependencies": {}
