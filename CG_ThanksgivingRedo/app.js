@@ -84,7 +84,8 @@ app.post('/login/complete', function(req, res){
         })
     }
     else{
-        userfunctions.login(req.body.email, req.body.password).catch(function(error){ //As Nieky has pointed out I could use switch statements and make a seperate function but... time and comp 336 stuff 
+        //As Nieky has pointed out I could use switch statements and make a seperate function but... time and comp 336 stuff
+        userfunctions.login(req.body.email, req.body.password).catch(function(error){ 
             var errorCode = error.code;
             var errorMessage = error.message;
             if (errorCode == 'auth/user-not-found') {
@@ -181,21 +182,21 @@ app.post('/signup/complete', function(req, res){
 .auth(req.body.email, req.body.password, req.body.selectNL, req.body.selectLL, req.body.username).catch(function(error){
                 var errorCode = error.code;
                 var errorMessage = error.message;
-             if (errorCode == 'auth/email-already-exists') {
+            if (errorCode == 'auth/email-already-exists') {
                 console.log('Email Already Exists');
                 req.flash('message','Email Already Exists');
                 res.redirect('/signup');
-              } 
-              if(errorCode == 'auth/uid-alread-exists'){
+            } 
+            if(errorCode == 'auth/uid-alread-exists'){
                 console.log('Username is already taken');
                 req.flash('message','Username is already taken');
                 res.redirect('/signup');
-              }
-              else {
+            }
+            else {
                 console.log(errorMessage);
-              }
+            }
                 console.log(error);
-          });
+            });
             firebase.auth().onAuthStateChanged(function(user) {
                 if (user) {
                     var user = firebase.auth().currentUser;
