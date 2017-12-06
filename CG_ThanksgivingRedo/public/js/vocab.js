@@ -1,20 +1,21 @@
-//this is now storing a token
-var userId = document.getElementById("bundle").getAttribute("data-userId");
-if (typeof userId === "undefined" ) {
-   var userId = ["No dice"];
-}
-
+//we store the link the user clicks on main canvas in localstorage
+//and then retrieve it here
 let link = localStorage["datadata"];
 localStorage.removeItem("datadata"); //clear out so can be used again
 
+
+//before anything else we need to get hooks in our canvas
+//and declare global vars that we will be continually reassigning as the canvas
+//moves and user data updates in different functions
 var c = document.getElementById("myCanvas");
 var ctx = c.getContext("2d");
 var frame = 0, card, otherColor = [255,255,255], startFlipFrame;
 var buttons, bars, mouseX = 0, mouseY = 0, keyPresses, mouseDown = false, clickBuffer = "None", 
   clickedNext = false, answer = 0, complete = false, currentQuestion, 
   currentAnswer, options, color, cardSet, currCard, langset, baseColor, 
-  userArray, currSet, language, cardBatch = 0;
+  userArray, currSet, language, cardBatch = 0, userId;
 c.style.backgroundColor = "#FFFFFF";
+
 
 function shuffleArray(a) {
   var array = a;
@@ -27,6 +28,8 @@ function shuffleArray(a) {
   return array;
 }
 
+//setup the canvas. Prior to this it is just loading cat
+//this function initializes the canvas listens for the user's movements on the canvas
 async function setup()
 {
   console.log("Setup is called");
@@ -36,7 +39,6 @@ async function setup()
     keyPresses.push(false)
   }
   await initialize();
-  await getLang(); //
   setInterval(move, 1000.0/60.0);
   document.body.addEventListener("mousemove", function(e) {
     mouseX = e.pageX;
@@ -57,17 +59,22 @@ async function setup()
   document.getElementById("loadingcat").remove();
 }
 
+/*
+fun stuff. we determine what cardset the user wants, we get the user's info
+off firebase and we setcards (choose the vocab word)
+to display on the flashcard & create 'bars' for the choice of answers to
+be displayed on
+*/
 async function initialize()
 {
   console.log("Initialize is called");
   color = [255,255,255];
   card = new Card(0,0,0,0,0,0,0,0);
 
-  cardSet =  await getCardSet(); //
-  langset = await getLang(); //
-  currCard = await setCards(); //
+  cardSet =  await getCardSet(); 
+  langset = await getLang(); 
+  currCard = await setCards(); 
   card = new Card(0.5, 0.3, 0.3, 0.2, 50, color, currentQuestion, 0, 5);
-  //constructor(x, y, rx, ry, cFill, cActive, cStroke, wStroke, link = "None", text = "", cText)
   var color1 = "rgb(" + baseColor[0] + ',' + baseColor[1] + ',' + baseColor[2] + ')';
   var color2 = "rgb(" + Math.floor((baseColor[0] + 0) / 2)  + ',' + Math.floor((baseColor[1] + 0) / 2) + ',' + Math.floor((baseColor[2] + 0) / 2) + ')';
   bars =  [
@@ -76,12 +83,15 @@ async function initialize()
         new Bar(0.5, 0.85, 0.3, 0.0375, color1, color2, "rgb(0,0,0)", 6, "./option3", "Option 3", "rgb(255,255,255)"),
         new Bar(0.5, 0.95, 0.3, 0.0375, color1, color2, "rgb(0,0,0)", 6, "./option4", "Option 4", "rgb(255,255,255)")
   ];
-  //constructor(x, y, rInactive, rActive, cFill, cActive, cStroke, wStroke, image = "None", link = "None", text = "", cText)
   buttons = [
     new CircleButton(0.9, 0.9, 0.07, 0.09, "rgb(100,100,100)", "rgb(150,150,150)", "rgb(0,0,0)", 6, "None", "./next", "Next", "rgb(0,0,0)")
   ];
 }
 
+/*we want to display the appropriate card set depending on
+which link they clicked. This function also changes the background color
+of the page based on that choice
+*/
 function getCardSet()
 {
   console.log("Getting cardset");
@@ -119,6 +129,7 @@ function getCardSet()
   }
 }
 
+//the Next button you see is made from this
 function drawButtons()
 {
   for (var i = 0; i < buttons.length; i++)
@@ -134,6 +145,7 @@ function drawButtons()
   }
 }
 
+//the answers below the flashcard are created by this
 function drawBars(options)
 {
   for (var i = 0; i < bars.length; i++)
@@ -246,6 +258,8 @@ async function userInfo() {
   return flash;
 }
 
+//this function returns various this about the user that we need to set the cards & draw on the
+//canvas. Username, their native language, their learning language, etc.
 async function getLang(){
   switch(userArray[1]){
     case 'Spanish':
@@ -328,6 +342,7 @@ async function SetUpCheck(){
    console.log(userArray + " user array");
    alpha = flash[2];
    flashcards = flash[0];
+   userId = flash[3];
    username = userArray[2];
    nativeL = userArray[0];
    learningL = userArray[1];
@@ -338,6 +353,7 @@ async function SetUpCheck(){
       alert("No alphabet for you!");
       var sadcat = new Image();
       sadcat.src = './img/cryingcat.jpeg';
+      document.getElementById("loadingcat").remove();      
       sadcat.addEventListener('load', function(){
         ctx.drawImage(sadcat, 300, 20);
       }, false)

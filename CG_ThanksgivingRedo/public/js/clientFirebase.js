@@ -98,7 +98,7 @@ async function getCards(){
         let langArray = await getUserDetails(userid);
         let alpharay = await getAlphabets(userid);
         //return [flashArray, langArray, alpharay];
-        let flash = [flashArray, langArray, alpharay];
+        let flash = [flashArray, langArray, alpharay, userid];
         if(flash != null){
           resolve(flash);
         }
