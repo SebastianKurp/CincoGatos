@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var path = require('path');
+var port     = process.env.PORT || 3000; //heroku stuff
 var validator = require('express-validator');
 var firebase = require("firebase");
 var userfunctions = require('./public/js/userfunctions');
@@ -83,7 +84,7 @@ app.post('/login/complete', function(req, res){
         })
     }
     else{
-        userfunctions.login(req.body.email, req.body.password).catch(function(error){
+        userfunctions.login(req.body.email, req.body.password).catch(function(error){ //As Nieky has pointed out I could use switch statements and make a seperate function but...
             var errorCode = error.code;
             var errorMessage = error.message;
             if (errorCode == 'auth/user-not-found') {
@@ -153,7 +154,8 @@ app.get('/seeyoulater', function(req, res){
 //signup page
 app.get('/signup', function(req, res){
     res.render('signup', {
-        title: 'Signup for Cinco Gatos'
+        title: 'Signup for Cinco Gatos',
+        message : req.flash('message')
     });
 });
 
@@ -170,12 +172,30 @@ app.post('/signup/complete', function(req, res){
             res.render('signup', 
             {
                 title: 'Register for Cinco Gatos',
-                errors: errors
+                errors: errors,
+
             })
         }
         else{
             var user = userfunctions
-            .auth(req.body.email, req.body.password, req.body.selectNL, req.body.selectLL, req.body.username);
+.auth(req.body.email, req.body.password, req.body.selectNL, req.body.selectLL, req.body.username).catch(function(error){
+                var errorCode = error.code;
+                var errorMessage = error.message;
+             if (errorCode == 'auth/email-already-exists') {
+                console.log('Email Already Exists');
+                req.flash('message','Email Already Exists');
+                res.redirect('/signup');
+              } 
+              if(errorCode == 'auth/uid-alread-exists'){
+                console.log('Username is already taken');
+                req.flash('message','Username is already taken');
+                res.redirect('/signup');
+              }
+              else {
+                console.log(errorMessage);
+              }
+                console.log(error);
+          });
             firebase.auth().onAuthStateChanged(function(user) {
                 if (user) {
                     var user = firebase.auth().currentUser;
@@ -265,6 +285,6 @@ app.get('/vocab', function(req, res){
     });
 });
 
-app.listen(3000, function(){
-    console.log("Server running on port 3000");
-})
+//Port is a var at the very top, this just looks cleaner.
+app.listen(port);
+console.log('The magic happens on port ' + port);

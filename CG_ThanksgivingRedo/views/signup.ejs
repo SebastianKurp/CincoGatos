@@ -2,6 +2,9 @@
 <title><%= title %></title>
 <div class="col-sm-6 col-sm-offset-3">
         <h1 id="header">Sign Up</h1>
+        <% if (message.length > 0) { %>
+          <div class="alert alert-danger"><%= message %></div>
+        <% } %>
         <form class="form" action="/signup/complete" method="POST" id="signupform">
           <div  class="form-group">
             <label>Username</label>
