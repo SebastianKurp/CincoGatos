@@ -84,7 +84,6 @@ app.post('/login/complete', function(req, res){
         })
     }
     else{
-        //As Nieky has pointed out I could use switch statements and make a seperate function but... time and comp 336 stuff
         userfunctions.login(req.body.email, req.body.password).catch(function(error){ 
             var errorCode = error.code;
             var errorMessage = error.message;
@@ -174,11 +173,29 @@ app.post('/signup/complete', function(req, res){
             {
                 title: 'Register for Cinco Gatos',
                 errors: errors,
+                message : req.flash('message')
 
             })
         }
         else{
-            var user = userfunctions.auth(req.body.email, req.body.password, req.body.selectNL, req.body.selectLL, req.body.username)
+            userfunctions.auth(req.body.email, req.body.password, req.body.selectNL, req.body.selectLL, req.body.username).catch(function(error){
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                if (errorCode == 'auth/email-already-in-use') {
+                  console.log('email-already-exists');
+                  req.flash('message','Email Already In Use!');
+                  res.redirect('/signup');
+                } 
+                if(errorCode == 'auth/uid-alread-exists'){
+                  console.log('Uid already exists');
+                  req.flash('message','Username already Exists');
+                  res.redirect('/signup');
+                }
+                else {
+                  console.log(errorMessage);
+                }
+                console.log(error);
+            });
             firebase.auth().onAuthStateChanged(function(user) {
                 if (user) {
                     var user = firebase.auth().currentUser;
