@@ -84,7 +84,7 @@ app.post('/login/complete', function(req, res){
         })
     }
     else{
-        userfunctions.login(req.body.email, req.body.password).catch(function(error){ //As Nieky has pointed out I could use switch statements and make a seperate function but...
+        userfunctions.login(req.body.email, req.body.password).catch(function(error){ //As Nieky has pointed out I could use switch statements and make a seperate function but... time and comp 336 stuff 
             var errorCode = error.code;
             var errorMessage = error.message;
             if (errorCode == 'auth/user-not-found') {
