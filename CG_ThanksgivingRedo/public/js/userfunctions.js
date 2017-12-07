@@ -79,8 +79,6 @@ function getUserDetails(userid){
       async function(resolve, reject)
       {
       var user = await firebase.auth().currentUser;
-    //  console.log("User details: Uid is "+ user.uid);
-    //  var uid = user.uid;
       firebase.database().ref(`users/`+userid).once('value').then((snapshot) => {
       console.log("Getting user details");
       var nativeLang = snapshot.val().nativeLang;
@@ -103,8 +101,6 @@ function getFlashcards(userid){
       async function(resolve, reject)
       {
       var user = await firebase.auth().currentUser;
-    //  console.log("Flashcards: Uid is "+ user.uid);
-    //  var uid = user.uid;
       firebase.database().ref(`users/`+userid+`/premadesets/premadesets`).once('value').then((snapshot) => {
       console.log("Getting flashcards");
       var animals = snapshot.val().animals;
@@ -132,11 +128,6 @@ function getAlphabets(userid){
       async function(resolve, reject)
       {
         var user = await firebase.auth().currentUser;
-        //console.log("Alphabets: Uid is "+ user.uid);
-        //var uid = user.uid;
-        //this logs on server side/terminal, but is null on client side
-        //even after retrieving a user from firebase it claims they are unauthed
-        //data logs successfully in terminal though
         firebase.database().ref(`users/`+userid+`/alphabets/alphabets`).once('value').then((snapshot) =>
       {
         console.log("Getting alphabets");
@@ -169,23 +160,6 @@ function writeScore(userId){
   //discuss with Abdul how he wants this written
 }
 */
-/*
-async function confirmUser(){
-  return new Promise(
-    async function(resolve, reject)
-    {
-      firebase.auth().onAuthStateChanged(async function(user) {
-        if (user) {
-            var user = await firebase.auth().currentUser;
-            console.log(user);
-            resolve(user);
-      }
-      else{
-        console.log("waiting....");
-      }
-});
-  });
-*/
 
 module.exports.auth = auth;
 module.exports.login = login;
@@ -195,4 +169,3 @@ module.exports.fbAuth = fbAuth;
 module.exports.resetPassword = resetPassword;
 module.exports.getUserDetails = getUserDetails;
 module.exports.getCards = getCards;
-//module.exports.confirmUser = confirmUser;
