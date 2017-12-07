@@ -20,13 +20,12 @@ function auth (email, pw, nL,lL, useName) {
     native = nL;
     learning = lL;
     name = useName;
-    return fbAuth().createUserWithEmailAndPassword(email, pw)
-      .then(saveUser);
+    return fbAuth().createUserWithEmailAndPassword(email, pw).then(saveUser);
   }
 
 function login (email, pw) {
     return fbAuth().signInWithEmailAndPassword(email, pw)
-  }
+}
 
 function logout () {
     return fbAuth().signOut()
