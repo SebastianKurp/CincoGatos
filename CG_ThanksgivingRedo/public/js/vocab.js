@@ -9,7 +9,7 @@ localStorage.removeItem("datadata"); //clear out so can be used again
 //moves and user data updates in different functions
 var c = document.getElementById("myCanvas");
 var ctx = c.getContext("2d");
-var frame = 0, card, otherColor = [255,255,255], startFlipFrame;
+var frame = 0, card, progress, otherColor = [255,255,255], startFlipFrame;
 var buttons, bars, mouseX = 0, mouseY = 0, keyPresses, mouseDown = false, clickBuffer = "None", 
   clickedNext = false, answer = 0, complete = false, currentQuestion, 
   currentAnswer, options, color, cardSet, currCard, langset, baseColor, 
@@ -74,9 +74,14 @@ async function initialize()
   cardSet =  await getCardSet(); 
   langset = await getLang(); 
   currCard = await setCards(); 
-  card = new Card(0.5, 0.3, 0.3, 0.2, 50, color, currentQuestion, 0, 5);
+
+  card = new Card(0.5, 0.375, 0.3, 0.2, 50, color, currentQuestion, 0, 5);
+  cardsDone = getCardsDone();
+
   var color1 = "rgb(" + baseColor[0] + ',' + baseColor[1] + ',' + baseColor[2] + ')';
   var color2 = "rgb(" + Math.floor((baseColor[0] + 0) / 2)  + ',' + Math.floor((baseColor[1] + 0) / 2) + ',' + Math.floor((baseColor[2] + 0) / 2) + ')';
+  
+  progress = new progressBar(cardsDone, langset[3][cardSet][langset[0]].length, 0.5, 0.1, 0.35, 0.04, "rgb(0,0,0)");
   bars =  [
         new Bar(0.5, 0.65, 0.3, 0.0375, color1, color2, "rgb(0,0,0)", 6, "./option1", "Option 1", "rgb(255,255,255)"),
         new Bar(0.5, 0.75, 0.3, 0.0375, color1, color2, "rgb(0,0,0)", 6, "./option2", "Option 2", "rgb(255,255,255)"),
@@ -92,6 +97,19 @@ async function initialize()
 which link they clicked. This function also changes the background color
 of the page based on that choice
 */
+function getCardsDone()
+{
+  output = 0
+  for (var i = 0; i < langset[3][cardSet][langset[0]].length; i++)
+  {
+    if (langset[3][cardSet][langset[0]][i][1] == 5)
+    {
+      output += 1;
+    }
+  }
+  return output;
+}
+
 function getCardSet()
 {
   console.log("Getting cardset");
@@ -178,6 +196,7 @@ async function move()
   ctx.fill();
 
   drawButtons();
+  progress.draw(ctx, c.width, c.height);
   drawBars(options);
 
   if (answer !== 0)
@@ -195,6 +214,7 @@ async function move()
           //if alphabet cards & correct answer
           console.log(currSet[language][currCard]);
           if(currSet[language][currCard][1] < 5){
+            if (currSet[language][currCard][1] == 4) progress.val += 1;
             currSet[language][currCard][1] += 1;
             card.val = currSet[language][currCard][1];
           }
@@ -202,6 +222,7 @@ async function move()
         else{
           //reg set & right answer
           if (langset[3][cardSet][langset[0]][currCard][1] < 5){
+            if (langset[3][cardSet][langset[0]][currCard][1] == 4) progress.val += 1;
             langset[3][cardSet][langset[0]][currCard][1] += 1;
             card.val = langset[3][cardSet][langset[0]][currCard][1];
           }
@@ -212,6 +233,7 @@ async function move()
             //alphabet & wrong answer
               color = [255,150,150];
               if(currSet[language][currCard][1] > 0){
+                if (currSet[language][currCard][1] == 5) progress.val -= 1;
                 currSet[language][currCard][1] -= 1;
                 card.val = currSet[language][currCard][1];
               }
@@ -222,6 +244,7 @@ async function move()
               color = [255,150,150];
               if (langset[3][cardSet][langset[0]][currCard][1] > 0)
               {
+                if (langset[3][cardSet][langset[0]][currCard][1] == 5) progress.val -= 1;
                 langset[3][cardSet][langset[0]][currCard][1] -= 1;
                 card.val = langset[3][cardSet][langset[0]][currCard][1];
               }
@@ -315,7 +338,22 @@ async function setCards()
   if (currSet === 'None') currSet = flashcards[cardSet]
   console.log(currSet)
   var l = currSet[language].length;
-  var r = Math.floor((Math.random() * l) + 1) - 1;
+  var sum = 0
+  for (var i = 0; i < l; i++)
+  {
+    sum += Math.pow((6 - currSet[language][i][1]),2)
+  }
+  console.log("sum " + sum);
+  var r = Math.floor((Math.random() * sum) + 1) - 1;
+  for (var i = 0; i < l; i++)
+  {
+    r -= Math.pow((6 - currSet[language][i][1]),2);
+    if (r <= 0) {
+      r = i;
+      break;
+    }
+  }
+  console.log(r);
 
   var cardIndex = r;
   currentQuestion = currSet[language][r][0];
