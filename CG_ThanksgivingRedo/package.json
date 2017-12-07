@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "mocha"
+    "test": "make test"
   },
   "author": "",
   "license": "ISC",
@@ -20,9 +20,13 @@
     "express-session": "^1.15.6",
     "express-validator": "^4.3.0",
     "firebase": "^4.6.2",
+    "firebase-test": "^0.3.2",
     "jquery": "^3.2.1",
     "mocha": "^4.0.1",
-    "nodemon": "^1.12.1"
+    "mocha-phantomjs": "^4.1.0",
+    "nodemon": "^1.12.1",
+    "phantomjs": "^2.1.7",
+    "targaryen": "^3.0.5"
   },
   "devDependencies": {}
 }
