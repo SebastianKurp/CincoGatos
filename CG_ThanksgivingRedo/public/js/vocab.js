@@ -75,7 +75,7 @@ async function initialize()
   langset = await getLang(); 
   currCard = await setCards(); 
 
-  card = new Card(0.5, 0.375, 0.3, 0.2, 50, color, currentQuestion, 0, 5);
+  card = new Card(0.5, 0.375, 0.3, 0.2, 50, color, currentQuestion, langset[3][cardSet][langset[0]][currCard][1], 5);
   cardsDone = getCardsDone();
 
   var color1 = "rgb(" + baseColor[0] + ',' + baseColor[1] + ',' + baseColor[2] + ')';
