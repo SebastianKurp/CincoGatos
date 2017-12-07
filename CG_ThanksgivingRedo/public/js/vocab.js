@@ -227,6 +227,27 @@ async function move()
               }
           }
       }
+      console.log(langset[3]);
+      console.log("To be updated");
+      cardsToBeUpdated = langset[3];
+      let animalsWrite = langset[3][0];
+      let clothingWrite = langset[3][1];
+      let colorsWrite = langset[3][2];
+      let foodsWrite = langset[3][3];
+      let householdWrite = langset[3][4];
+      let numbersWrite = langset[3][5];
+      let schoolWrite = langset[3][6];
+    //could not find way to selectively update dictionaries
+        firebase.database().ref(`users/`+userId+`/premadesets/premadesets`).set({
+        animals: animalsWrite,
+        clothing: clothingWrite,
+        colors: colorsWrite,
+        foods: foodsWrite,
+        household: householdWrite,
+        numbers: numbersWrite,
+        school: schoolWrite
+      });
+      
 
       card.text = currentAnswer;
       card.drawFlip(ctx, frame - startFlipFrame, color, c.width, c.height);
@@ -312,6 +333,8 @@ async function setCards()
       return false;
     }
   }
+  console.log(flashcards);
+  console.log("Flashcards");
   if (currSet === 'None') currSet = flashcards[cardSet]
   console.log(currSet)
   var l = currSet[language].length;
