@@ -2,7 +2,7 @@
 # CincoGatos
 
 ***Abstract***  
-CincoGatos is a language learning WebApp that allows a user to begin learning some basic vocabulary from one of four languages: Arabic, Japnese, Polish, and Spanish.  The user can also upload documents and words to create custom flashcard sets.  The project is written using Firebase, Node, Express, Java, SJON, HTML, and CSS.
+CincoGatos is a language learning WebApp that allows a user to begin learning some basic vocabulary from one of four languages: Arabic, Japnese, Polish, and Spanish.  The user can also upload documents and words to create custom flashcard sets.  The project is written using Firebase, Node, Express, Java, JSON, HTML, and CSS.
 
 Latest version is from commits made on 12/2
 
