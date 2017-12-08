@@ -83,7 +83,7 @@ app.post('/login/complete', function(req, res){
             errors: errors
         })
     }
-    else{
+    else{//need to switch it over to auth.js
         userfunctions.login(req.body.email, req.body.password).catch(function(error){ 
             var errorCode = error.code;
             var errorMessage = error.message;
