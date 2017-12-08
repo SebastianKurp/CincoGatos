@@ -109,7 +109,10 @@ function getCardsDone()
   }
   return output;
 }
-
+/*
+This function changes the colors of the page based on the set which the user wanted to see
+The returned value is the indice related to the array of cards
+*/
 function getCardSet()
 {
   console.log("Getting cardset");
@@ -183,6 +186,13 @@ function drawBars(options)
   }
 }
 
+/*
+#MATH
+In this function we do animations for the cards flipping and determine if the 
+user has given a correct answer or not. We write the scores to Firebase after each card
+this is not our original plan, but due to time contraints it is what we went with.
+See further notes inside function regarding how data is written to Firebase
+*/
 async function move()
 {
   ctx.canvas.width = window.innerWidth;
@@ -250,8 +260,6 @@ async function move()
               }
           }
       }
-      console.log(langset[3]);
-      console.log("To be updated");
       cardsToBeUpdated = langset[3];
       let animalsWrite = langset[3][0];
       let clothingWrite = langset[3][1];
@@ -260,7 +268,23 @@ async function move()
       let householdWrite = langset[3][4];
       let numbersWrite = langset[3][5];
       let schoolWrite = langset[3][6];
-    //could not find way to selectively update dictionaries
+    /*
+    We also realized that the way which we had pulled the data from Firebase lost the name
+    ex: 
+      animals: [
+        [japanese array],
+        [english array]
+      ]
+    became instead
+    0: [
+      [japanese array],
+      [english array]
+    ]
+    Again, time constraints meant that a cleaner fix to the problem were not possible as it would
+    involve rewriting how we accessed the data in several parts of the program or making the database
+    less readable (changing names of the sets to numbers)
+    Thus, we take the parent ex: premadesets/premadesets and rewrite the entire contents
+    */
         firebase.database().ref(`users/`+userId+`/premadesets/premadesets`).set({
         animals: animalsWrite,
         clothing: clothingWrite,
@@ -295,6 +319,9 @@ async function move()
   frame++;
 }
 
+/*
+
+ */
 async function userInfo() {
   let flash = await getCards(userId);
   console.log("User info triggered, awaited get cards");
