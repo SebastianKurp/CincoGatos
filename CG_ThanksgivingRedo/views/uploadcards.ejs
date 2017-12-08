@@ -5,13 +5,20 @@
 <body>
     <div id="body">
         <span id="language"><%= learning %></span> <!-- language not passed to js file, used to get textcontent to customcards.js -->
-        <h2 id="header">Upload Your Own Flashcards</h2>
+        <h2 id="header">Upload Your Own Translations</h2>
         <h6>(Currently only supports .txt files)</h6>
         <form id="form">
             <label for="file">Choose a file</label></br>  
             <input id="file" type="file" accept=".txt"/>                 
             <span id="fileName">test</span>
         </form>
+        <div id="loadingcat">
+            <img src="/img/loading_blue.gif"/>
+        </div>
+        <div class="displayTranslations" id="display">
+            <ul id="list">
+            </ul>
+        </div>
     </div>
 </body>
 

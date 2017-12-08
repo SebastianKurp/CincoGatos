@@ -45,7 +45,7 @@ function readFile(file) {
         }
 
         for(i=0; i<noDuplicates.length;i++){
-            //console.log(translations[i] + " " + typeof translations[i]);
+            console.log(translations[i] + " " + typeof translations[i]);
             if(typeof translations[i] === "number"){
                 translations.splice(i, 1);
                 noDuplicates.splice(i, 1);
@@ -53,6 +53,7 @@ function readFile(file) {
             console.log(noDuplicates[i]+ " : " + translations[i]);
         }
         console.log(translations);
+        showTranslations(noDuplicates, translations);
     };
     reader.readAsText(file);  
 } 
@@ -71,6 +72,17 @@ async function getJSONAsync(url){
     })
 }
 
+var list = document.getElementById("list");
+function showTranslations(eng,trans){
+    document.getElementById('loadingcat').setAttribute("style", "display : none");
+    document.getElementById("display").setAttribute("style", "display: block");
+    for(i = 0; i<eng.length; i++){
+        var entry = document.createElement('li');
+        entry.appendChild(document.createTextNode(eng[i] + " : "+ trans[i]));
+        list.appendChild(entry);        
+    }
+}
+
 
 function showFileName(name){
     var txtIndex = name.search(".txt");
@@ -82,6 +94,7 @@ function showFileName(name){
 document.getElementById('file').onchange = function(e) {
     readFile(e.srcElement.files[0]);
     showFileName(e.srcElement.files[0].name);
+    document.getElementById('loadingcat').setAttribute("style", "display : block");
 };
 
 
