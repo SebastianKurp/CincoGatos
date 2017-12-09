@@ -1,6 +1,6 @@
 #background{
     position: absolute;
-    background-image: url("../img/flags.jpg");
+    background-image: url("../img/flags.png");
     background-color: rgb(243, 242, 239);
     background-repeat: no-repeat;
     background-size: 100%;
@@ -21,7 +21,6 @@
     margin: 2.85em 0em 0em -2.6em;
     font-size: 5.75em;
 }
-
 .top-buffer {
     margin-top: 37em;
 }
