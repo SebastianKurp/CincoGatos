@@ -36,10 +36,7 @@ function readFile(file) {
             } //for some reason this only removes some of the '1' values.
             //console.log(noDuplicates[i]+ " : " + translations[i]);
         }
-        //console.log(translations);
         SetUpCheck();
-        showTranslations(noDuplicates, translations);
-        document.getElementById('body').setAttribute("style", "display: none");
     };
     reader.readAsText(file);  
 } 
@@ -58,17 +55,7 @@ async function getJSONAsync(url){//gets translation from api
     })
 }
 
-var list = document.getElementById("list");//displays translations for the user 
-function showTranslations(eng,trans){
-    shithasvalues = true;
-    document.getElementById('loadingcat').setAttribute("style", "display : none");
-    document.getElementById("display").setAttribute("style", "display: block");
-    for(i = 0; i<eng.length; i++){
-        var entry = document.createElement('li');
-        entry.appendChild(document.createTextNode(eng[i] + " : "+ trans[i]));
-        list.appendChild(entry);        
-    }
-}
+
 
 
 function showFileName(name){//displays file name that was uploaded
@@ -79,10 +66,11 @@ function showFileName(name){//displays file name that was uploaded
 }
 
 document.getElementById('file').onchange = function(e) {//waits for file upload 
+    document.getElementById('body').setAttribute("style", "display: none");
+    document.getElementById('loadingcat').setAttribute("style", "display : block");
     
     readFile(e.srcElement.files[0]);
     showFileName(e.srcElement.files[0].name);
-    document.getElementById('loadingcat').setAttribute("style", "display : block");
     
 };
 
