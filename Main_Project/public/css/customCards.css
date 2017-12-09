@@ -76,3 +76,26 @@ label:active{
     visibility: hidden;
     overflow-wrap: break-word;
 }
+
+.displayTranslations{
+    display: none;
+    color: rgb(0, 125, 209);
+    font-size: 20px;
+    text-align: center;
+    margin: auto;
+    width: 30%;
+    height: 40%;
+    border: 2px solid grey;
+    border-radius: 5px;
+    overflow-y: auto;
+    padding: .5em;
+}
+
+#loadingcat{
+    display: none;
+}
+
+#list{
+    list-style: none;
+}
+
