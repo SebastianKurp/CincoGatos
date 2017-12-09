@@ -1,3 +1,91 @@
+var translations = [];
+var noDuplicates= [];
+var shithasvalues = false;
+
+
+function readFile(file) {
+    var learning = langCodes();
+    var lowerCase = [];
+
+    var reader = new FileReader();
+    reader.onload = success;                                            
+    async function success(evt) { 
+        var contents = evt.target.result;
+        var result = contents.split(/[^a-zA-Z0-9']/);
+        
+        for(i=0;i<result.length;i++){
+            lowerCase.push(result[i].toLowerCase());
+        }
+        for(i=0;i<lowerCase.length;i++){//remove duplicates
+            if(noDuplicates.indexOf(lowerCase[i])<0 && lowerCase[i].length>1){
+                noDuplicates.push(lowerCase[i]);
+            }
+        } 
+        
+        for(i=0; i<noDuplicates.length;i++){//use api to fetch translations
+            var url = "https://glosbe.com/gapi/translate?from=eng&dest=" + learning +"&format=json&phrase=" + noDuplicates[i] +
+                    "&pretty=true&callback=?";
+            await getJSONAsync(url);
+        }
+
+        for(i=0; i<noDuplicates.length;i++){//remove words with no translation
+            //console.log(translations[i] + " " + typeof translations[i]);
+            if(typeof translations[i] === "number"){
+                translations.splice(i, 1);
+                noDuplicates.splice(i, 1);
+            } //for some reason this only removes some of the '1' values.
+            //console.log(noDuplicates[i]+ " : " + translations[i]);
+        }
+        //console.log(translations);
+        SetUpCheck();
+        showTranslations(noDuplicates, translations);
+        document.getElementById('body').setAttribute("style", "display: none");
+    };
+    reader.readAsText(file);  
+} 
+
+
+async function getJSONAsync(url){//gets translation from api 
+    await $.getJSON(url, function(json){
+        if(json != "Nothing found."){
+            try{
+                var transWord = json.tuc[0].phrase.text;
+                translations.push(transWord);
+            }catch(err){
+                translations.push(1);
+            }
+        }       
+    })
+}
+
+var list = document.getElementById("list");//displays translations for the user 
+function showTranslations(eng,trans){
+    shithasvalues = true;
+    document.getElementById('loadingcat').setAttribute("style", "display : none");
+    document.getElementById("display").setAttribute("style", "display: block");
+    for(i = 0; i<eng.length; i++){
+        var entry = document.createElement('li');
+        entry.appendChild(document.createTextNode(eng[i] + " : "+ trans[i]));
+        list.appendChild(entry);        
+    }
+}
+
+
+function showFileName(name){//displays file name that was uploaded
+    var txtIndex = name.search(".txt");
+    var finalName = name.substring(0,txtIndex);
+    document.getElementById("fileName").textContent = finalName;
+    document.getElementById("fileName").setAttribute("style","visibility: visible");    
+}
+
+document.getElementById('file').onchange = function(e) {//waits for file upload 
+    
+    readFile(e.srcElement.files[0]);
+    showFileName(e.srcElement.files[0].name);
+    document.getElementById('loadingcat').setAttribute("style", "display : block");
+    
+};
+
 //we store the link the user clicks on main canvas in localstorage
 //and then retrieve it here
 let link = localStorage["datadata"];
@@ -69,20 +157,19 @@ async function initialize()
 {
   console.log("Initialize is called");
   color = [255,255,255];
-  card = new Card(0,0,0,0,0,0,0,0);
+  card = new Card(0,0,0,0,0,0);
 
   cardSet =  await getCardSet(); 
   langset = await getLang(); 
   currCard = await setCards(); 
 
-  card = new Card(0.5, 0.375, 0.3, 0.2, 50, color, currentQuestion, langset[3][cardSet][langset[0]][currCard][1], 5);
-  
-  cardsDone = getCardsDone();
+  card = new Card(0.5, 0.375, 0.3, 0.2, 50, color, currentQuestion, 0, 5);
+  //cardsDone = getCardsDone();
 
   var color1 = "rgb(" + baseColor[0] + ',' + baseColor[1] + ',' + baseColor[2] + ')';
   var color2 = "rgb(" + Math.floor((baseColor[0] + 0) / 2)  + ',' + Math.floor((baseColor[1] + 0) / 2) + ',' + Math.floor((baseColor[2] + 0) / 2) + ')';
   
-  progress = new progressBar(cardsDone, langset[3][cardSet][langset[0]].length, 0.5, 0.1, 0.35, 0.04, "rgb(0,0,0)");
+  //progress = new progressBar(cardsDone, langset[3][cardSet][langset[0]].length, 0.5, 0.1, 0.35, 0.04, "rgb(0,0,0)");
   bars =  [
         new Bar(0.5, 0.65, 0.3, 0.0375, color1, color2, "rgb(0,0,0)", 6, "./option1", "Option 1", "rgb(255,255,255)"),
         new Bar(0.5, 0.75, 0.3, 0.0375, color1, color2, "rgb(0,0,0)", 6, "./option2", "Option 2", "rgb(255,255,255)"),
@@ -98,7 +185,7 @@ async function initialize()
 which link they clicked. This function also changes the background color
 of the page based on that choice
 */
-function getCardsDone()
+/*function getCardsDone()
 {
   output = 0
   for (var i = 0; i < langset[3][cardSet][langset[0]].length; i++)
@@ -109,7 +196,7 @@ function getCardsDone()
     }
   }
   return output;
-}
+}*/
 /*
 This function changes the colors of the page based on the set which the user wanted to see
 The returned value is the indice related to the array of cards
@@ -148,6 +235,9 @@ function getCardSet()
   else if (link === "/alphabet") {
     baseColor = [100,100,100];
     return 7;
+  }else{
+      baseColor = [255,0,127];
+      return 8;
   }
 }
 
@@ -207,7 +297,7 @@ async function move()
   ctx.fill();
 
   drawButtons();
-  progress.draw(ctx, c.width, c.height);
+  //progress.draw(ctx, c.width, c.height);
   drawBars(options);
 
   if (answer !== 0)
@@ -221,7 +311,7 @@ async function move()
       if (currentAnswer === options[answer-1]) 
       {
         color = [150,255,150];
-        if(cardSet === 7){
+        /*if(cardSet === 7){
           //if alphabet cards & correct answer
           console.log(currSet[language][currCard]);
           if(currSet[language][currCard][1] < 5){
@@ -237,10 +327,11 @@ async function move()
             langset[3][cardSet][langset[0]][currCard][1] += 1;
             card.val = langset[3][cardSet][langset[0]][currCard][1];
           }
-        }
+        }*/
       }
          else { //else for 'wrong answer'
-          if(cardSet === 7){
+         color = [255, 150, 150];
+          /*if(cardSet === 7){
             //alphabet & wrong answer
               color = [255,150,150];
               if(currSet[language][currCard][1] > 0){
@@ -259,7 +350,7 @@ async function move()
                 langset[3][cardSet][langset[0]][currCard][1] -= 1;
                 card.val = langset[3][cardSet][langset[0]][currCard][1];
               }
-          }
+          }*/
       }
       cardsToBeUpdated = langset[3];
       let animalsWrite = langset[3][0];
@@ -386,19 +477,20 @@ async function setCards()
   }
   console.log(flashcards);
   console.log("Flashcards");
-  if (currSet === 'None') currSet = flashcards[cardSet]
-  console.log(currSet)
-  var l = currSet[language].length;
+  if (currSet === 'None') currSet = translations//flashcards[cardSet]
+    console.log(currSet)
+  var l = translations.length;
+  
   var sum = 0
   for (var i = 0; i < l; i++)
   {
-    sum += Math.pow((6 - currSet[language][i][1]),2)
+    sum += Math.pow((6 - 0),2)
   }
   console.log("sum " + sum);
   var r = Math.floor((Math.random() * sum) + 1) - 1;
   for (var i = 0; i < l; i++)
   {
-    r -= Math.pow((6 - currSet[language][i][1]),2);
+    r -= Math.pow((6 -0),2);
     if (r <= 0) {
       r = i;
       break;
@@ -407,9 +499,9 @@ async function setCards()
   console.log(r);
 
   var cardIndex = r;
-  currentQuestion = currSet[language][r][0];
-  card.val = currSet[language][r][1];
-  currentAnswer = currSet["en"][r];
+  currentQuestion = translations[r];
+  card.val = 0;
+  currentAnswer = noDuplicates[r];
 
   var otherOptions = [r];
   console.log("other options "+otherOptions)
@@ -418,7 +510,7 @@ async function setCards()
     r = Math.floor((Math.random() * l) + 1) - 1;
     if (!otherOptions.includes(r)) otherOptions.push(r);
   }
-  for (var i = 0; i < otherOptions.length; i++) otherOptions[i] = currSet["en"][otherOptions[i]]
+  for (var i = 0; i < otherOptions.length; i++) otherOptions[i] = noDuplicates[otherOptions[i]]
   
   options = shuffleArray(otherOptions);
   console.log("options " + options);
@@ -426,33 +518,56 @@ async function setCards()
 }
 
 async function SetUpCheck(){
-  let flash = await userInfo();
-   userArray = flash[1];
-   console.log(userArray + " user array");
-   alpha = flash[2];
-   flashcards = flash[0];
-   userId = flash[3];
-   username = userArray[2];
-   nativeL = userArray[0];
-   learningL = userArray[1];
-  if(link === '/alphabet'){
-    let userArray = flash[1];
-    let learningL = userArray[1];
-    if(learningL === 'Spanish'){
-      alert("No alphabet for you!");
-      var sadcat = new Image();
-      sadcat.src = './img/cryingcat.jpeg';
-      document.getElementById("loadingcat").remove();      
-      sadcat.addEventListener('load', function(){
-        ctx.drawImage(sadcat, 300, 20);
-      }, false)
-      return;
-    }else {
-      setup();
-    } 
-  }else{
-    setup();
-  }
+    
+    console.log("here");
+    let flash =  await userInfo();
+    userArray = flash[1];
+    console.log(userArray + " user array");
+    alpha = flash[2];
+    flashcards = flash[0];
+    userId = flash[3];
+    username = userArray[2];
+    nativeL = userArray[0];
+    learningL = userArray[1];
+    if(link === '/alphabet'){
+        let userArray = flash[1];
+        let learningL = userArray[1];
+        if(learningL === 'Spanish'){
+        alert("No alphabet for you!");
+        var sadcat = new Image();
+        sadcat.src = './img/cryingcat.jpeg';
+        document.getElementById("loadingcat").remove();      
+        sadcat.addEventListener('load', function(){
+            ctx.drawImage(sadcat, 300, 20);
+        }, false)
+        return;
+        }else {
+        setup();
+        } 
+    }else{
+        setup();
+    }
+    
+}
+function langCodes(){//get users language they want to learn
+    var learning = document.getElementById("language").textContent;
+    switch(learning){
+        case "Spanish":
+            learning = "spa";
+            break;
+        case "Arabic":
+            learning = "ara";
+            break;
+        case "Polish":
+            learning = "pol";
+            break;
+        case "Japanese":
+            learning = "jpn";
+            break;
+    }    
+    return learning;
 }
 
-SetUpCheck();
+
+
+//SetUpCheck();
