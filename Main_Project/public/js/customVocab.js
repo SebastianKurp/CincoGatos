@@ -71,7 +71,7 @@ document.getElementById('file').onchange = function(e) {//waits for file upload
     
     readFile(e.srcElement.files[0]);
     showFileName(e.srcElement.files[0].name);
-    
+    document.getElementById('myCanvas').setAttribute("style", "display : block");    
 };
 
 //we store the link the user clicks on main canvas in localstorage

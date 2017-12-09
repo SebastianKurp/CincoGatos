@@ -101,3 +101,6 @@ label:active{
     list-style: none;
 }
 
+#myCanvas{
+    display: none;
+}
