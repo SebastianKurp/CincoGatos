@@ -21,6 +21,10 @@
     "pl" : {
       "en" : [ "on/om", "ci", "en/em", "w", "ni", "u", "si", "zi", "zh", "ts", "i" ],
       "pl" : [ [ "ą", 0 ], [ "ć", 0 ], [ "ę", 0 ], [ "Ł ł", 0 ], [ "ń", 0 ], [ "ó", 0 ], [ "ś", 0 ], [ "ź", 0 ], [ "ż", 0 ], [ "c", 0 ], [ "y", 0 ] ]
+    },
+    "reading" : {
+      "en" : ["jane","vyeh-choor","proh-sheh","shay","moo-vyeh","zdroh-vyeh","khleb","chialo","chas","dzwon","djzecko","neeieno","shedem","szynka","zhelony"],
+      "pl" : [["dzien",0],["wieczór",0],["prosze",0],["sie",0],["mówie",0],["zdrowie",0],["cleb",0],["cialo",0],["czas",0],["dzwom",0],["dziecko",0],["niebo",0],["siedem",0],["szynka",0],["zielony",0]]
     }
   },
   "premadesets" : {
@@ -99,6 +103,10 @@
           "pl" : {
             "en" : [ "on/om", "ci", "en/em", "w", "ni", "u", "si", "zi", "zh", "ts", "i" ],
             "pl" : [ [ "ą", 0 ], [ "ć", 0 ], [ "ę", 0 ], [ "Ł ł", 0 ], [ "ń", 0 ], [ "ó", 0 ], [ "ś", 0 ], [ "ź", 0 ], [ "ż", 0 ], [ "c", 0 ], [ "y", 0 ] ]
+          },
+          "reading" : {
+            "en" : ["jane","vyeh-choor","proh-sheh","shay","moo-vyeh","zdroh-vyeh","khleb","chialo","chas","dzwon","djzecko","neeieno","shedem","szynka","zhelony"],
+            "pl" : [["dzien",0],["wieczór",0],["prosze",0],["sie",0],["mówie",0],["zdrowie",0],["cleb",0],["cialo",0],["czas",0],["dzwom",0],["dziecko",0],["niebo",0],["siedem",0],["szynka",0],["zielony",0]]
           }
         }
       },
@@ -187,6 +195,10 @@
           "pl" : {
             "en" : [ "on/om", "ci", "en/em", "w", "ni", "u", "si", "zi", "zh", "ts", "i" ],
             "pl" : [ [ "ą", 0 ], [ "ć", 0 ], [ "ę", 0 ], [ "Ł ł", 0 ], [ "ń", 0 ], [ "ó", 0 ], [ "ś", 0 ], [ "ź", 0 ], [ "ż", 0 ], [ "c", 0 ], [ "y", 0 ] ]
+          },
+          "reading" : {
+            "en" : ["jane","vyeh-choor","proh-sheh","shay","moo-vyeh","zdroh-vyeh","khleb","chialo","chas","dzwon","djzecko","neeieno","shedem","szynka","zhelony"],
+            "pl" : [["dzien",0],["wieczór",0],["prosze",0],["sie",0],["mówie",0],["zdrowie",0],["cleb",0],["cialo",0],["czas",0],["dzwom",0],["dziecko",0],["niebo",0],["siedem",0],["szynka",0],["zielony",0]]
           }
         }
       },
@@ -275,6 +287,10 @@
           "pl" : {
             "en" : [ "on/om", "ci", "en/em", "w", "ni", "u", "si", "zi", "zh", "ts", "i" ],
             "pl" : [ [ "ą", 0 ], [ "ć", 0 ], [ "ę", 0 ], [ "Ł ł", 0 ], [ "ń", 0 ], [ "ó", 0 ], [ "ś", 0 ], [ "ź", 0 ], [ "ż", 0 ], [ "c", 0 ], [ "y", 0 ] ]
+          },
+          "reading" : {
+            "en" : ["jane","vyeh-choor","proh-sheh","shay","moo-vyeh","zdroh-vyeh","khleb","chialo","chas","dzwon","djzecko","neeieno","shedem","szynka","zhelony"],
+            "pl" : [["dzien",0],["wieczór",0],["prosze",0],["sie",0],["mówie",0],["zdrowie",0],["cleb",0],["cialo",0],["czas",0],["dzwom",0],["dziecko",0],["niebo",0],["siedem",0],["szynka",0],["zielony",0]]
           }
         }
       },
@@ -363,6 +379,10 @@
           "pl" : {
             "en" : [ "on/om", "ci", "en/em", "w", "ni", "u", "si", "zi", "zh", "ts", "i" ],
             "pl" : [ [ "ą", 0 ], [ "ć", 0 ], [ "ę", 0 ], [ "Ł ł", 0 ], [ "ń", 0 ], [ "ó", 0 ], [ "ś", 0 ], [ "ź", 0 ], [ "ż", 0 ], [ "c", 0 ], [ "y", 0 ] ]
+          },
+          "reading" : {
+            "en" : ["jane","vyeh-choor","proh-sheh","shay","moo-vyeh","zdroh-vyeh","khleb","chialo","chas","dzwon","djzecko","neeieno","shedem","szynka","zhelony"],
+            "pl" : [["dzien",0],["wieczór",0],["prosze",0],["sie",0],["mówie",0],["zdrowie",0],["cleb",0],["cialo",0],["czas",0],["dzwom",0],["dziecko",0],["niebo",0],["siedem",0],["szynka",0],["zielony",0]]
           }
         }
       },
@@ -451,6 +471,10 @@
           "pl" : {
             "en" : [ "on/om", "ci", "en/em", "w", "ni", "u", "si", "zi", "zh", "ts", "i" ],
             "pl" : [ [ "ą", 0 ], [ "ć", 0 ], [ "ę", 0 ], [ "Ł ł", 0 ], [ "ń", 0 ], [ "ó", 0 ], [ "ś", 0 ], [ "ź", 0 ], [ "ż", 0 ], [ "c", 0 ], [ "y", 0 ] ]
+          },
+          "reading" : {
+            "en" : ["jane","vyeh-choor","proh-sheh","shay","moo-vyeh","zdroh-vyeh","khleb","chialo","chas","dzwon","djzecko","neeieno","shedem","szynka","zhelony"],
+            "pl" : [["dzien",0],["wieczór",0],["prosze",0],["sie",0],["mówie",0],["zdrowie",0],["cleb",0],["cialo",0],["czas",0],["dzwom",0],["dziecko",0],["niebo",0],["siedem",0],["szynka",0],["zielony",0]]
           }
         }
       },
@@ -539,6 +563,10 @@
           "pl" : {
             "en" : [ "on/om", "ci", "en/em", "w", "ni", "u", "si", "zi", "zh", "ts", "i" ],
             "pl" : [ [ "ą", 0 ], [ "ć", 0 ], [ "ę", 0 ], [ "Ł ł", 0 ], [ "ń", 0 ], [ "ó", 0 ], [ "ś", 0 ], [ "ź", 0 ], [ "ż", 0 ], [ "c", 0 ], [ "y", 0 ] ]
+          },
+          "reading" : {
+            "en" : ["jane","vyeh-choor","proh-sheh","shay","moo-vyeh","zdroh-vyeh","khleb","chialo","chas","dzwon","djzecko","neeieno","shedem","szynka","zhelony"],
+            "pl" : [["dzien",0],["wieczór",0],["prosze",0],["sie",0],["mówie",0],["zdrowie",0],["cleb",0],["cialo",0],["czas",0],["dzwom",0],["dziecko",0],["niebo",0],["siedem",0],["szynka",0],["zielony",0]]
           }
         }
       },
@@ -627,6 +655,10 @@
           "pl" : {
             "en" : [ "on/om", "ci", "en/em", "w", "ni", "u", "si", "zi", "zh", "ts", "i" ],
             "pl" : [ [ "ą", 0 ], [ "ć", 0 ], [ "ę", 0 ], [ "Ł ł", 0 ], [ "ń", 0 ], [ "ó", 0 ], [ "ś", 0 ], [ "ź", 0 ], [ "ż", 0 ], [ "c", 0 ], [ "y", 0 ] ]
+          },
+          "reading" : {
+            "en" : ["jane","vyeh-choor","proh-sheh","shay","moo-vyeh","zdroh-vyeh","khleb","chialo","chas","dzwon","djzecko","neeieno","shedem","szynka","zhelony"],
+            "pl" : [["dzien",0],["wieczór",0],["prosze",0],["sie",0],["mówie",0],["zdrowie",0],["cleb",0],["cialo",0],["czas",0],["dzwom",0],["dziecko",0],["niebo",0],["siedem",0],["szynka",0],["zielony",0]]
           }
         }
       },
@@ -715,6 +747,10 @@
           "pl" : {
             "en" : [ "on/om", "ci", "en/em", "w", "ni", "u", "si", "zi", "zh", "ts", "i" ],
             "pl" : [ [ "ą", 0 ], [ "ć", 0 ], [ "ę", 0 ], [ "Ł ł", 0 ], [ "ń", 0 ], [ "ó", 0 ], [ "ś", 0 ], [ "ź", 0 ], [ "ż", 0 ], [ "c", 0 ], [ "y", 0 ] ]
+          },
+          "reading" : {
+            "en" : ["jane","vyeh-choor","proh-sheh","shay","moo-vyeh","zdroh-vyeh","khleb","chialo","chas","dzwon","djzecko","neeieno","shedem","szynka","zhelony"],
+            "pl" : [["dzien",0],["wieczór",0],["prosze",0],["sie",0],["mówie",0],["zdrowie",0],["cleb",0],["cialo",0],["czas",0],["dzwom",0],["dziecko",0],["niebo",0],["siedem",0],["szynka",0],["zielony",0]]
           }
         }
       },
@@ -803,6 +839,10 @@
           "pl" : {
             "en" : [ "on/om", "ci", "en/em", "w", "ni", "u", "si", "zi", "zh", "ts", "i" ],
             "pl" : [ [ "ą", 0 ], [ "ć", 0 ], [ "ę", 0 ], [ "Ł ł", 0 ], [ "ń", 0 ], [ "ó", 0 ], [ "ś", 0 ], [ "ź", 0 ], [ "ż", 0 ], [ "c", 0 ], [ "y", 0 ] ]
+          },
+          "reading" : {
+            "en" : ["jane","vyeh-choor","proh-sheh","shay","moo-vyeh","zdroh-vyeh","khleb","chialo","chas","dzwon","djzecko","neeieno","shedem","szynka","zhelony"],
+            "pl" : [["dzien",0],["wieczór",0],["prosze",0],["sie",0],["mówie",0],["zdrowie",0],["cleb",0],["cialo",0],["czas",0],["dzwom",0],["dziecko",0],["niebo",0],["siedem",0],["szynka",0],["zielony",0]]
           }
         }
       },
@@ -891,6 +931,10 @@
           "pl" : {
             "en" : [ "on/om", "ci", "en/em", "w", "ni", "u", "si", "zi", "zh", "ts", "i" ],
             "pl" : [ [ "ą", 0 ], [ "ć", 0 ], [ "ę", 0 ], [ "Ł ł", 0 ], [ "ń", 0 ], [ "ó", 0 ], [ "ś", 0 ], [ "ź", 0 ], [ "ż", 0 ], [ "c", 0 ], [ "y", 0 ] ]
+          },
+          "reading" : {
+            "en" : ["jane","vyeh-choor","proh-sheh","shay","moo-vyeh","zdroh-vyeh","khleb","chialo","chas","dzwon","djzecko","neeieno","shedem","szynka","zhelony"],
+            "pl" : [["dzien",0],["wieczór",0],["prosze",0],["sie",0],["mówie",0],["zdrowie",0],["cleb",0],["cialo",0],["czas",0],["dzwom",0],["dziecko",0],["niebo",0],["siedem",0],["szynka",0],["zielony",0]]
           }
         }
       },
@@ -979,6 +1023,10 @@
           "pl" : {
             "en" : [ "on/om", "ci", "en/em", "w", "ni", "u", "si", "zi", "zh", "ts", "i" ],
             "pl" : [ [ "ą", 0 ], [ "ć", 0 ], [ "ę", 0 ], [ "Ł ł", 0 ], [ "ń", 0 ], [ "ó", 0 ], [ "ś", 0 ], [ "ź", 0 ], [ "ż", 0 ], [ "c", 0 ], [ "y", 0 ] ]
+          },
+          "reading" : {
+            "en" : ["jane","vyeh-choor","proh-sheh","shay","moo-vyeh","zdroh-vyeh","khleb","chialo","chas","dzwon","djzecko","neeieno","shedem","szynka","zhelony"],
+            "pl" : [["dzien",0],["wieczór",0],["prosze",0],["sie",0],["mówie",0],["zdrowie",0],["cleb",0],["cialo",0],["czas",0],["dzwom",0],["dziecko",0],["niebo",0],["siedem",0],["szynka",0],["zielony",0]]
           }
         }
       },
@@ -1067,6 +1115,10 @@
           "pl" : {
             "en" : [ "on/om", "ci", "en/em", "w", "ni", "u", "si", "zi", "zh", "ts", "i" ],
             "pl" : [ [ "ą", 0 ], [ "ć", 0 ], [ "ę", 0 ], [ "Ł ł", 0 ], [ "ń", 0 ], [ "ó", 0 ], [ "ś", 0 ], [ "ź", 0 ], [ "ż", 0 ], [ "c", 0 ], [ "y", 0 ] ]
+          },
+          "reading" : {
+            "en" : ["jane","vyeh-choor","proh-sheh","shay","moo-vyeh","zdroh-vyeh","khleb","chialo","chas","dzwon","djzecko","neeieno","shedem","szynka","zhelony"],
+            "pl" : [["dzien",0],["wieczór",0],["prosze",0],["sie",0],["mówie",0],["zdrowie",0],["cleb",0],["cialo",0],["czas",0],["dzwom",0],["dziecko",0],["niebo",0],["siedem",0],["szynka",0],["zielony",0]]
           }
         }
       },
@@ -1155,6 +1207,10 @@
           "pl" : {
             "en" : [ "on/om", "ci", "en/em", "w", "ni", "u", "si", "zi", "zh", "ts", "i" ],
             "pl" : [ [ "ą", 0 ], [ "ć", 0 ], [ "ę", 0 ], [ "Ł ł", 0 ], [ "ń", 0 ], [ "ó", 0 ], [ "ś", 0 ], [ "ź", 0 ], [ "ż", 0 ], [ "c", 0 ], [ "y", 0 ] ]
+          },
+          "reading" : {
+            "en" : ["jane","vyeh-choor","proh-sheh","shay","moo-vyeh","zdroh-vyeh","khleb","chialo","chas","dzwon","djzecko","neeieno","shedem","szynka","zhelony"],
+            "pl" : [["dzien",0],["wieczór",0],["prosze",0],["sie",0],["mówie",0],["zdrowie",0],["cleb",0],["cialo",0],["czas",0],["dzwom",0],["dziecko",0],["niebo",0],["siedem",0],["szynka",0],["zielony",0]]
           }
         }
       },
@@ -1243,6 +1299,10 @@
           "pl" : {
             "en" : [ "on/om", "ci", "en/em", "w", "ni", "u", "si", "zi", "zh", "ts", "i" ],
             "pl" : [ [ "ą", 0 ], [ "ć", 0 ], [ "ę", 0 ], [ "Ł ł", 0 ], [ "ń", 0 ], [ "ó", 0 ], [ "ś", 0 ], [ "ź", 0 ], [ "ż", 0 ], [ "c", 0 ], [ "y", 0 ] ]
+          },
+          "reading" : {
+            "en" : ["jane","vyeh-choor","proh-sheh","shay","moo-vyeh","zdroh-vyeh","khleb","chialo","chas","dzwon","djzecko","neeieno","shedem","szynka","zhelony"],
+            "pl" : [["dzien",0],["wieczór",0],["prosze",0],["sie",0],["mówie",0],["zdrowie",0],["cleb",0],["cialo",0],["czas",0],["dzwom",0],["dziecko",0],["niebo",0],["siedem",0],["szynka",0],["zielony",0]]
           }
         }
       },
