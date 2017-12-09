@@ -94,6 +94,7 @@ label:active{
 
 #loadingcat{
     display: none;
+    text-align: center;
 }
 
 #list{
