@@ -321,7 +321,8 @@ async function move()
 }
 
 /*
-
+See notes on getCards in clientFirebase.js. This is actually a chain of events which returns
+multiple arrays.
  */
 async function userInfo() {
   let flash = await getCards(userId);

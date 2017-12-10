@@ -11,11 +11,15 @@ firebase.initializeApp(config);
 const ref = firebase.database().ref();
 const fbAuth = firebase.auth;
 
+/**
+ This function stores the values within nativeLang, learningLang and username into an array
+ and returns them. These details are needed to determine what language the user is learning and
+ to personalize the experience by refering to them by their username
+ */
 function getUserDetails(userid){
   return new Promise(
     async function(resolve, reject)
     {
-  //  var user = await firebase.auth().currentUser;
     firebase.database().ref(`users/`+userid).once('value').then((snapshot) => {
     console.log("Getting user details");
     var nativeLang = snapshot.val().nativeLang;
@@ -32,12 +36,13 @@ function getUserDetails(userid){
   })
 }
 
+/*
+This gets all of our regular flashcard vocabulary sets in the same manner as getUserDetails
+*/
 function getFlashcards(userid){
   return new Promise(
     async function(resolve, reject)
     {
-  //  var user = await firebase.auth().currentUser;
-  //  console.log("Flashcards: Uid is "+ user.uid);
     firebase.database().ref(`users/`+userid+`/premadesets/premadesets`).once('value').then((snapshot) => {
     console.log("Getting flashcards");
     var animals = snapshot.val().animals;
@@ -59,6 +64,7 @@ function getFlashcards(userid){
   })
 }
 
+/* Samesies with this one. Returns alphabets in an array */
 function getAlphabets(userid){
   return new Promise(
     async function(resolve, reject)
@@ -84,7 +90,11 @@ function getAlphabets(userid){
 }
 
 
-//used to be fed userid as param
+/*
+I only made this function because I didn't want a mammoth function with all those promises.
+Easier to debug when you know which one is failing. Functionally this method listens for a user
+and upon hearing them calls and waits on the user's general details, vocab sets, and alphabet sets
+*/
 async function getCards(){
   return new Promise(
     async function(resolve, reject){
@@ -113,6 +123,12 @@ async function getCards(){
     })
   };
 
+  /*
+  I don't like this solution overall, but it will do. The user is simultaneously being
+  logged in on the client side as they are logged in server side. I had already written a number of things
+  reliant on the user data being passed server side, but I absolutely had to have authorization on
+  client side in order to be writin back to the database to update the user's scores
+  */
   function clientLog(){
     let email = document.getElementById('email').value;
     let pass = document.getElementById('password').value;
