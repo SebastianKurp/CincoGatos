@@ -1,6 +1,6 @@
 class Card
 {
-	constructor(x, y, rx, ry, flipSpeed, color, text, val, maxVal)
+	constructor(x, y, rx, ry, flipSpeed, color, text, val = "None", maxVal = "None")
 	{
 		this.x = x;
 		this.y = y;
@@ -13,7 +13,8 @@ class Card
 		this.val = val;
 		this.maxVal = maxVal;
 		//progressBar constructor: val,maxVal,x,y,rx,ry,color
-		this.progressBar = new progressBar(this.val, this.maxVal, this.x, this.y + this.ry * 0.6, this.rx * 0.8, this.ry * 0.2, "rgb(0,0,0)")
+		if (val === "None") this.progressBar = new progressBar(0,0,0,0,0,0,0)
+		else this.progressBar = new progressBar(this.val, this.maxVal, this.x, this.y + this.ry * 0.6, this.rx * 0.8, this.ry * 0.2, "rgb(0,0,0)")
 	}
 
 	drawFlip(ctx, frame, origColorBack, canvasWidth, canvasHeight)
@@ -92,7 +93,10 @@ class Card
 		ctx.textAlign = "center";
 		ctx.fillText(this.text, x, y); 
 
-		this.progressBar.val = this.val;
-		this.progressBar.draw(ctx, canvasWidth, canvasHeight);
+		if (this.val !== "None")
+		{
+			this.progressBar.val = this.val;
+			this.progressBar.draw(ctx, canvasWidth, canvasHeight);
+		}
 	}
 }
