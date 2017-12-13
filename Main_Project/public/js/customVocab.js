@@ -29,12 +29,11 @@ function readFile(file) {
         }
 
         for(i=0; i<noDuplicates.length;i++){//remove words with no translation
-            //console.log(translations[i] + " " + typeof translations[i]);
             if(typeof translations[i] === "number"){
                 translations.splice(i, 1);
                 noDuplicates.splice(i, 1);
-            } //for some reason this only removes some of the '1' values.
-            //console.log(noDuplicates[i]+ " : " + translations[i]);
+                i--;
+            } 
         }
         SetUpCheck();
     };
@@ -151,13 +150,11 @@ async function initialize()
   langset = await getLang(); 
   currCard = await setCards(); 
 
-  card = new Card(0.5, 0.375, 0.3, 0.2, 50, color, currentQuestion, 0, 5);
-  //cardsDone = getCardsDone();
+  card = new Card(0.5, 0.375, 0.3, 0.2, 50, color, currentQuestion);
 
   var color1 = "rgb(" + baseColor[0] + ',' + baseColor[1] + ',' + baseColor[2] + ')';
   var color2 = "rgb(" + Math.floor((baseColor[0] + 0) / 2)  + ',' + Math.floor((baseColor[1] + 0) / 2) + ',' + Math.floor((baseColor[2] + 0) / 2) + ')';
   
-  //progress = new progressBar(cardsDone, langset[3][cardSet][langset[0]].length, 0.5, 0.1, 0.35, 0.04, "rgb(0,0,0)");
   bars =  [
         new Bar(0.5, 0.65, 0.3, 0.0375, color1, color2, "rgb(0,0,0)", 6, "./option1", "Option 1", "rgb(255,255,255)"),
         new Bar(0.5, 0.75, 0.3, 0.0375, color1, color2, "rgb(0,0,0)", 6, "./option2", "Option 2", "rgb(255,255,255)"),
@@ -173,18 +170,7 @@ async function initialize()
 which link they clicked. This function also changes the background color
 of the page based on that choice
 */
-/*function getCardsDone()
-{
-  output = 0
-  for (var i = 0; i < langset[3][cardSet][langset[0]].length; i++)
-  {
-    if (langset[3][cardSet][langset[0]][i][1] == 5)
-    {
-      output += 1;
-    }
-  }
-  return output;
-}*/
+
 /*
 This function changes the colors of the page based on the set which the user wanted to see
 The returned value is the indice related to the array of cards
@@ -285,7 +271,6 @@ async function move()
   ctx.fill();
 
   drawButtons();
-  //progress.draw(ctx, c.width, c.height);
   drawBars(options);
 
   if (answer !== 0)
@@ -299,46 +284,9 @@ async function move()
       if (currentAnswer === options[answer-1]) 
       {
         color = [150,255,150];
-        /*if(cardSet === 7){
-          //if alphabet cards & correct answer
-          console.log(currSet[language][currCard]);
-          if(currSet[language][currCard][1] < 5){
-            if (currSet[language][currCard][1] == 4) progress.val += 1;
-            currSet[language][currCard][1] += 1;
-            card.val = currSet[language][currCard][1];
-          }
-        }
-        else{
-          //reg set & right answer
-          if (langset[3][cardSet][langset[0]][currCard][1] < 5){
-            if (langset[3][cardSet][langset[0]][currCard][1] == 4) progress.val += 1;
-            langset[3][cardSet][langset[0]][currCard][1] += 1;
-            card.val = langset[3][cardSet][langset[0]][currCard][1];
-          }
-        }*/
-      }
-         else { //else for 'wrong answer'
-         color = [255, 150, 150];
-          /*if(cardSet === 7){
-            //alphabet & wrong answer
-              color = [255,150,150];
-              if(currSet[language][currCard][1] > 0){
-                if (currSet[language][currCard][1] == 5) progress.val -= 1;
-                currSet[language][currCard][1] -= 1;
-                card.val = currSet[language][currCard][1];
-              }
-            }
-            else
-            {
-              //reg set & wrong answer
-              color = [255,150,150];
-              if (langset[3][cardSet][langset[0]][currCard][1] > 0)
-              {
-                if (langset[3][cardSet][langset[0]][currCard][1] == 5) progress.val -= 1;
-                langset[3][cardSet][langset[0]][currCard][1] -= 1;
-                card.val = langset[3][cardSet][langset[0]][currCard][1];
-              }
-          }*/
+        
+      }else { //else for 'wrong answer'
+         color = [255, 150, 150];   
       }
       cardsToBeUpdated = langset[3];
       let animalsWrite = langset[3][0];
@@ -374,8 +322,7 @@ async function move()
         numbers: numbersWrite,
         school: schoolWrite
       });
-      
-
+    
       card.text = currentAnswer;
       card.drawFlip(ctx, frame - startFlipFrame, color, c.width, c.height);
     }
@@ -399,9 +346,7 @@ async function move()
   frame++;
 }
 
-/*
 
- */
 async function userInfo() {
   let flash = await getCards(userId);
   console.log("User info triggered, awaited get cards");
@@ -556,6 +501,3 @@ function langCodes(){//get users language they want to learn
     return learning;
 }
 
-
-
-//SetUpCheck();

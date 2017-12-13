@@ -1,4 +1,3 @@
-
 var firebase = require('firebase');
 
 //Initialize Firebase
@@ -15,7 +14,7 @@ var config = {
   const ref = firebase.database().ref();
   const fbAuth = firebase.auth;
 
-//Firebase functions
+// Most of the functions on here are honestly pretty standard from the Firebase docs
 function auth (email, pw, nL,lL, useName) {
     native = nL;
     learning = lL;
@@ -35,6 +34,8 @@ function resetPassword (email) {
     return fbAuth().sendPasswordResetEmail(email)
   }
 
+  /* The only noteworthy thing about this function is that it calls addUserDetails when
+   saving the user to Firebase */
 function saveUser (user) {
     var userId = user.uid;
     var username = name;
@@ -50,6 +51,13 @@ function saveUser (user) {
       .then(() => user)
   }
   
+/*
+This function was not in the docs it's pretty important for the app to work properly
+When the user is saved to Firebase we add all the default flashcard sets to their profile
+Their 'learningLang' determines which one they see, but if that were to be changed
+they would already have the other languges preloaded and if they switched back to the old
+language their scores would still be there.
+*/
 function addUserDetails(userId, username, nativeLang, learningLang){
     //add the user's native and learned lang to firebase
     firebase.database().ref(`users/`+userId).set({
@@ -72,7 +80,11 @@ function addUserDetails(userId, username, nativeLang, learningLang){
       })
     })
   }
-  
+
+/* I hate redundant code. This is here so that the server side can also use these functions
+A more full refactoring would wipe them. The details on getUserDetails, getFlashcards,
+getAlphabets, and getCards are in clientFirebase.js
+*/
 function getUserDetails(userid){
     return new Promise(
       async function(resolve, reject)
@@ -153,12 +165,6 @@ async function getCards(userid){
     let alpharay = await getAlphabets(userid);
       return [flashArray, langArray, alpharay];
   };
-
-  /*
-function writeScore(userId){
-  //discuss with Abdul how he wants this written
-}
-*/
 
 module.exports.auth = auth;
 module.exports.login = login;
