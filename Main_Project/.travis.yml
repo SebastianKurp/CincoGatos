@@ -3,5 +3,7 @@ node_js:
   - "stable"
 install:
   -npm install
+script:
+"test": "mocha"
 after_success:
 - npm run coveralls
