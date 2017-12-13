@@ -47,10 +47,10 @@ function initialize()
 			new CircleButton(0.7, 0.7, 0.08, 0.1, "rgb(255,200,0)", "rgb(255,255,50)", "rgb(0,0,0)", 6, "None", "/numbers", "numbers", "rgb(0,0,0)"),
 				];
 		//constructor(x, y, rx, ry, cFill, cActive, cStroke, wStroke, link = "None", text = "", cText)
-	bars =	[
-				new Bar(0.60, 0.9, 0.075, 0.05, "rgb(255,255,255)", "rgb(200,200,200)", "rgb(0,0,0)", 6, "/settings", "settings", "rgb(0,0,0)"),
-				new Bar(0.80, 0.9, 0.075, 0.05, "rgb(255,255,255)", "rgb(200,200,200)", "rgb(0,0,0)", 6, "/achievements", "achievements", "rgb(0,0,0)")
-			]
+// 	bars =	[
+// 				new Bar(0.60, 0.9, 0.075, 0.05, "rgb(255,255,255)", "rgb(200,200,200)", "rgb(0,0,0)", 6, "/settings", "settings", "rgb(0,0,0)"),
+// 				new Bar(0.80, 0.9, 0.075, 0.05, "rgb(255,255,255)", "rgb(200,200,200)", "rgb(0,0,0)", 6, "/achievements", "achievements", "rgb(0,0,0)")
+// 			]
 }
 
 function drawButtons()
