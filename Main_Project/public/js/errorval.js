@@ -1,4 +1,4 @@
-module.exports.autherrors = auth 
+module.exports.autherrors = errorval 
 //todo, Nieky will probably check this so do it...
 function auth(errors){
 
@@ -18,3 +18,5 @@ function auth(errors){
   }
     }
   }
+
+  //Work in progress, unit testing is a piority
