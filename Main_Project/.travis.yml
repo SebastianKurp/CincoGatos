@@ -4,6 +4,6 @@ node_js:
 install:
   -npm install
 script:
-"test": "mocha"
+  - npm test
 after_success:
 - npm run coveralls
