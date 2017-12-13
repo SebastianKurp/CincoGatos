@@ -146,7 +146,6 @@ function getAlphabets(userid){
         var polish = snapshot.val().pl;
         var japanese = snapshot.val().jp;
         var alpha = [arabic, polish, japanese];
-        console.log(alpha);
         console.log("Retrieved alphabets");
         if(alpha != null){
           resolve(alpha);
