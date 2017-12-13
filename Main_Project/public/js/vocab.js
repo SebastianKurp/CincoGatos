@@ -440,17 +440,23 @@ async function SetUpCheck(){
     let userArray = flash[1];
     let learningL = userArray[1];
     if(learningL === 'Spanish'){
-      alert("No alphabet for you!");
       var sadcat = new Image();
-      sadcat.src = './img/cryingcat.jpeg';
+      sadcat.src = './img/alphabets.png';
       document.getElementById("loadingcat").remove();      
       sadcat.addEventListener('load', function(){
-        ctx.drawImage(sadcat, 300, 20);
+        ctx.drawImage(sadcat, 500, 20);
       }, false)
       return;
     }else {
       setup();
     } 
+  }else if(link === '/transliteration' || link === '/reading'){
+    var sadcat = new Image();
+    sadcat.src = './img/construction.png';
+    document.getElementById("loadingcat").remove();      
+    sadcat.addEventListener('load', function(){
+      ctx.drawImage(sadcat, 500, 20);
+    }, false)
   }else{
     setup();
   }
