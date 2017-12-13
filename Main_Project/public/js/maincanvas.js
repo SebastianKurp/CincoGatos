@@ -46,11 +46,6 @@ function initialize()
 			new CircleButton(0.5, 0.7, 0.08, 0.1, "rgb(255,100,125)", "rgb(255,150,175)", "rgb(0,0,0)", 6, "None", "/clothing", "clothing", "rgb(0,0,0)"),
 			new CircleButton(0.7, 0.7, 0.08, 0.1, "rgb(255,200,0)", "rgb(255,255,50)", "rgb(0,0,0)", 6, "None", "/numbers", "numbers", "rgb(0,0,0)"),
 				];
-		//constructor(x, y, rx, ry, cFill, cActive, cStroke, wStroke, link = "None", text = "", cText)
-// 	bars =	[
-// 				new Bar(0.60, 0.9, 0.075, 0.05, "rgb(255,255,255)", "rgb(200,200,200)", "rgb(0,0,0)", 6, "/settings", "settings", "rgb(0,0,0)"),
-// 				new Bar(0.80, 0.9, 0.075, 0.05, "rgb(255,255,255)", "rgb(200,200,200)", "rgb(0,0,0)", 6, "/achievements", "achievements", "rgb(0,0,0)")
-// 			]
 }
 
 function drawButtons()
@@ -78,27 +73,6 @@ function drawButtons()
   }
 }
 
-function drawBars()
-{
-  for (var i = 0; i < bars.length; i++)
-  {
-    bars[i].isTouchingMouse(mouseX, mouseY - 75, c.width, c.height)
-      if (!mouseDown && clickBuffer !== "None")
-      {
-          console.log(clickBuffer);
-
-          var hardcodingisbad = "http://localhost:3000";
-          window.location.href= hardcodingisbad+'/achievements';
-          localStorage.setItem("datadata", clickBuffer);
-
-          //if clickbuffer is passed we can dynamically change flashcard sets
-          //& background colors based on user clicks -- one canvas
-          clickBuffer = "None";
-      }
-    bars[i].draw(ctx, c.width, c.height);
-  }
-}
-
 function move()
 {
 	ctx.canvas.width = window.innerWidth;
@@ -111,7 +85,6 @@ function move()
 	ctx.fill();
 		
   drawButtons();
-	drawBars();
   
     ctx.fillStyle = "rgb(0,0,0)";
     ctx.textAlign = "left";

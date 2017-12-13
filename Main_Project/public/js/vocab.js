@@ -75,14 +75,31 @@ async function initialize()
   langset = await getLang(); 
   currCard = await setCards(); 
 
-  card = new Card(0.5, 0.375, 0.3, 0.2, 50, color, currentQuestion, langset[3][cardSet][langset[0]][currCard][1], 5);
+  if(link === '/alphabet'){
+    console.log(currSet[language][currCard]);
+    card = new Card(0.5, 0.375, 0.3, 0.2, 50, color, currentQuestion, currSet[language][currCard][1], 5);
+  }
+  else{
+    card = new Card(0.5, 0.375, 0.3, 0.2, 50, color, currentQuestion, langset[3][cardSet][langset[0]][currCard][1], 5);
+  }
+  
   
   cardsDone = getCardsDone();
 
   var color1 = "rgb(" + baseColor[0] + ',' + baseColor[1] + ',' + baseColor[2] + ')';
   var color2 = "rgb(" + Math.floor((baseColor[0] + 0) / 2)  + ',' + Math.floor((baseColor[1] + 0) / 2) + ',' + Math.floor((baseColor[2] + 0) / 2) + ')';
   
-  progress = new progressBar(cardsDone, langset[3][cardSet][langset[0]].length, 0.5, 0.1, 0.35, 0.04, "rgb(0,0,0)");
+  var vocabSetLength;
+  if(language === 'jp'){
+    vocabSetLength = 129;
+  } else if(link === '/alphabet'){
+    vocabSetLength = currSet[language].length;
+  } 
+  else{
+    vocabSetLength = langset[3][cardSet][langset[0]].length;
+  }
+
+  progress = new progressBar(cardsDone, vocabSetLength, 0.5, 0.1, 0.35, 0.04, "rgb(0,0,0)");
   bars =  [
         new Bar(0.5, 0.65, 0.3, 0.0375, color1, color2, "rgb(0,0,0)", 6, "./option1", "Option 1", "rgb(255,255,255)"),
         new Bar(0.5, 0.75, 0.3, 0.0375, color1, color2, "rgb(0,0,0)", 6, "./option2", "Option 2", "rgb(255,255,255)"),
@@ -94,21 +111,32 @@ async function initialize()
   ];
 }
 
-/*we want to display the appropriate card set depending on
-which link they clicked. This function also changes the background color
-of the page based on that choice
+/*
+this function determines the user's overall score for the set (5/20, 17/20, etc).
 */
 function getCardsDone()
 {
   output = 0
-  for (var i = 0; i < langset[3][cardSet][langset[0]].length; i++)
-  {
-    if (langset[3][cardSet][langset[0]][i][1] == 5)
-    {
-      output += 1;
+  if(link === '/alphabet'){
+    //what we're getting here is the # of words in the flashcard set
+    for(var j = 0; j < currSet.length; j++){
+      if(currSet[i][1] === 5){
+        output += 1;
+      }
     }
+    return output;
+  } else {
+    for (var i = 0; i < langset[3][cardSet][langset[0]].length; i++)
+    {
+      if (langset[3][cardSet][langset[0]][i][1] === 5)
+      {
+        output += 1;
+      }
+    }
+    return output;
   }
-  return output;
+
+
 }
 /*
 This function changes the colors of the page based on the set which the user wanted to see
