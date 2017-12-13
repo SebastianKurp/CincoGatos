@@ -8,4 +8,16 @@
     <h4><u>Native Language:</u> <%= native %> </h4>
     <h4><u>Target Language:</u> <%= learning %> </h4>
 </div>
+<div class="form-group">
+    <label>
+        Pick the language you want to learn: <br />
+        <select name="selectLL">
+            <option value="Error">Select One</option>
+            <option value="Spanish">Spanish</option>
+            <option value="Polish">Polish</option>
+            <option value="Arabic">Arabic</option>
+            <option value="Japanese">Japanese</option>
+        </select>
+    </label>
+</div>
 <% include partials/footer %>
