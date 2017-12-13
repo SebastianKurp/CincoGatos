@@ -1,4 +1,3 @@
-import should from 'should'
 import { login} from '/js/userfunctions'
 
 describe('Authenticated firebase', () => {
