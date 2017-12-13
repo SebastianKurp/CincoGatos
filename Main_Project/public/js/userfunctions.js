@@ -52,7 +52,7 @@ function saveUser (user) {
   }
   
 /*
-This function was not in the docs it's pretty important for the app to work properly
+This function was not in the docs, but it's pretty important for the app to work properly.
 When the user is saved to Firebase we add all the default flashcard sets to their profile
 Their 'learningLang' determines which one they see, but if that were to be changed
 they would already have the other languges preloaded and if they switched back to the old
