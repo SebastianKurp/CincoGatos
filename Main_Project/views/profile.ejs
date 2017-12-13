@@ -1,18 +1,24 @@
 <% include partials/header %>
+<link href="/css/profile.css" rel="stylesheet" type="text/css">
+<div class="col-sm-6 col-sm-offset-3">
     <h2>Your Profile</h2><br>
     <h4><u>User Name:</u> <%= username %></h4>
     <h4><u>Native Language:</u> <%= native %> </h4>
-    <h4><u>Target Language:</u> <%= learning %> </h4>
+    <h4 id="targetLang"><u>Target Language:</u> <%= learning %> </h4>
 <div class="form-group">
     <label>
         <h4>Pick the language you want to learn: </h4>
-        <select name="selectLL">
+        <select id="selectLL">
             <option value="Error">Select One</option>
             <option value="Spanish">Spanish</option>
             <option value="Polish">Polish</option>
             <option value="Arabic">Arabic</option>
             <option value="Japanese">Japanese</option>
         </select>
-    </label>
+    </label><br/>
+    <button class="btn btn-success" onClick="changeLearningLang()" name="langBtn">Try something new!</button>
 </div>
+</div>
+<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+<script src = "/js/clientFirebase.js"></script>
 <% include partials/footer %>

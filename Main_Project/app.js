@@ -6,7 +6,6 @@ var port     = process.env.PORT || 3000; //heroku stuff
 var validator = require('express-validator');
 var firebase = require("firebase");
 var userfunctions = require('./public/js/userfunctions');
-//var session = require('client-sessions');
 var session = require('express-session');
 var flash = require('connect-flash');
 var app = express();
@@ -110,7 +109,6 @@ app.post('/login/complete', function(req, res){
                 await userfunctions.getCards(user.uid).then(function(result){
                         flash = result;
                     });
-                //return [flashArray, langArray, alpharay];
                 let userArray = flash[1];
                 let username = userArray[2];
                 let nativeL = userArray[0];

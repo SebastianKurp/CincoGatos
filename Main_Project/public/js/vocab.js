@@ -314,7 +314,10 @@ async function move()
     less readable (changing names of the sets to numbers)
     Thus, we take the parent ex: premadesets/premadesets and rewrite the entire contents
     */
-        firebase.database().ref(`users/`+userId+`/premadesets/premadesets`).set({
+    if(link === '/alphabet'){
+      console.log();
+    }else{
+      firebase.database().ref(`users/`+userId+`/premadesets/premadesets`).set({
         animals: animalsWrite,
         clothing: clothingWrite,
         colors: colorsWrite,
@@ -323,6 +326,8 @@ async function move()
         numbers: numbersWrite,
         school: schoolWrite
       });
+    }
+
       
 
       card.text = currentAnswer;

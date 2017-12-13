@@ -143,3 +143,18 @@ async function getCards(){
      })
   }
 
+ async function changeLearningLang(){
+    //change the user's learning lang. Learn ALL the languages
+    var user = await firebase.auth().currentUser;
+    userId = user.uid;
+    var selectLang = document.getElementById('selectLL');
+    var newLang = selectLang.options[selectLang.selectedIndex].value;
+    console.log(newLang);
+    if(newLang === 'Error'){
+      console.log("Error...");
+      return; //exit the hell out
+    }
+    var learningLangRef = firebase.database().ref('users/' + userId)
+    .update({learningLang: newLang});
+    document.getElementById('targetLang').innerHTML = "<u>Target Language:</u> "+ newLang;
+  }
