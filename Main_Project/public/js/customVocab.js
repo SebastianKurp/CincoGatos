@@ -3,8 +3,12 @@ var noDuplicates= [];
 var shithasvalues = false;
 
 
-function readFile(file) {
-    var learning = langCodes();
+async function readFile(file) {
+    var bigOlUserArrayOfFreshDatas = await userInfo();
+    var learning = bigOlUserArrayOfFreshDatas[1][1];
+    learning = langCodes(learning);
+
+
     var lowerCase = [];
 
     var reader = new FileReader();
@@ -21,7 +25,8 @@ function readFile(file) {
                 noDuplicates.push(lowerCase[i]);
             }
         } 
-        
+        console.log(learning);
+        console.log("This is what we are giving the API");
         for(i=0; i<noDuplicates.length;i++){//use api to fetch translations
             var url = "https://glosbe.com/gapi/translate?from=eng&dest=" + learning +"&format=json&phrase=" + noDuplicates[i] +
                     "&pretty=true&callback=?";
@@ -72,6 +77,7 @@ document.getElementById('file').onchange = function(e) {//waits for file upload
     showFileName(e.srcElement.files[0].name);
     document.getElementById('myCanvas').setAttribute("style", "display : block");    
 };
+
 
 //we store the link the user clicks on main canvas in localstorage
 //and then retrieve it here
@@ -288,41 +294,7 @@ async function move()
       }else { //else for 'wrong answer'
          color = [255, 150, 150];   
       }
-      cardsToBeUpdated = langset[3];
-      let animalsWrite = langset[3][0];
-      let clothingWrite = langset[3][1];
-      let colorsWrite = langset[3][2];
-      let foodsWrite = langset[3][3];
-      let householdWrite = langset[3][4];
-      let numbersWrite = langset[3][5];
-      let schoolWrite = langset[3][6];
-    /*
-    We also realized that the way which we had pulled the data from Firebase lost the name
-    ex: 
-      animals: [
-        [japanese array],
-        [english array]
-      ]
-    became instead
-    0: [
-      [japanese array],
-      [english array]
-    ]
-    Again, time constraints meant that a cleaner fix to the problem were not possible as it would
-    involve rewriting how we accessed the data in several parts of the program or making the database
-    less readable (changing names of the sets to numbers)
-    Thus, we take the parent ex: premadesets/premadesets and rewrite the entire contents
-    */
-        firebase.database().ref(`users/`+userId+`/premadesets/premadesets`).set({
-        animals: animalsWrite,
-        clothing: clothingWrite,
-        colors: colorsWrite,
-        foods: foodsWrite,
-        household: householdWrite,
-        numbers: numbersWrite,
-        school: schoolWrite
-      });
-    
+
       card.text = currentAnswer;
       card.drawFlip(ctx, frame - startFlipFrame, color, c.width, c.height);
     }
@@ -349,13 +321,12 @@ async function move()
 
 async function userInfo() {
   let flash = await getCards(userId);
-  console.log("User info triggered, awaited get cards");
   console.log(flash);
   return flash;
 }
 
 //this function returns various this about the user that we need to set the cards & draw on the
-//canvas. Username, their native language, their learning language, etc.
+//canvas. Username, their native language, their learningL language, etc.
 async function getLang(){
   switch(userArray[1]){
     case 'Spanish':
@@ -482,8 +453,7 @@ async function SetUpCheck(){
     }
     
 }
-function langCodes(){//get users language they want to learn
-    var learning = document.getElementById("language").textContent;
+function langCodes(learning){//get users language they want to learn
     switch(learning){
         case "Spanish":
             learning = "spa";
