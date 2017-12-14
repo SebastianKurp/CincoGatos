@@ -1,14 +1,27 @@
-///canvas tests
-var expect    = require("chai").expect;
-var pbar = require("../app/progressBar");
+//setting up server for e2e testing
+let server
 
-describe("Draws the progessBar", function() {
-  describe("Draws Bar", function() {
-    it("Draws", function() {
-      var bar = pbar.draw(5,600,600)
+before((done) => {
+  const app = express()
+  app.use('/', express.static(path.resolve(__dirname, '../../dist')))
+  server = app.listen(8080, done)
+})
+after(() => {
+  server.close()
+})
 
-      expect(bar).to.equal("360000");
+const {prepareDriver, cleanupDriver} = require('../utils/browser-automation')
 
-    });
-  });
-});
+
+describe('browser app', function () {
+  let driver
+  before(async () => {
+    driver = await prepareDriver()
+  })
+  after(() => cleanupDriver(driver))
+
+  it('should work', async function () {
+    await driver.get('http://localhost:8080')
+  }) 
+})
+
